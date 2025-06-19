@@ -1,4 +1,5 @@
-﻿using System;
+﻿using C969_Scheduling_App.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,23 @@ namespace C969_Scheduling_App
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void btnSignIn_Click(object sender, EventArgs e)
+        {
+            Scheduler scheduler = new Scheduler();
+            scheduler.Show();
+            this.Hide();
+        }
+
+        private void txtUserName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

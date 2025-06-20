@@ -36,6 +36,7 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnSignIn = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
+            this.btnCheckConnection = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // titleSchedulingApp
@@ -112,11 +113,22 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
+            // btnCheckConnection
+            // 
+            this.btnCheckConnection.Location = new System.Drawing.Point(520, 350);
+            this.btnCheckConnection.Name = "btnCheckConnection";
+            this.btnCheckConnection.Size = new System.Drawing.Size(75, 23);
+            this.btnCheckConnection.TabIndex = 8;
+            this.btnCheckConnection.Text = "Check Connection";
+            this.btnCheckConnection.UseVisualStyleBackColor = true;
+            this.btnCheckConnection.Click += new System.EventHandler(this.btnCheckConnection_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnCheckConnection);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.txtPassword);
@@ -126,7 +138,7 @@
             this.Controls.Add(this.lblSignIn);
             this.Controls.Add(this.titleSchedulingApp);
             this.Name = "Login";
-            this.Text = "Form1";
+            this.Text = "Scheduling Application";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +154,7 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnSignIn;
         private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Button btnCheckConnection;
     }
 }
 

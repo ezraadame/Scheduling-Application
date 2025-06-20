@@ -1,4 +1,5 @@
-﻿using System;
+﻿using C969_Scheduling_App.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,10 @@ namespace C969_Scheduling_App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            DBConnection.StartConnection();
             Application.Run(new Login());
+            DBConnection.CloseConneciton();
         }
     }
 }

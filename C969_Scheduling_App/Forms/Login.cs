@@ -1,4 +1,5 @@
-﻿using C969_Scheduling_App.Forms;
+﻿using C969_Scheduling_App.Database;
+using C969_Scheduling_App.Forms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,6 @@ namespace C969_Scheduling_App
         private void btnConnect_Click(object sender, EventArgs e)
         {
             string constr = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
-
             MySqlConnection conn = null;
 
             try
@@ -61,6 +61,16 @@ namespace C969_Scheduling_App
                 {
                     conn.Close();
                 }
+            }
+        }
+
+        private void btnCheckConnection_Click(object sender, EventArgs e)
+        {
+            MySqlConnection c = DBConnection.conn;
+
+            if (c.State == ConnectionState.Open)
+            {
+                MessageBox.Show("Connection open!");
             }
         }
     }

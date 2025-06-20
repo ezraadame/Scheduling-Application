@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,44 +24,63 @@ namespace C969_Scheduling_App
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-            Scheduler scheduler = new Scheduler();
-            scheduler.Show();
-            this.Hide();
+
+            string userName = txtUserName.Text;
+            string password = txtPassword.Text;
+            
+            string query = @"SELECT * FROM user WHERE userName = @userName AND password = @password";
+
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn))
+                {
+                    cmd.Parameters.AddWithValue("@userName", userName);
+                    cmd.Parameters.AddWithValue("@password", password);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Scheduler scheduler = new Scheduler();
+                            scheduler.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wrong credentials!");
+                        }
+                    }
+                }
+
+
+            }
+            catch(MySqlException ex)
+            {
+                MessageBox.Show("Login failed: " + ex.Message);
+            }
         }
 
         private void txtUserName_TextChanged(object sender, EventArgs e)
         {
-
+            if (txtUserName.Text.Length > 0)
+            {
+                txtUserName.BackColor = Color.White;
+            }
+            else
+            {
+                txtUserName.BackColor = Color.Yellow;
+            }
         }
 
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            string constr = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
-            MySqlConnection conn = null;
-
-            try
+            if (txtUserName.Text.Length > 0)
             {
-                conn = new MySqlConnection(constr);
-
-                conn.Open();
-
-                MessageBox.Show("Connection is open");
+                txtPassword.BackColor = Color.White;
             }
-            catch (MySqlException ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                txtPassword.BackColor = Color.Yellow;
             }
         }
 

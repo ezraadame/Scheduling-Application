@@ -17,9 +17,9 @@ namespace C969_Scheduling_App.Database
         {
             try
             {
-                string constr = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
+                string connectionString = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
 
-                conn = new MySqlConnection(constr);
+                conn = new MySqlConnection(connectionString);
 
                 conn.Open();
 

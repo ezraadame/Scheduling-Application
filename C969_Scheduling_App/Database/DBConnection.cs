@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace C969_Scheduling_App.Database
 {
-    public class DBConnection
+    public static class DBConnection
     {
         public static MySqlConnection conn { get; set; }
 

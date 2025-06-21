@@ -10,56 +10,11 @@ using System.Windows.Forms;
 
 namespace C969_Scheduling_App.Forms
 {
-    public partial class Main_Menu : Form
+    public partial class AddAppointment : Form
     {
-        public Main_Menu()
+        public AddAppointment()
         {
             InitializeComponent();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
     }
 }

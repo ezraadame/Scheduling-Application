@@ -62,28 +62,26 @@ namespace C969_Scheduling_App
                 {
                     cmd.Parameters.AddWithValue("@userName", userName);
                     cmd.Parameters.AddWithValue("@password", password);
+                    bool loginSuccess = false;
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            Main_Menu scheduler = new Main_Menu();
-                            scheduler.Show();
-                            this.Hide();
+                            loginSuccess = true;
                         }
-                        else
-                        {
-                            string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-
-                            if (language == "es")
-                            {
-                                MessageBox.Show("¡Credenciales incorrectas!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Wrong credentials!");
-                            }
-                        }
+                        
+                    }
+                    if (loginSuccess)
+                    {
+                        Forms.MainMenu mainMenu = new Forms.MainMenu();
+                        mainMenu.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+                        MessageBox.Show(language == "es" ? "¡Credenciales incorrectas!" : "Wrong credentials!");
                     }
                 }
             }

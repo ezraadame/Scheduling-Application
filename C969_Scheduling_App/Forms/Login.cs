@@ -67,7 +67,7 @@ namespace C969_Scheduling_App
                     {
                         if (reader.Read())
                         {
-                            Scheduler scheduler = new Scheduler();
+                            Customer_Management scheduler = new Customer_Management();
                             scheduler.Show();
                             this.Hide();
                         }

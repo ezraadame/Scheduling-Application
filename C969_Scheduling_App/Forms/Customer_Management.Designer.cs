@@ -1,6 +1,6 @@
 ﻿namespace C969_Scheduling_App.Forms
 {
-    partial class Scheduler
+    partial class Customer_Management
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Customer_Management
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Scheduler";
+            this.Name = "Customer_Management";
+            this.Text = "Customer Management";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

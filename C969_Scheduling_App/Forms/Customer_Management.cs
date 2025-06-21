@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace C969_Scheduling_App.Forms
 {
-    public partial class Scheduler : Form
+    public partial class Customer_Management : Form
     {
-        public Scheduler()
+        public Customer_Management()
         {
             InitializeComponent();
         }

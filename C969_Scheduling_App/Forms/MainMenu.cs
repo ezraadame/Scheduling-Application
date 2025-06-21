@@ -29,6 +29,7 @@ namespace C969_Scheduling_App.Forms
             dgvCustomerMGMT.MultiSelect = false;
             dgvCustomerMGMT.AllowUserToAddRows = false;
             LoadCustomerData();
+            dgvCustomerMGMT.ClearSelection();
 
             dgvAppointmentMGMT.RowHeadersVisible = false;
             dgvAppointmentMGMT.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -38,15 +39,27 @@ namespace C969_Scheduling_App.Forms
             dgvAppointmentMGMT.MultiSelect = false;
             dgvAppointmentMGMT.AllowUserToAddRows = false;
             LoadAppointmentData();
+            dgvAppointmentMGMT.ClearSelection();
         }
 
         private void LoadCustomerData()
         {
             try
             {
-                string query = "SELECT * FROM customer";
+                string customerQuery = "" +
+                    "SELECT \r\n    " +
+                    "c.customerId AS 'ID', \r\n    " +
+                    "c.customerName AS 'Name', \r\n    " +
+                    "a.address AS 'Address',\r\n    " +
+                    "a.phone AS 'Phone Number',\r\n    " +
+                    "ci.city AS 'City',\r\n    " +
+                    "co.country AS 'Country'\r\n" +
+                    "FROM customer c\r\n" +
+                    "JOIN address a ON c.addressId = a.addressId\r\n" +
+                    "JOIN city ci ON a.cityId = ci.cityId\r\n" +
+                    "JOIN country co ON ci.countryId = co.countryId;";
 
-                MySqlDataAdapter adapter = new MySqlDataAdapter(query, DBConnection.conn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(customerQuery, DBConnection.conn);
 
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -64,8 +77,8 @@ namespace C969_Scheduling_App.Forms
         {
             try
             {
-                string query = "SELECT * FROM appointment";
-                MySqlDataAdapter adapter = new MySqlDataAdapter(query, DBConnection.conn);
+                string appointmentQuery = "SELECT * FROM appointment";
+                MySqlDataAdapter adapter = new MySqlDataAdapter(appointmentQuery, DBConnection.conn);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 dgvAppointmentMGMT.DataSource = table;

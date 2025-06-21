@@ -73,6 +73,7 @@
             this.btnAddCustomerSave.TabIndex = 7;
             this.btnAddCustomerSave.Text = "Save";
             this.btnAddCustomerSave.UseVisualStyleBackColor = true;
+            this.btnAddCustomerSave.Click += new System.EventHandler(this.btnAddCustomerSave_Click);
             // 
             // lblAddCustomerID
             // 
@@ -162,7 +163,7 @@
             this.txtAddCustomerNumber.Name = "txtAddCustomerNumber";
             this.txtAddCustomerNumber.Size = new System.Drawing.Size(185, 20);
             this.txtAddCustomerNumber.TabIndex = 17;
-            this.txtAddCustomerNumber.TextChanged += new System.EventHandler(this.txtAddCustomerNumber_TextChanged);
+            this.txtAddCustomerNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAddCustomerNumber_KeyPress);
             // 
             // txtAddCustomerCity
             // 

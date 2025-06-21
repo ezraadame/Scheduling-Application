@@ -34,10 +34,7 @@ namespace C969_Scheduling_App.Database
         {
             try
             {
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                conn?.Close();
                 conn = null;
             }
             catch (MySqlException ex)

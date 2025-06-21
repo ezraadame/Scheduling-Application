@@ -10,11 +10,56 @@ using System.Windows.Forms;
 
 namespace C969_Scheduling_App.Forms
 {
-    public partial class Customer_Management : Form
+    public partial class Main_Menu : Form
     {
-        public Customer_Management()
+        public Main_Menu()
         {
             InitializeComponent();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

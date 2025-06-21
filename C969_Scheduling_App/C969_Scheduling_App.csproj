@@ -99,11 +99,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\DBConnection.cs" />
-    <Compile Include="Forms\Customer_Management.cs">
+    <Compile Include="Forms\Main_Menu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Customer_Management.Designer.cs">
-      <DependentUpon>Customer_Management.cs</DependentUpon>
+    <Compile Include="Forms\Main_Menu.Designer.cs">
+      <DependentUpon>Main_Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Login.cs">
       <SubType>Form</SubType>
@@ -113,8 +113,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\Customer_Management.resx">
-      <DependentUpon>Customer_Management.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Main_Menu.resx">
+      <DependentUpon>Main_Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

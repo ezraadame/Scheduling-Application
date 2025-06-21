@@ -67,7 +67,7 @@ namespace C969_Scheduling_App
                     {
                         if (reader.Read())
                         {
-                            Customer_Management scheduler = new Customer_Management();
+                            Main_Menu scheduler = new Main_Menu();
                             scheduler.Show();
                             this.Hide();
                         }
@@ -126,5 +126,9 @@ namespace C969_Scheduling_App
             }
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

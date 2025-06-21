@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,37 @@ namespace C969_Scheduling_App
             InitializeComponent();
         }
 
+        private void Login_Load(object sender, EventArgs e)
+        {
+            LocalizeForm();
+        }
+
+        private void LocalizeForm()
+        {
+            string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+            if (language == "es")
+            {
+                lblUsername.Text = "Nombre de usuario";
+                lblPassword.Text = "Contrasena";
+                btnSignIn.Text = "Iniciar sesion";
+                lblSignIn.Text = "Iniciar sesion";
+                titleSchedulingApp.Text = "Solicitud De Programacion";
+            }
+            else
+            {
+                lblUsername.Text = "Username";
+                lblPassword.Text = "Password";
+                btnSignIn.Text = "Sign in";
+                lblSignIn.Text = "Sign in";
+                titleSchedulingApp.Text = "Scheduling Application";
+            }
+        }
+
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-
             string userName = txtUserName.Text;
             string password = txtPassword.Text;
-            
             string query = @"SELECT * FROM user WHERE userName = @userName AND password = @password";
 
             try
@@ -47,16 +73,32 @@ namespace C969_Scheduling_App
                         }
                         else
                         {
-                            MessageBox.Show("Wrong credentials!");
+                            string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+                            if (language == "es")
+                            {
+                                MessageBox.Show("¡Credenciales incorrectas!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Wrong credentials!");
+                            }
                         }
                     }
                 }
-
-
             }
-            catch(MySqlException ex)
+            catch (MySqlException)
             {
-                MessageBox.Show("Login failed: " + ex.Message);
+                string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+                if (language == "es")
+                {
+                    MessageBox.Show("Error de iniciio de sesion");
+                }
+                else
+                {
+                    MessageBox.Show("Login failed");
+                }
+                    
             }
         }
 
@@ -84,14 +126,5 @@ namespace C969_Scheduling_App
             }
         }
 
-        private void btnCheckConnection_Click(object sender, EventArgs e)
-        {
-            MySqlConnection c = DBConnection.conn;
-
-            if (c.State == ConnectionState.Open)
-            {
-                MessageBox.Show("Connection open!");
-            }
-        }
     }
 }

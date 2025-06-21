@@ -35,7 +35,6 @@
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnSignIn = new System.Windows.Forms.Button();
-            this.btnCheckConnection = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // titleSchedulingApp
@@ -52,7 +51,7 @@
             // 
             this.lblSignIn.AutoSize = true;
             this.lblSignIn.Font = new System.Drawing.Font("Gadugi", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSignIn.Location = new System.Drawing.Point(354, 152);
+            this.lblSignIn.Location = new System.Drawing.Point(355, 152);
             this.lblSignIn.Name = "lblSignIn";
             this.lblSignIn.Size = new System.Drawing.Size(81, 25);
             this.lblSignIn.TabIndex = 1;
@@ -61,7 +60,7 @@
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(237, 200);
+            this.lblUsername.Location = new System.Drawing.Point(218, 193);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(55, 13);
             this.lblUsername.TabIndex = 2;
@@ -70,7 +69,7 @@
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(237, 252);
+            this.lblPassword.Location = new System.Drawing.Point(218, 243);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(53, 13);
             this.lblPassword.TabIndex = 3;
@@ -79,7 +78,7 @@
             // txtUserName
             // 
             this.txtUserName.BackColor = System.Drawing.Color.Yellow;
-            this.txtUserName.Location = new System.Drawing.Point(299, 198);
+            this.txtUserName.Location = new System.Drawing.Point(321, 193);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(228, 20);
             this.txtUserName.TabIndex = 4;
@@ -88,7 +87,7 @@
             // txtPassword
             // 
             this.txtPassword.BackColor = System.Drawing.Color.Yellow;
-            this.txtPassword.Location = new System.Drawing.Point(299, 247);
+            this.txtPassword.Location = new System.Drawing.Point(321, 243);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(228, 20);
             this.txtPassword.TabIndex = 5;
@@ -96,7 +95,7 @@
             // 
             // btnSignIn
             // 
-            this.btnSignIn.Location = new System.Drawing.Point(240, 296);
+            this.btnSignIn.Location = new System.Drawing.Point(360, 299);
             this.btnSignIn.Name = "btnSignIn";
             this.btnSignIn.Size = new System.Drawing.Size(75, 23);
             this.btnSignIn.TabIndex = 6;
@@ -104,22 +103,11 @@
             this.btnSignIn.UseVisualStyleBackColor = true;
             this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
             // 
-            // btnCheckConnection
-            // 
-            this.btnCheckConnection.Location = new System.Drawing.Point(520, 350);
-            this.btnCheckConnection.Name = "btnCheckConnection";
-            this.btnCheckConnection.Size = new System.Drawing.Size(75, 23);
-            this.btnCheckConnection.TabIndex = 8;
-            this.btnCheckConnection.Text = "Check Connection";
-            this.btnCheckConnection.UseVisualStyleBackColor = true;
-            this.btnCheckConnection.Click += new System.EventHandler(this.btnCheckConnection_Click);
-            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnCheckConnection);
             this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUserName);
@@ -129,6 +117,7 @@
             this.Controls.Add(this.titleSchedulingApp);
             this.Name = "Login";
             this.Text = "Scheduling Application";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,7 +132,6 @@
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnSignIn;
-        private System.Windows.Forms.Button btnCheckConnection;
     }
 }
 

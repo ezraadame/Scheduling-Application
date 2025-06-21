@@ -23,7 +23,6 @@ namespace C969_Scheduling_App.Database
 
                 conn.Open();
 
-                MessageBox.Show("Connection is open");
             }
             catch (MySqlException ex)
             {

@@ -35,83 +35,85 @@ namespace C969_Scheduling_App.Forms
             this.Hide();
         }
 
-        private void btnAddCustomerSave_Click(object sender, EventArgs e)
-        {
-            string name = txtAddCustomerName.Text.Trim();
-            string address = txtAddCustomerAddress.Text.Trim();
-            string number = txtAddCustomerNumber.Text.Trim();
-            string city = txtAddCustomerCity.Text.Trim();
-            string country = txtAddCustomerCountry.Text.Trim();
+        
 
-            try
-            {
-                if (
-                    string.IsNullOrEmpty(name) ||
-                    string.IsNullOrEmpty(address) ||
-                    string.IsNullOrEmpty(number) ||
-                    string.IsNullOrEmpty(city) ||
-                    string.IsNullOrEmpty(country)
-                    )
-                {
-                    MessageBox.Show("Please fill in all required fields.",
-                        "Invalid Operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    string queryAddCustomerName =
-                        "INSERT INTO customer (customerName) VALUES (@name)";
+        //private void btnAddCustomerSave_Click(object sender, EventArgs e)
+        //{
+        //    string name = txtAddCustomerName.Text.Trim();
+        //    string address = txtAddCustomerAddress.Text.Trim();
+        //    string number = txtAddCustomerNumber.Text.Trim();
+        //    string city = txtAddCustomerCity.Text.Trim();
+        //    string country = txtAddCustomerCountry.Text.Trim();
 
-                    string queryAddCustomerAddress =
-                        "INSERT INTO address (address) VALUES (@address)";
+        //    try
+        //    {
+        //        if (
+        //            string.IsNullOrEmpty(name) ||
+        //            string.IsNullOrEmpty(address) ||
+        //            string.IsNullOrEmpty(number) ||
+        //            string.IsNullOrEmpty(city) ||
+        //            string.IsNullOrEmpty(country)
+        //            )
+        //        {
+        //            MessageBox.Show("Please fill in all required fields.",
+        //                "Invalid Operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //        else
+        //        {
+        //            string queryAddCustomerName =
+        //                "INSERT INTO customer (customerName) VALUES (@name)";
 
-                    string queryAddCustomerNumber =
-                        "INSERT INTO address (phone) VALUES (@number)";
+        //            string queryAddCustomerAddress =
+        //                "INSERT INTO address (address) VALUES (@address)";
 
-                    string queryAddCustomerCity =
-                        "INSERT INTO city (city) VALUES (@city)";
+        //            string queryAddCustomerNumber =
+        //                "INSERT INTO address (phone) VALUES (@number)";
 
-                    string queryAddCustomerCountry =
-                        "INSERT INTO country (country) VALUES (@country)";
+        //            string queryAddCustomerCity =
+        //                "INSERT INTO city (city) VALUES (@city)";
+
+        //            string queryAddCustomerCountry =
+        //                "INSERT INTO country (country) VALUES (@country)";
 
 
-                    using (MySqlCommand cmdCustomer = new MySqlCommand(queryAddCustomerName, DBConnection.conn))
-                    {
-                        cmdCustomer.Parameters.AddWithValue("@name", name);
-                        cmdCustomer.ExecuteNonQuery();
-                    }
+        //            using (MySqlCommand cmdCustomer = new MySqlCommand(queryAddCustomerName, DBConnection.conn))
+        //            {
+        //                cmdCustomer.Parameters.AddWithValue("@name", name);
+        //                cmdCustomer.ExecuteNonQuery();
+        //            }
 
-                    using (MySqlCommand cmdAddress = new MySqlCommand(queryAddCustomerAddress, DBConnection.conn))
-                    {
-                        cmdAddress.Parameters.AddWithValue("@address", address);
-                        cmdAddress.ExecuteNonQuery();
-                    }
+        //            using (MySqlCommand cmdAddress = new MySqlCommand(queryAddCustomerAddress, DBConnection.conn))
+        //            {
+        //                cmdAddress.Parameters.AddWithValue("@address", address);
+        //                cmdAddress.ExecuteNonQuery();
+        //            }
 
-                    using (MySqlCommand cmdNumber = new MySqlCommand(queryAddCustomerNumber, DBConnection.conn))
-                    {
-                        cmdNumber.Parameters.AddWithValue("@number", number);
-                        cmdNumber.ExecuteNonQuery();
-                    }
+        //            using (MySqlCommand cmdNumber = new MySqlCommand(queryAddCustomerNumber, DBConnection.conn))
+        //            {
+        //                cmdNumber.Parameters.AddWithValue("@number", number);
+        //                cmdNumber.ExecuteNonQuery();
+        //            }
 
-                    using (MySqlCommand cmdCity = new MySqlCommand(queryAddCustomerCity, DBConnection.conn))
-                    {
-                        cmdCity.Parameters.AddWithValue("@city", city);
-                        cmdCity.ExecuteNonQuery();
-                    }
+        //            using (MySqlCommand cmdCity = new MySqlCommand(queryAddCustomerCity, DBConnection.conn))
+        //            {
+        //                cmdCity.Parameters.AddWithValue("@city", city);
+        //                cmdCity.ExecuteNonQuery();
+        //            }
 
-                    using (MySqlCommand cmdCountry = new MySqlCommand(queryAddCustomerCountry, DBConnection.conn))
-                    {
-                        cmdCountry.Parameters.AddWithValue("@country", country);
-                        cmdCountry.ExecuteNonQuery();
-                    }
+        //            using (MySqlCommand cmdCountry = new MySqlCommand(queryAddCustomerCountry, DBConnection.conn))
+        //            {
+        //                cmdCountry.Parameters.AddWithValue("@country", country);
+        //                cmdCountry.ExecuteNonQuery();
+        //            }
 
-                    MessageBox.Show("Customer added successfully!");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
-        }
+        //            MessageBox.Show("Customer added successfully!");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"An error occurred: {ex.Message}");
+        //    }
+        //}
 
     }
 }

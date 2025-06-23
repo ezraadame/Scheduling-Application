@@ -73,7 +73,6 @@
             this.btnAddCustomerSave.TabIndex = 7;
             this.btnAddCustomerSave.Text = "Save";
             this.btnAddCustomerSave.UseVisualStyleBackColor = true;
-            this.btnAddCustomerSave.Click += new System.EventHandler(this.btnAddCustomerSave_Click);
             // 
             // lblAddCustomerID
             // 

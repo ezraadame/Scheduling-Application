@@ -10,6 +10,6 @@ namespace C969_Scheduling_App.Forms.Customers
 {
     public class Customers
     {
-        public static BindingList<Customers> CustomerList = new BindingList<Customers>();
+        
     }
 }

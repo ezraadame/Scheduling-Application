@@ -10,8 +10,10 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace C969_Scheduling_App
@@ -26,6 +28,7 @@ namespace C969_Scheduling_App
         private void Login_Load(object sender, EventArgs e)
         {
             LocalizeForm();
+            GetLocation();
         }
 
         private void LocalizeForm()
@@ -127,6 +130,30 @@ namespace C969_Scheduling_App
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        public void GetLocation()
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    string json = client.DownloadString("http://ip-api.com/json/");
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    dynamic result = serializer.Deserialize<object>(json);
+
+                    string country = result["country"];
+                    string city = result["city"];
+                    string timezone = result["timezone"];
+
+                    lblCurrentLocation.Text = $"City: {city}" + Environment.NewLine + $"Country: {country}" + Environment.NewLine + $"Timezone: {timezone}";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblCurrentLocation.Text = $"Location unavailabkle, ({ex.Message})";
+            }
+
         }
     }
 }

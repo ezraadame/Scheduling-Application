@@ -122,10 +122,10 @@
             // lblCurrentLocation
             // 
             this.lblCurrentLocation.AutoSize = true;
-            this.lblCurrentLocation.Font = new System.Drawing.Font("Gadugi", 8.25F);
-            this.lblCurrentLocation.Location = new System.Drawing.Point(12, 460);
+            this.lblCurrentLocation.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentLocation.Location = new System.Drawing.Point(12, 424);
             this.lblCurrentLocation.Name = "lblCurrentLocation";
-            this.lblCurrentLocation.Size = new System.Drawing.Size(93, 14);
+            this.lblCurrentLocation.Size = new System.Drawing.Size(103, 16);
             this.lblCurrentLocation.TabIndex = 14;
             this.lblCurrentLocation.Text = "Current Location";
             // 

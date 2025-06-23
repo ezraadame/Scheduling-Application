@@ -1,5 +1,6 @@
 ﻿using C969_Scheduling_App.Database;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,8 @@ namespace C969_Scheduling_App.Forms
         public AddCustomer()
         {
             InitializeComponent();
+            LoadCities();
+            LoadCountries();
         }
 
         private void txtAddCustomerNumber_KeyPress(object sender, KeyPressEventArgs e)
@@ -35,85 +38,128 @@ namespace C969_Scheduling_App.Forms
             this.Hide();
         }
 
-        
+        private void LoadCities()
+        {
 
-        //private void btnAddCustomerSave_Click(object sender, EventArgs e)
-        //{
-        //    string name = txtAddCustomerName.Text.Trim();
-        //    string address = txtAddCustomerAddress.Text.Trim();
-        //    string number = txtAddCustomerNumber.Text.Trim();
-        //    string city = txtAddCustomerCity.Text.Trim();
-        //    string country = txtAddCustomerCountry.Text.Trim();
+            string cityQuery = "SELECT DISTINCT cityId, city FROM city ORDER BY city;";
+            MySqlDataAdapter adapter = new MySqlDataAdapter(cityQuery, DBConnection.conn);
+            DataTable cityTable = new DataTable();
+            adapter.Fill(cityTable);
 
-        //    try
-        //    {
-        //        if (
-        //            string.IsNullOrEmpty(name) ||
-        //            string.IsNullOrEmpty(address) ||
-        //            string.IsNullOrEmpty(number) ||
-        //            string.IsNullOrEmpty(city) ||
-        //            string.IsNullOrEmpty(country)
-        //            )
-        //        {
-        //            MessageBox.Show("Please fill in all required fields.",
-        //                "Invalid Operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //        else
-        //        {
-        //            string queryAddCustomerName =
-        //                "INSERT INTO customer (customerName) VALUES (@name)";
+            cmbAddCustomerCity.DataSource = cityTable;
+            cmbAddCustomerCity.DisplayMember = "city";
+            cmbAddCustomerCity.ValueMember = "cityId";
+            cmbAddCustomerCity.SelectedIndex = -1;
+            
+        }
 
-        //            string queryAddCustomerAddress =
-        //                "INSERT INTO address (address) VALUES (@address)";
+        private void LoadCountries()
+        {
+            string countryQuery = "SELECT DISTINCT countryId, country FROM country ORDER BY country;";
+            MySqlDataAdapter adapter = new MySqlDataAdapter(countryQuery, DBConnection.conn);
+            DataTable countryTable = new DataTable();
+            adapter.Fill(countryTable);
 
-        //            string queryAddCustomerNumber =
-        //                "INSERT INTO address (phone) VALUES (@number)";
+            cmbAddCustomerCountry.DataSource = countryTable;
+            cmbAddCustomerCountry.DisplayMember = "country";
+            cmbAddCustomerCountry.ValueMember = "countryId";
+            cmbAddCustomerCountry.SelectedIndex = -1;
+            
+        }
 
-        //            string queryAddCustomerCity =
-        //                "INSERT INTO city (city) VALUES (@city)";
+        private void btnAddCustomerSave_Click(object sender, EventArgs e)
+        {
+            string name = txtAddCustomerName.Text.Trim();
+            string address = txtAddCustomerAddress.Text.Trim();
+            string number = txtAddCustomerNumber.Text.Trim();
+            DateTime date = DateTime.Now;
 
-        //            string queryAddCustomerCountry =
-        //                "INSERT INTO country (country) VALUES (@country)";
+            try
+            {
+                if (
+                    string.IsNullOrEmpty(name) ||
+                    string.IsNullOrEmpty(address) ||
+                    string.IsNullOrEmpty(number)
+                    )
+                {
+                    MessageBox.Show("Please fill in all required fields.",
+                        "Invalid Operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
 
+                    int selectedCityId = Convert.ToInt32(cmbAddCustomerCity.SelectedValue);
+                    int selectedCountryId = Convert.ToInt32(cmbAddCustomerCountry.SelectedValue);
+                    string queryIsCityInCountry = "SELECT countryId FROM city WHERE cityId = @cityId;";
+                    int actualCountryId = -1;
 
-        //            using (MySqlCommand cmdCustomer = new MySqlCommand(queryAddCustomerName, DBConnection.conn))
-        //            {
-        //                cmdCustomer.Parameters.AddWithValue("@name", name);
-        //                cmdCustomer.ExecuteNonQuery();
-        //            }
+                    using (MySqlCommand cmd = new MySqlCommand(queryIsCityInCountry, DBConnection.conn))
+                    {
+                        cmd.Parameters.AddWithValue("@cityId", selectedCityId);
+                        object result = cmd.ExecuteScalar();
+                        
+                        if (result != null)
+                        {
+                            actualCountryId = Convert.ToInt32(result);
+                        }
+                    }
 
-        //            using (MySqlCommand cmdAddress = new MySqlCommand(queryAddCustomerAddress, DBConnection.conn))
-        //            {
-        //                cmdAddress.Parameters.AddWithValue("@address", address);
-        //                cmdAddress.ExecuteNonQuery();
-        //            }
+                    if (actualCountryId != selectedCountryId)
+                    {
+                        MessageBox.Show("The selected city does not belong to the selected country.");
+                        return;
+                    }
+                    else
+                    {
+                        int newAddressID = 0;
+                        string queryInsertIntoAddress =
+                            @"INSERT INTO address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)
+                              VALUES (@address, @address2, @cityId, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
 
-        //            using (MySqlCommand cmdNumber = new MySqlCommand(queryAddCustomerNumber, DBConnection.conn))
-        //            {
-        //                cmdNumber.Parameters.AddWithValue("@number", number);
-        //                cmdNumber.ExecuteNonQuery();
-        //            }
+                        using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoAddress, DBConnection.conn))
+                        {
+                            cmd.Parameters.AddWithValue("@address", address);
+                            cmd.Parameters.AddWithValue("@address2", "");
+                            cmd.Parameters.AddWithValue("@cityId", cmbAddCustomerCity.SelectedValue);
+                            cmd.Parameters.AddWithValue("@postalCode", "");
+                            cmd.Parameters.AddWithValue("@phone", number);
+                            cmd.Parameters.AddWithValue("@createDate", date);
+                            cmd.Parameters.AddWithValue("@createdBy", "user");
+                            cmd.Parameters.AddWithValue("@lastUpdate", date);
+                            cmd.Parameters.AddWithValue("@lastUpdateBy", "user");
 
-        //            using (MySqlCommand cmdCity = new MySqlCommand(queryAddCustomerCity, DBConnection.conn))
-        //            {
-        //                cmdCity.Parameters.AddWithValue("@city", city);
-        //                cmdCity.ExecuteNonQuery();
-        //            }
+                            cmd.ExecuteNonQuery();
 
-        //            using (MySqlCommand cmdCountry = new MySqlCommand(queryAddCustomerCountry, DBConnection.conn))
-        //            {
-        //                cmdCountry.Parameters.AddWithValue("@country", country);
-        //                cmdCountry.ExecuteNonQuery();
-        //            }
+                            cmd.CommandText = "SELECT LAST_INSERT_ID();";
+                            cmd.Parameters.Clear();
+                            object result = cmd.ExecuteScalar();
+                            newAddressID = Convert.ToInt32(result);
+                        }
 
-        //            MessageBox.Show("Customer added successfully!");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"An error occurred: {ex.Message}");
-        //    }
-        //}
+                        string queryInsertIntoCustomer =
+                            @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy)
+                          VALUES (@customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
 
+                        using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoCustomer, DBConnection.conn))
+                        {
+                            cmd.Parameters.AddWithValue("@customerName", name);
+                            cmd.Parameters.AddWithValue("@addressId", newAddressID);
+                            cmd.Parameters.AddWithValue("@active", 1);
+                            cmd.Parameters.AddWithValue("@createDate", date);
+                            cmd.Parameters.AddWithValue("@createdBy", "user");
+                            cmd.Parameters.AddWithValue("@lastUpdate", date);
+                            cmd.Parameters.AddWithValue("@lastUpdateBy", "user");
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    MessageBox.Show("Customer added successfully!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
     }
 }

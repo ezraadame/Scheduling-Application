@@ -41,8 +41,8 @@
             this.txtAddCustomerName = new System.Windows.Forms.TextBox();
             this.txtAddCustomerAddress = new System.Windows.Forms.TextBox();
             this.txtAddCustomerNumber = new System.Windows.Forms.TextBox();
-            this.txtAddCustomerCity = new System.Windows.Forms.TextBox();
-            this.txtAddCustomerCountry = new System.Windows.Forms.TextBox();
+            this.cmbAddCustomerCity = new System.Windows.Forms.ComboBox();
+            this.cmbAddCustomerCountry = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblTitleAddCustomer
@@ -57,7 +57,7 @@
             // 
             // btnAddCustomerCancel
             // 
-            this.btnAddCustomerCancel.Location = new System.Drawing.Point(256, 442);
+            this.btnAddCustomerCancel.Location = new System.Drawing.Point(256, 451);
             this.btnAddCustomerCancel.Name = "btnAddCustomerCancel";
             this.btnAddCustomerCancel.Size = new System.Drawing.Size(83, 39);
             this.btnAddCustomerCancel.TabIndex = 6;
@@ -67,12 +67,13 @@
             // 
             // btnAddCustomerSave
             // 
-            this.btnAddCustomerSave.Location = new System.Drawing.Point(154, 442);
+            this.btnAddCustomerSave.Location = new System.Drawing.Point(154, 451);
             this.btnAddCustomerSave.Name = "btnAddCustomerSave";
             this.btnAddCustomerSave.Size = new System.Drawing.Size(83, 39);
             this.btnAddCustomerSave.TabIndex = 7;
             this.btnAddCustomerSave.Text = "Save";
             this.btnAddCustomerSave.UseVisualStyleBackColor = true;
+            this.btnAddCustomerSave.Click += new System.EventHandler(this.btnAddCustomerSave_Click);
             // 
             // lblAddCustomerID
             // 
@@ -118,7 +119,7 @@
             // 
             this.lblAddCustomerCity.AutoSize = true;
             this.lblAddCustomerCity.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblAddCustomerCity.Location = new System.Drawing.Point(47, 318);
+            this.lblAddCustomerCity.Location = new System.Drawing.Point(47, 319);
             this.lblAddCustomerCity.Name = "lblAddCustomerCity";
             this.lblAddCustomerCity.Size = new System.Drawing.Size(32, 17);
             this.lblAddCustomerCity.TabIndex = 12;
@@ -128,7 +129,7 @@
             // 
             this.lblAddCustomerCountry.AutoSize = true;
             this.lblAddCustomerCountry.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblAddCustomerCountry.Location = new System.Drawing.Point(47, 362);
+            this.lblAddCustomerCountry.Location = new System.Drawing.Point(47, 363);
             this.lblAddCustomerCountry.Name = "lblAddCustomerCountry";
             this.lblAddCustomerCountry.Size = new System.Drawing.Size(58, 17);
             this.lblAddCustomerCountry.TabIndex = 13;
@@ -164,27 +165,31 @@
             this.txtAddCustomerNumber.TabIndex = 17;
             this.txtAddCustomerNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAddCustomerNumber_KeyPress);
             // 
-            // txtAddCustomerCity
+            // cmbAddCustomerCity
             // 
-            this.txtAddCustomerCity.Location = new System.Drawing.Point(154, 318);
-            this.txtAddCustomerCity.Name = "txtAddCustomerCity";
-            this.txtAddCustomerCity.Size = new System.Drawing.Size(185, 20);
-            this.txtAddCustomerCity.TabIndex = 18;
+            this.cmbAddCustomerCity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAddCustomerCity.FormattingEnabled = true;
+            this.cmbAddCustomerCity.Location = new System.Drawing.Point(154, 319);
+            this.cmbAddCustomerCity.Name = "cmbAddCustomerCity";
+            this.cmbAddCustomerCity.Size = new System.Drawing.Size(185, 21);
+            this.cmbAddCustomerCity.TabIndex = 18;
             // 
-            // txtAddCustomerCountry
+            // cmbAddCustomerCountry
             // 
-            this.txtAddCustomerCountry.Location = new System.Drawing.Point(154, 362);
-            this.txtAddCustomerCountry.Name = "txtAddCustomerCountry";
-            this.txtAddCustomerCountry.Size = new System.Drawing.Size(185, 20);
-            this.txtAddCustomerCountry.TabIndex = 19;
+            this.cmbAddCustomerCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAddCustomerCountry.FormattingEnabled = true;
+            this.cmbAddCustomerCountry.Location = new System.Drawing.Point(154, 363);
+            this.cmbAddCustomerCountry.Name = "cmbAddCustomerCountry";
+            this.cmbAddCustomerCountry.Size = new System.Drawing.Size(185, 21);
+            this.cmbAddCustomerCountry.TabIndex = 19;
             // 
             // AddCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(389, 526);
-            this.Controls.Add(this.txtAddCustomerCountry);
-            this.Controls.Add(this.txtAddCustomerCity);
+            this.Controls.Add(this.cmbAddCustomerCountry);
+            this.Controls.Add(this.cmbAddCustomerCity);
             this.Controls.Add(this.txtAddCustomerNumber);
             this.Controls.Add(this.txtAddCustomerAddress);
             this.Controls.Add(this.txtAddCustomerName);
@@ -220,7 +225,7 @@
         private System.Windows.Forms.TextBox txtAddCustomerName;
         private System.Windows.Forms.TextBox txtAddCustomerAddress;
         private System.Windows.Forms.TextBox txtAddCustomerNumber;
-        private System.Windows.Forms.TextBox txtAddCustomerCity;
-        private System.Windows.Forms.TextBox txtAddCustomerCountry;
+        private System.Windows.Forms.ComboBox cmbAddCustomerCity;
+        private System.Windows.Forms.ComboBox cmbAddCustomerCountry;
     }
 }

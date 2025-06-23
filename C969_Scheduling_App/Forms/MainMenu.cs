@@ -128,7 +128,7 @@ namespace C969_Scheduling_App.Forms
 
         private void btnCustomerUpdate_Click(object sender, EventArgs e)
         {
-            ModifyCustomer modifyCustomer = new ModifyCustomer();
+            UpdateCustomer modifyCustomer = new UpdateCustomer();
             modifyCustomer.Show();
             this.Hide();
         }

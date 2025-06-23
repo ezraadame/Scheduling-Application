@@ -84,6 +84,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -111,7 +112,6 @@
     <Compile Include="Forms\Customers\AddCustomer.Designer.cs">
       <DependentUpon>AddCustomer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Customers\Customers.cs" />
     <Compile Include="Forms\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,11 +130,11 @@
     <Compile Include="Forms\Appointments\ModifyAppointment.Designer.cs">
       <DependentUpon>ModifyAppointment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Customers\ModifyCustomer.cs">
+    <Compile Include="Forms\Customers\UpdateCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Customers\ModifyCustomer.Designer.cs">
-      <DependentUpon>ModifyCustomer.cs</DependentUpon>
+    <Compile Include="Forms\Customers\UpdateCustomer.Designer.cs">
+      <DependentUpon>UpdateCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Reports\Reports.cs">
       <SubType>Form</SubType>
@@ -142,13 +142,19 @@
     <Compile Include="Forms\Reports\Reports.Designer.cs">
       <DependentUpon>Reports.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Customers\AddCustomer.resx">
       <DependentUpon>AddCustomer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Customers\ModifyCustomer.resx">
-      <DependentUpon>ModifyCustomer.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Customers\UpdateCustomer.resx">
+      <DependentUpon>UpdateCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
@@ -179,5 +185,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

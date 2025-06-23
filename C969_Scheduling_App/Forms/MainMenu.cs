@@ -88,11 +88,6 @@ namespace C969_Scheduling_App.Forms
                 MessageBox.Show("Failed " + ex.Message);
             }
         }
-
-
-
-
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -133,6 +128,24 @@ namespace C969_Scheduling_App.Forms
             this.Hide();
         }
 
-        
+        private void btnCustomerDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvCustomerMGMT.CurrentRow == null || !dgvCustomerMGMT.CurrentRow.Selected)
+            {
+                MessageBox.Show("Nothing selected, please select an item.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this item forever?", "Confirmation", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                //
+            }
+            else
+            {
+                MessageBox.Show("Unable to delete item.");
+            }
+            
+        }
     }
 }

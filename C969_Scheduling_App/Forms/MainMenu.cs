@@ -139,7 +139,39 @@ namespace C969_Scheduling_App.Forms
             DialogResult result = MessageBox.Show("Are you sure you want to delete this item forever?", "Confirmation", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                //
+                int customerId = Convert.ToInt32(dgvCustomerMGMT.CurrentRow.Cells["ID"].Value);
+                int addressId = -1;
+                string queryDeleteAddressRow = "DELETE FROM address WHERE addressId = @addressId;";
+                string queryDeleteCustomerRow = "DELETE FROM customer WHERE customerId = @customerId;";
+                string queryGetAddressId = "SELECT addressId FROM customer WHERE customerId = @customerId;";
+                
+                using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.conn))
+                {
+                    cmdGetAddressId.Parameters.AddWithValue("@customerId", customerId);
+                    using (var reader = cmdGetAddressId.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            addressId = reader.GetInt32("addressId");
+                        }
+                    }
+                }
+
+                if (addressId != -1)
+                {
+                    using (MySqlCommand cmdAddress = new MySqlCommand(queryDeleteCustomerRow, DBConnection.conn))
+                    {
+                        cmdAddress.Parameters.AddWithValue("@customerId", customerId);
+                        cmdAddress.ExecuteNonQuery();
+                    }
+                    using (MySqlCommand cmdCustomer = new MySqlCommand(queryDeleteAddressRow, DBConnection.conn))
+                    {
+                        cmdCustomer.Parameters.AddWithValue("@addressId", addressId);
+                        cmdCustomer.ExecuteNonQuery();
+                    }
+                }
+                LoadCustomerData();
+                LoadAppointmentData();
             }
             else
             {

@@ -8,18 +8,22 @@ namespace C969_Scheduling_App.Models
 {
     public class Customer
     {
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
         public string CustomerName { get; set; }
         public int AddressID { get; set; }
+        public string Address {  get; set; }
+        public string Phone { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
         public int Active { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime LastUpdate { get; set; }
         public string LastUpdatedBy { get; set; }
 
-        public Customer(int customerID, string customerName, int addressID, int active, DateTime createdDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
+        public Customer(int customerId, string customerName, int addressID, int active, DateTime createdDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
         {
-            CustomerID = customerID;
+            CustomerId = customerId;
             CustomerName = customerName;
             AddressID = addressID;
             Active = active;
@@ -27,6 +31,11 @@ namespace C969_Scheduling_App.Models
             CreatedBy = createdBy;
             LastUpdate = lastUpdate;
             LastUpdatedBy = lastUpdatedBy;
+        }
+
+        public Customer()
+        {
+            
         }
     }
 }

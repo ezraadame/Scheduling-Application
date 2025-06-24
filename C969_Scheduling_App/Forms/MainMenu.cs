@@ -1,4 +1,5 @@
 ﻿using C969_Scheduling_App.Database;
+using C969_Scheduling_App.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -123,9 +124,48 @@ namespace C969_Scheduling_App.Forms
 
         private void btnCustomerUpdate_Click(object sender, EventArgs e)
         {
-            UpdateCustomer modifyCustomer = new UpdateCustomer();
-            modifyCustomer.Show();
-            this.Hide();
+            if (dgvCustomerMGMT.CurrentRow == null || !dgvCustomerMGMT.CurrentRow.Selected)
+            {
+                MessageBox.Show("Nothing selected, please select an item.");
+                return;
+            }
+            else
+            {
+                var selectedCustomer = new Customer
+                {
+                    CustomerId = Convert.ToInt32(dgvCustomerMGMT.CurrentRow.Cells["ID"].Value),
+                    CustomerName = dgvCustomerMGMT.CurrentRow.Cells["Name"].Value.ToString(),
+                    Address = dgvCustomerMGMT.CurrentRow.Cells["Address"].Value.ToString(),
+                    Phone = dgvCustomerMGMT.CurrentRow.Cells["Phone Number"].Value.ToString(),
+                    City = dgvCustomerMGMT.CurrentRow.Cells["City"].Value.ToString(),
+                    Country = dgvCustomerMGMT.CurrentRow.Cells["Country"].Value.ToString()
+                };
+
+                int addressId = -1;
+                string queryGetAddressId = "SELECT addressId FROM customer WHERE customerId = @customerId;";
+                using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.conn))
+                {
+                    cmdGetAddressId.Parameters.AddWithValue("@customerId", selectedCustomer.CustomerId);
+                    using (var reader = cmdGetAddressId.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            addressId = reader.GetInt32("addressId");
+                        }
+                    }
+                }
+
+                if (addressId != -1)
+                {
+                    UpdateCustomer updateCustomer = new UpdateCustomer(selectedCustomer, addressId);
+                    updateCustomer.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to retrieve address ID for the selected customer.");
+                }
+            }
         }
 
         private void btnCustomerDelete_Click(object sender, EventArgs e)

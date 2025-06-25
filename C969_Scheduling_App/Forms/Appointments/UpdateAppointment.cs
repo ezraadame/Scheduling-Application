@@ -10,30 +10,29 @@ using System.Windows.Forms;
 
 namespace C969_Scheduling_App.Forms
 {
-    public partial class AddAppointment : Form
+    public partial class UpdateAppointment : Form
     {
-        public AddAppointment()
+        public UpdateAppointment()
         {
             InitializeComponent();
         }
 
-        private void AddAppointment_Load(object sender, EventArgs e)
+        private void UpdateAppointment_Load(object sender, EventArgs e)
         {
 
         }
 
 
-        private void btnAddCustomerSave_Click(object sender, EventArgs e)
+        private void btnUpdateCustomerSave_Click(object sender, EventArgs e)
         {
 
         }
-        private void btnAddCustomerCancel_Click(object sender, EventArgs e)
+
+        private void btnUpdateCustomerCancel_Click(object sender, EventArgs e)
         {
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
             this.Hide();
         }
-
-        
     }
 }

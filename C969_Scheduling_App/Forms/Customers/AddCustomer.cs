@@ -30,14 +30,6 @@ namespace C969_Scheduling_App.Forms
                 e.Handled = true;
             }
         }
-
-        private void btnAddCustomerCancel_Click(object sender, EventArgs e)
-        {
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.Show();
-            this.Hide();
-        }
-
         private void LoadCities()
         {
 
@@ -72,6 +64,8 @@ namespace C969_Scheduling_App.Forms
             string name = txtAddCustomerName.Text.Trim();
             string address = txtAddCustomerAddress.Text.Trim();
             string number = txtAddCustomerNumber.Text.Trim();
+            string city = cmbAddCustomerCity.Text.Trim();
+            string country = cmbAddCustomerCountry.Text.Trim();
             DateTime date = DateTime.Now;
 
             try
@@ -79,7 +73,9 @@ namespace C969_Scheduling_App.Forms
                 if (
                     string.IsNullOrEmpty(name) ||
                     string.IsNullOrEmpty(address) ||
-                    string.IsNullOrEmpty(number)
+                    string.IsNullOrEmpty(number) ||
+                    string.IsNullOrEmpty(city) ||
+                    string.IsNullOrEmpty(country)
                     )
                 {
                     MessageBox.Show("Please fill in all required fields.",
@@ -138,7 +134,7 @@ namespace C969_Scheduling_App.Forms
 
                         string queryInsertIntoCustomer =
                             @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy)
-                          VALUES (@customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
+                              VALUES (@customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
 
                         using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoCustomer, DBConnection.conn))
                         {
@@ -160,6 +156,13 @@ namespace C969_Scheduling_App.Forms
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+        }
+
+        private void btnAddCustomerCancel_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
+            this.Hide();
         }
     }
 }

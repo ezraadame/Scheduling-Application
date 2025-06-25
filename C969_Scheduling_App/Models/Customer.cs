@@ -1,8 +1,13 @@
-﻿using System;
+﻿using C969_Scheduling_App.Database;
+using C969_Scheduling_App.Forms;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace C969_Scheduling_App.Models
 {
@@ -37,5 +42,6 @@ namespace C969_Scheduling_App.Models
         {
             
         }
+
     }
 }

@@ -78,7 +78,18 @@ namespace C969_Scheduling_App.Forms
         {
             try
             {
-                string appointmentQuery = "SELECT * FROM appointment";
+                string appointmentQuery = "" +
+                    "SELECT \r\n" +
+                    "appointmentId AS 'ID', \r\n" +
+                    "customerId AS 'Customer ID', \r\n" +
+                    "userId AS 'User ID', \r\n" +
+                    "title AS 'Title', \r\n" +
+                    "description AS 'Description', \r\n" +
+                    "location AS 'Location', \r\n" +
+                    "contact AS 'Contact', \r\n" +
+                    "start AS 'Start Date/Time', \r\n" +
+                    "end AS 'End Date/Time' \r\n" +
+                    "FROM appointment;\r\n";
                 MySqlDataAdapter adapter = new MySqlDataAdapter(appointmentQuery, DBConnection.conn);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -86,12 +97,8 @@ namespace C969_Scheduling_App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed " + ex.Message);
+                MessageBox.Show("An error occurred " + ex.Message);
             }
-        }
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
         private void btnReportsMenu_Click(object sender, EventArgs e)
@@ -110,7 +117,7 @@ namespace C969_Scheduling_App.Forms
 
         private void btnAppointmentUpdate_Click(object sender, EventArgs e)
         {
-            ModifyAppointment modifyAppointment = new ModifyAppointment();
+            UpdateAppointment modifyAppointment = new UpdateAppointment();
             modifyAppointment.Show();
             this.Hide();
         }
@@ -176,7 +183,7 @@ namespace C969_Scheduling_App.Forms
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this item forever?", "Confirmation", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this customer forever?", "Confirmation", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 int customerId = Convert.ToInt32(dgvCustomerMGMT.CurrentRow.Cells["ID"].Value);
@@ -219,5 +226,17 @@ namespace C969_Scheduling_App.Forms
             }
             
         }
+
+        private void btnAppointmentDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        
     }
 }

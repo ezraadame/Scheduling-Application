@@ -65,9 +65,6 @@ namespace C969_Scheduling_App.Forms
             cmbUpdateCustomerCountry.SelectedIndex = -1;
 
         }
-
-
-
         private void btnUpdateCustomerSave_Click(object sender, EventArgs e)
         {
 
@@ -76,9 +73,11 @@ namespace C969_Scheduling_App.Forms
             try
             {
                 if (
-                    string.IsNullOrEmpty(txtUpdateCustomerName.Text) ||
-                    string.IsNullOrEmpty(txtUpdateCustomerAddress.Text) ||
-                    string.IsNullOrEmpty(txtUpdateCustomerNumber.Text)
+                    string.IsNullOrEmpty(txtUpdateCustomerName.Text.Trim()) ||
+                    string.IsNullOrEmpty(txtUpdateCustomerAddress.Text.Trim()) ||
+                    string.IsNullOrEmpty(txtUpdateCustomerNumber.Text.Trim()) ||
+                    string.IsNullOrEmpty(cmbUpdateCustomerCity.Text.Trim()) ||
+                    string.IsNullOrEmpty(cmbUpdateCustomerCountry.Text.Trim())
                    )
                 {
                     MessageBox.Show("Please fill in all required fields.", "Invalid Operation", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -53,6 +53,9 @@
             this.txtUserId = new System.Windows.Forms.TextBox();
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.lblCustomerName = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblEasternStartTime = new System.Windows.Forms.Label();
+            this.lblEasternEndTime = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTitleAddAppointment
@@ -67,7 +70,7 @@
             // 
             // btnAddCustomerSave
             // 
-            this.btnAddCustomerSave.Location = new System.Drawing.Point(498, 376);
+            this.btnAddCustomerSave.Location = new System.Drawing.Point(498, 408);
             this.btnAddCustomerSave.Name = "btnAddCustomerSave";
             this.btnAddCustomerSave.Size = new System.Drawing.Size(83, 39);
             this.btnAddCustomerSave.TabIndex = 9;
@@ -77,7 +80,7 @@
             // 
             // btnAddCustomerCancel
             // 
-            this.btnAddCustomerCancel.Location = new System.Drawing.Point(587, 376);
+            this.btnAddCustomerCancel.Location = new System.Drawing.Point(587, 408);
             this.btnAddCustomerCancel.Name = "btnAddCustomerCancel";
             this.btnAddCustomerCancel.Size = new System.Drawing.Size(83, 39);
             this.btnAddCustomerCancel.TabIndex = 8;
@@ -100,12 +103,12 @@
             this.txtDescription.Location = new System.Drawing.Point(470, 72);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(200, 153);
+            this.txtDescription.Size = new System.Drawing.Size(200, 135);
             this.txtDescription.TabIndex = 37;
             // 
             // dtpStartDateTime
             // 
-            this.dtpStartDateTime.Location = new System.Drawing.Point(470, 265);
+            this.dtpStartDateTime.Location = new System.Drawing.Point(470, 233);
             this.dtpStartDateTime.Name = "dtpStartDateTime";
             this.dtpStartDateTime.ShowCheckBox = true;
             this.dtpStartDateTime.Size = new System.Drawing.Size(200, 20);
@@ -114,31 +117,32 @@
             // 
             // dtpEndDateTime
             // 
-            this.dtpEndDateTime.Location = new System.Drawing.Point(470, 319);
+            this.dtpEndDateTime.Location = new System.Drawing.Point(470, 328);
             this.dtpEndDateTime.Name = "dtpEndDateTime";
             this.dtpEndDateTime.ShowCheckBox = true;
             this.dtpEndDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpEndDateTime.TabIndex = 43;
+            this.dtpEndDateTime.ValueChanged += new System.EventHandler(this.dtpEndDateTime_ValueChanged);
             // 
             // lblStartDateTime
             // 
             this.lblStartDateTime.AutoSize = true;
             this.lblStartDateTime.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblStartDateTime.Location = new System.Drawing.Point(360, 265);
+            this.lblStartDateTime.Location = new System.Drawing.Point(360, 219);
             this.lblStartDateTime.Name = "lblStartDateTime";
-            this.lblStartDateTime.Size = new System.Drawing.Size(104, 17);
+            this.lblStartDateTime.Size = new System.Drawing.Size(104, 34);
             this.lblStartDateTime.TabIndex = 44;
-            this.lblStartDateTime.Text = "Start Date/Time";
+            this.lblStartDateTime.Text = "Start Date/Time\r\n(Local)\r\n";
             // 
             // lblEndDateTime
             // 
             this.lblEndDateTime.AutoSize = true;
             this.lblEndDateTime.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblEndDateTime.Location = new System.Drawing.Point(360, 319);
+            this.lblEndDateTime.Location = new System.Drawing.Point(360, 314);
             this.lblEndDateTime.Name = "lblEndDateTime";
-            this.lblEndDateTime.Size = new System.Drawing.Size(98, 17);
+            this.lblEndDateTime.Size = new System.Drawing.Size(98, 34);
             this.lblEndDateTime.TabIndex = 45;
-            this.lblEndDateTime.Text = "End Date/Time";
+            this.lblEndDateTime.Text = "End Date/Time\r\n(Loca)\r\n";
             // 
             // txtType
             // 
@@ -280,11 +284,42 @@
             this.lblCustomerName.TabIndex = 83;
             this.lblCustomerName.Text = "Customer Name";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(546, 257);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 85;
+            // 
+            // lblEasternStartTime
+            // 
+            this.lblEasternStartTime.AutoSize = true;
+            this.lblEasternStartTime.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEasternStartTime.Location = new System.Drawing.Point(467, 257);
+            this.lblEasternStartTime.Name = "lblEasternStartTime";
+            this.lblEasternStartTime.Size = new System.Drawing.Size(28, 16);
+            this.lblEasternStartTime.TabIndex = 86;
+            this.lblEasternStartTime.Text = "EST";
+            // 
+            // lblEasternEndTime
+            // 
+            this.lblEasternEndTime.AutoSize = true;
+            this.lblEasternEndTime.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEasternEndTime.Location = new System.Drawing.Point(467, 351);
+            this.lblEasternEndTime.Name = "lblEasternEndTime";
+            this.lblEasternEndTime.Size = new System.Drawing.Size(28, 16);
+            this.lblEasternEndTime.TabIndex = 87;
+            this.lblEasternEndTime.Text = "EST";
+            // 
             // AddAppointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 436);
+            this.ClientSize = new System.Drawing.Size(684, 459);
+            this.Controls.Add(this.lblEasternEndTime);
+            this.Controls.Add(this.lblEasternStartTime);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCustomerName);
             this.Controls.Add(this.lblCustomerName);
             this.Controls.Add(this.txtType);
@@ -345,5 +380,8 @@
         private System.Windows.Forms.TextBox txtUserId;
         private System.Windows.Forms.TextBox txtCustomerName;
         private System.Windows.Forms.Label lblCustomerName;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblEasternStartTime;
+        private System.Windows.Forms.Label lblEasternEndTime;
     }
 }

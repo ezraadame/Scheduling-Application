@@ -90,8 +90,8 @@ namespace C969_Scheduling_App.Forms
                     "a.location AS 'Location', \r\n" +
                     "a.contact AS 'Contact', \r\n" +
                     "a.type AS 'Type', \r\n" +
-                    "a.start AS 'Start Date/Time', \r\n" +
-                    "a.end AS 'End Date/Time' \r\n" +
+                    "a.start AS 'Start Date/Time EST', \r\n" +
+                    "a.end AS 'End Date/Time EST' \r\n" +
                     "FROM appointment a\r\n" +
                     "INNER JOIN customer c ON a.customerId = c.customerId;";
                 MySqlDataAdapter adapter = new MySqlDataAdapter(appointmentQuery, DBConnection.conn);

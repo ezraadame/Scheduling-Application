@@ -53,43 +53,47 @@
             this.txtUserId = new System.Windows.Forms.TextBox();
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.lblCustomerName = new System.Windows.Forms.Label();
+            this.lblEasternStartTime = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblEndDateTime
             // 
             this.lblEndDateTime.AutoSize = true;
             this.lblEndDateTime.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblEndDateTime.Location = new System.Drawing.Point(357, 322);
+            this.lblEndDateTime.Location = new System.Drawing.Point(357, 316);
             this.lblEndDateTime.Name = "lblEndDateTime";
-            this.lblEndDateTime.Size = new System.Drawing.Size(98, 17);
+            this.lblEndDateTime.Size = new System.Drawing.Size(98, 34);
             this.lblEndDateTime.TabIndex = 66;
-            this.lblEndDateTime.Text = "End Date/Time";
+            this.lblEndDateTime.Text = "End Date/Time\r\n(Local)";
             // 
             // lblStartDateTime
             // 
             this.lblStartDateTime.AutoSize = true;
             this.lblStartDateTime.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblStartDateTime.Location = new System.Drawing.Point(357, 268);
+            this.lblStartDateTime.Location = new System.Drawing.Point(357, 232);
             this.lblStartDateTime.Name = "lblStartDateTime";
-            this.lblStartDateTime.Size = new System.Drawing.Size(104, 17);
+            this.lblStartDateTime.Size = new System.Drawing.Size(104, 34);
             this.lblStartDateTime.TabIndex = 65;
-            this.lblStartDateTime.Text = "Start Date/Time";
+            this.lblStartDateTime.Text = "Start Date/Time\r\n(Local)";
             // 
             // dtpEndDateTime
             // 
-            this.dtpEndDateTime.Location = new System.Drawing.Point(467, 322);
+            this.dtpEndDateTime.Location = new System.Drawing.Point(467, 330);
             this.dtpEndDateTime.Name = "dtpEndDateTime";
             this.dtpEndDateTime.ShowCheckBox = true;
             this.dtpEndDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpEndDateTime.TabIndex = 64;
+            this.dtpEndDateTime.ValueChanged += new System.EventHandler(this.dtpEndDateTime_ValueChanged);
             // 
             // dtpStartDateTime
             // 
-            this.dtpStartDateTime.Location = new System.Drawing.Point(467, 268);
+            this.dtpStartDateTime.Location = new System.Drawing.Point(467, 246);
             this.dtpStartDateTime.Name = "dtpStartDateTime";
             this.dtpStartDateTime.ShowCheckBox = true;
             this.dtpStartDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpStartDateTime.TabIndex = 63;
+            this.dtpStartDateTime.ValueChanged += new System.EventHandler(this.dtpStartDateTime_ValueChanged);
             // 
             // txtContact
             // 
@@ -198,7 +202,7 @@
             // 
             // btnUpdateCustomerSave
             // 
-            this.btnUpdateCustomerSave.Location = new System.Drawing.Point(495, 380);
+            this.btnUpdateCustomerSave.Location = new System.Drawing.Point(495, 408);
             this.btnUpdateCustomerSave.Name = "btnUpdateCustomerSave";
             this.btnUpdateCustomerSave.Size = new System.Drawing.Size(83, 39);
             this.btnUpdateCustomerSave.TabIndex = 48;
@@ -208,7 +212,7 @@
             // 
             // btnUpdateCustomerCancel
             // 
-            this.btnUpdateCustomerCancel.Location = new System.Drawing.Point(584, 380);
+            this.btnUpdateCustomerCancel.Location = new System.Drawing.Point(584, 408);
             this.btnUpdateCustomerCancel.Name = "btnUpdateCustomerCancel";
             this.btnUpdateCustomerCancel.Size = new System.Drawing.Size(83, 39);
             this.btnUpdateCustomerCancel.TabIndex = 47;
@@ -279,11 +283,33 @@
             this.lblCustomerName.TabIndex = 69;
             this.lblCustomerName.Text = "Customer Name";
             // 
+            // lblEasternStartTime
+            // 
+            this.lblEasternStartTime.AutoSize = true;
+            this.lblEasternStartTime.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEasternStartTime.Location = new System.Drawing.Point(464, 269);
+            this.lblEasternStartTime.Name = "lblEasternStartTime";
+            this.lblEasternStartTime.Size = new System.Drawing.Size(28, 16);
+            this.lblEasternStartTime.TabIndex = 88;
+            this.lblEasternStartTime.Text = "EST";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(464, 353);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(28, 16);
+            this.label1.TabIndex = 89;
+            this.label1.Text = "EST";
+            // 
             // UpdateAppointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 436);
+            this.ClientSize = new System.Drawing.Size(684, 459);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblEasternStartTime);
             this.Controls.Add(this.txtCustomerName);
             this.Controls.Add(this.lblCustomerName);
             this.Controls.Add(this.txtType);
@@ -344,5 +370,7 @@
         private System.Windows.Forms.TextBox txtUserId;
         private System.Windows.Forms.TextBox txtCustomerName;
         private System.Windows.Forms.Label lblCustomerName;
+        private System.Windows.Forms.Label lblEasternStartTime;
+        private System.Windows.Forms.Label label1;
     }
 }

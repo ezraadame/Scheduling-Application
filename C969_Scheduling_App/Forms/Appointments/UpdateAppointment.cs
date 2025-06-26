@@ -153,5 +153,23 @@ namespace C969_Scheduling_App.Forms
             mainMenu.Show();
             this.Hide();
         }
+
+        private void dtpStartDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime localTime = dtpStartDateTime.Value;
+            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
+
+            lblEasternStartTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
+        }
+
+        private void dtpEndDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime localTime = dtpStartDateTime.Value;
+            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
+
+            lblEasternStartTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
+        }
     }
 }

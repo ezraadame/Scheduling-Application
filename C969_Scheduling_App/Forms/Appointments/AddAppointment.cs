@@ -34,17 +34,23 @@ namespace C969_Scheduling_App.Forms
             dtpStartDateTime.CustomFormat = "MM/dd/yyyy hh:mm tt";
             dtpEndDateTime.Format = DateTimePickerFormat.Custom;
             dtpEndDateTime.CustomFormat = "MM/dd/yyyy hh:mm tt";
+            dtpStartDateTime_ValueChanged(null, null);
+            dtpEndDateTime_ValueChanged(null, null);
             
         }
 
 
         private void btnAddCustomerSave_Click(object sender, EventArgs e)
         {
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime easternStartTime = TimeZoneInfo.ConvertTime(dtpStartDateTime.Value, TimeZoneInfo.Local, easternZone);
+            DateTime easternEndTime = TimeZoneInfo.ConvertTime(dtpEndDateTime.Value, TimeZoneInfo.Local, easternZone);
+
             DateTime selectedStartTime = dtpStartDateTime.Value;
             DateTime selectedEndTime = dtpEndDateTime.Value;
 
-            TimeSpan startTime = selectedStartTime.TimeOfDay;
-            TimeSpan endTime = selectedEndTime.TimeOfDay;
+            TimeSpan businessStart = TimeSpan.FromHours(9);
+            TimeSpan businessEnd = TimeSpan.FromHours(17);
 
             string customerId = txtCustomerId.Text.Trim();
             string userId = txtUserId.Text.Trim();
@@ -52,22 +58,20 @@ namespace C969_Scheduling_App.Forms
             string location = txtLocation.Text.Trim();
             string contact = txtContact.Text.Trim();
             string type = txtType.Text.Trim();
+            string url = "";
             string description = txtDescription.Text.Trim();
-            DateTime StartTime = dtpStartDateTime.Value;
-            DateTime EndTime = dtpEndDateTime.Value;
             DateTime now = DateTime.Now;
-
             string user = _appointment.User.ToString();
             string userLastUpdated = _appointment.User.ToString();
 
             try
             {
                 if (
-                    string.IsNullOrEmpty(txtTitle.Text.Trim()) ||
-                    string.IsNullOrEmpty(txtLocation.Text.Trim()) ||
-                    string.IsNullOrEmpty(txtContact.Text.Trim()) ||
-                    string.IsNullOrEmpty(txtType.Text.Trim()) ||
-                    string.IsNullOrEmpty(txtDescription.Text.Trim()) ||
+                    string.IsNullOrEmpty(title) ||
+                    string.IsNullOrEmpty(location) ||
+                    string.IsNullOrEmpty(contact) ||
+                    string.IsNullOrEmpty(type) ||
+                    string.IsNullOrEmpty(description) ||
                     dtpStartDateTime.Checked == false ||
                     dtpEndDateTime.Checked == false
                     )
@@ -76,31 +80,35 @@ namespace C969_Scheduling_App.Forms
                         "Invalid Operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
-                else if (selectedStartTime.DayOfWeek == DayOfWeek.Saturday || selectedStartTime.DayOfWeek == DayOfWeek.Sunday)
+                else if (easternStartTime.DayOfWeek == DayOfWeek.Saturday || easternStartTime.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    MessageBox.Show("Please select a weekday for your start time.");
+                    MessageBox.Show("Please select a start time on a weekday (Monday-Friday) in Eastern Time.");
                     return;
                 }
-                else if (selectedEndTime.DayOfWeek == DayOfWeek.Saturday || selectedEndTime.DayOfWeek == DayOfWeek.Sunday)
+                else if (easternEndTime.DayOfWeek == DayOfWeek.Saturday || easternEndTime.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    MessageBox.Show("Please select a weekday for your end time.");
+                    MessageBox.Show("Please select a end time on a weekday (Monday-Friday) in Eastern Time.");
                     return;
                 }
 
-                else if (startTime < TimeSpan.FromHours(9) || startTime > TimeSpan.FromHours(17))
+                else if (easternStartTime.TimeOfDay < businessStart || easternStartTime.TimeOfDay > businessEnd)
                 {
-                    MessageBox.Show("Please select a start time between 9 AM and 5 PM");
+                    MessageBox.Show("Please select a start time between 9 AM and 5 PM in Eastern Time");
+                }
+                else if (easternEndTime.TimeOfDay < businessStart || easternEndTime.TimeOfDay > businessEnd)
+                {
+                    MessageBox.Show("Please select a start time between 9 AM and 5 PM in Eastern Time");
                 }
 
-                else if (endTime < TimeSpan.FromHours(9) || endTime > TimeSpan.FromHours(17))
-                {
-                    MessageBox.Show("Please select a end time between 9 AM and 5 PM");
-                }
-                else if (StartTime.ToString("yyyy-MM-dd HH:mm") == EndTime.ToString("yyyy-MM-dd HH:mm") || StartTime > EndTime)
+                else if (easternStartTime.ToString("yyyy-MM-dd HH:mm") == easternEndTime.ToString("yyyy-MM-dd HH:mm") || easternStartTime > easternEndTime)
                 {
                     MessageBox.Show("Start Date/Time cannot be greater than or equal too End Date/Time.");
                 }
-                
+                else if () 
+                { 
+                }
+
+
                 else
                 {
                     string queryInsertIntoAppointment = @"
@@ -118,9 +126,9 @@ namespace C969_Scheduling_App.Forms
                         cmd.Parameters.AddWithValue("@location", location);
                         cmd.Parameters.AddWithValue("@contact", contact);
                         cmd.Parameters.AddWithValue("@type", type);
-                        cmd.Parameters.AddWithValue("@url", "not needed");
-                        cmd.Parameters.AddWithValue("@start", StartTime);
-                        cmd.Parameters.AddWithValue("@end", EndTime);
+                        cmd.Parameters.AddWithValue("@url", url);
+                        cmd.Parameters.AddWithValue("@start", easternStartTime);
+                        cmd.Parameters.AddWithValue("@end", easternEndTime);
                         cmd.Parameters.AddWithValue("@createDate", now);
                         cmd.Parameters.AddWithValue("@createdBy", user);
                         cmd.Parameters.AddWithValue("@lastUpdate", now);
@@ -148,7 +156,20 @@ namespace C969_Scheduling_App.Forms
 
         private void dtpStartDateTime_ValueChanged(object sender, EventArgs e)
         {
-            
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime localTime = dtpStartDateTime.Value;
+            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
+
+            lblEasternStartTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
+        }
+
+        private void dtpEndDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime localTime = dtpStartDateTime.Value;
+            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
+
+            lblEasternEndTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
         }
     }
 }

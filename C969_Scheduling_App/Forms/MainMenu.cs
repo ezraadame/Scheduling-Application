@@ -241,20 +241,30 @@ namespace C969_Scheduling_App.Forms
 
             if (dgvAppointmentMGMT.CurrentRow == null || !dgvAppointmentMGMT.CurrentRow.Selected)
             {
-                MessageBox.Show("Please select a customer to begin adding an appointment.");
+                MessageBox.Show("Please select an appointment to update.");
                 return;
             }
             else
             {
-                var selectedCustomer = new Appointment
+                var selectedAppointment = new Appointment
                 {
-
+                    AppointmentId = Convert.ToInt32(dgvAppointmentMGMT.CurrentRow.Cells["ID"].Value),
+                    CustomerId = Convert.ToInt32(dgvAppointmentMGMT.CurrentRow.Cells["Customer ID"].Value),
+                    CustomerName = dgvAppointmentMGMT.CurrentRow.Cells["Customer Name"].Value.ToString(),
+                    UserId = AppSession.CurrentUserId,
+                    User = AppSession.CurrentUserName,
+                    Title = dgvAppointmentMGMT.CurrentRow.Cells["Title"].Value.ToString(),
+                    Description = dgvAppointmentMGMT.CurrentRow.Cells["Description"].Value.ToString(),
+                    Location = dgvAppointmentMGMT.CurrentRow.Cells["Location"].Value.ToString(), 
+                    Contact = dgvAppointmentMGMT.CurrentRow.Cells["Contact"].Value.ToString(),
+                    Type = dgvAppointmentMGMT.CurrentRow.Cells["Type"].Value.ToString(),
+                    StartDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["Start Date/Time"].Value,
+                    EndDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["End Date/Time"].Value
                     
-
                 };
 
-                UpdateAppointment modifyAppointment = new UpdateAppointment();
-                modifyAppointment.Show();
+                UpdateAppointment updateAppointment = new UpdateAppointment(selectedAppointment);
+                updateAppointment.Show();
                 this.Hide();
             }
             

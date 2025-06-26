@@ -34,7 +34,7 @@ namespace C969_Scheduling_App.Forms
             dtpStartDateTime.CustomFormat = "MM/dd/yyyy hh:mm";
             dtpEndDateTime.Format = DateTimePickerFormat.Custom;
             dtpEndDateTime.CustomFormat = "MM/dd/yyyy hh:mm";
-            //dtpStartDateTime.ShowUpDown = true;
+            
         }
 
 
@@ -42,7 +42,6 @@ namespace C969_Scheduling_App.Forms
         {
             
             string customerId = txtCustomerId.Text.Trim();
-            //string customerName = txtCustomerName.Text.Trim();
             string userId = txtUserId.Text.Trim();
             string title = txtTitle.Text.Trim();
             string location = txtLocation.Text.Trim();
@@ -54,6 +53,7 @@ namespace C969_Scheduling_App.Forms
             DateTime now = DateTime.Now;
 
             string user = _appointment.User.ToString();
+            string userLastUpdated = _appointment.User.ToString();
 
             try
             {
@@ -93,7 +93,7 @@ namespace C969_Scheduling_App.Forms
                         cmd.Parameters.AddWithValue("@createDate", now);
                         cmd.Parameters.AddWithValue("@createdBy", user);
                         cmd.Parameters.AddWithValue("@lastUpdate", now);
-                        cmd.Parameters.AddWithValue("@lastUpdateBy", user);
+                        cmd.Parameters.AddWithValue("@lastUpdateBy", userLastUpdated);
 
                         cmd.ExecuteNonQuery();
 

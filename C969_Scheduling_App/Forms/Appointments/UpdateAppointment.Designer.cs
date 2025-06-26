@@ -79,6 +79,7 @@
             // 
             this.dtpEndDateTime.Location = new System.Drawing.Point(467, 322);
             this.dtpEndDateTime.Name = "dtpEndDateTime";
+            this.dtpEndDateTime.ShowCheckBox = true;
             this.dtpEndDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpEndDateTime.TabIndex = 64;
             // 
@@ -86,6 +87,7 @@
             // 
             this.dtpStartDateTime.Location = new System.Drawing.Point(467, 268);
             this.dtpStartDateTime.Name = "dtpStartDateTime";
+            this.dtpStartDateTime.ShowCheckBox = true;
             this.dtpStartDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpStartDateTime.TabIndex = 63;
             // 

@@ -24,7 +24,9 @@ namespace C969_Scheduling_App.Models
         public DateTime LastUpdate { get; set; }
         public string LastUpdatedBy { get; set; }
         public string CustomerName { get; set; }
-        public string User { get; internal set; }
+        public string User { get; set; }
+        public DateTime StartDateTime { get; set; }
+        public DateTime EndDateTime { get; set; }
 
         public Appointment(
                 int appointmentId, int customerId, int userId, string title, string description, string location, string contact, string type, string uRL,

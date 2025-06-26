@@ -54,7 +54,7 @@
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.lblCustomerName = new System.Windows.Forms.Label();
             this.lblEasternStartTime = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblEasternEndTime = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblEndDateTime
@@ -293,22 +293,22 @@
             this.lblEasternStartTime.TabIndex = 88;
             this.lblEasternStartTime.Text = "EST";
             // 
-            // label1
+            // lblEasternEndTime
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(464, 353);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(28, 16);
-            this.label1.TabIndex = 89;
-            this.label1.Text = "EST";
+            this.lblEasternEndTime.AutoSize = true;
+            this.lblEasternEndTime.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEasternEndTime.Location = new System.Drawing.Point(464, 353);
+            this.lblEasternEndTime.Name = "lblEasternEndTime";
+            this.lblEasternEndTime.Size = new System.Drawing.Size(28, 16);
+            this.lblEasternEndTime.TabIndex = 89;
+            this.lblEasternEndTime.Text = "EST";
             // 
             // UpdateAppointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 459);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblEasternEndTime);
             this.Controls.Add(this.lblEasternStartTime);
             this.Controls.Add(this.txtCustomerName);
             this.Controls.Add(this.lblCustomerName);
@@ -371,6 +371,6 @@
         private System.Windows.Forms.TextBox txtCustomerName;
         private System.Windows.Forms.Label lblCustomerName;
         private System.Windows.Forms.Label lblEasternStartTime;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblEasternEndTime;
     }
 }

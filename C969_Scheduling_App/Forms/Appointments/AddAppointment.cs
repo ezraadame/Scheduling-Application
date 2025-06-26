@@ -28,7 +28,7 @@ namespace C969_Scheduling_App.Forms
         {
 
             txtCustomerId.Text = _appointment.CustomerId.ToString();
-            txtCustomerName.Text= _appointment.CustomerName.ToString();
+            txtCustomerName.Text = _appointment.CustomerName.ToString();
             txtUserId.Text = _appointment.UserId.ToString();
             dtpStartDateTime.Format = DateTimePickerFormat.Custom;
             dtpStartDateTime.CustomFormat = "MM/dd/yyyy hh:mm tt";
@@ -36,7 +36,7 @@ namespace C969_Scheduling_App.Forms
             dtpEndDateTime.CustomFormat = "MM/dd/yyyy hh:mm tt";
             dtpStartDateTime_ValueChanged(null, null);
             dtpEndDateTime_ValueChanged(null, null);
-            
+
         }
 
 
@@ -104,42 +104,61 @@ namespace C969_Scheduling_App.Forms
                 {
                     MessageBox.Show("Start Date/Time cannot be greater than or equal too End Date/Time.");
                 }
-                else if () 
-                { 
-                }
-
 
                 else
                 {
-                    string queryInsertIntoAppointment = @"
-                            INSERT INTO appointment 
-                            (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)
-                            VALUES 
-                            (@customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
+                    bool overlaps = false;
+                    string queryOverlapCheck = @"
+                            SELECT * FROM appointment
+                            WHERE @start < end AND @end > start;";
 
-                    using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoAppointment, DBConnection.conn))
+                    using (MySqlCommand cmd = new MySqlCommand(queryOverlapCheck, DBConnection.conn))
                     {
-                        cmd.Parameters.AddWithValue("@customerId", customerId);
-                        cmd.Parameters.AddWithValue("@userId", userId);
-                        cmd.Parameters.AddWithValue("@title", title);
-                        cmd.Parameters.AddWithValue("@description", description);
-                        cmd.Parameters.AddWithValue("@location", location);
-                        cmd.Parameters.AddWithValue("@contact", contact);
-                        cmd.Parameters.AddWithValue("@type", type);
-                        cmd.Parameters.AddWithValue("@url", url);
                         cmd.Parameters.AddWithValue("@start", easternStartTime);
                         cmd.Parameters.AddWithValue("@end", easternEndTime);
-                        cmd.Parameters.AddWithValue("@createDate", now);
-                        cmd.Parameters.AddWithValue("@createdBy", user);
-                        cmd.Parameters.AddWithValue("@lastUpdate", now);
-                        cmd.Parameters.AddWithValue("@lastUpdateBy", userLastUpdated);
 
-                        cmd.ExecuteNonQuery();
-
-                        MessageBox.Show("Appointment added successfully!");
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            overlaps = reader.HasRows;
+                        }
+                    }
+                    if (overlaps)
+                    {
+                        MessageBox.Show("This appointment overlaps with an existing appointment. Select a different time frame!");
+                        return;
                     }
                 }
-                
+
+
+                string queryInsertIntoAppointment = @"
+                        INSERT INTO appointment 
+                        (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)
+                        VALUES 
+                        (@customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
+
+                using (MySqlCommand cmdInsertIntoAppointment = new MySqlCommand(queryInsertIntoAppointment, DBConnection.conn))
+                {
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@customerId", customerId);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@userId", userId);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@title", title);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@description", description);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@location", location);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@contact", contact);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@type", type);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@url", url);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@start", easternStartTime);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@end", easternEndTime);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@createDate", now);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@createdBy", user);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@lastUpdate", now);
+                    cmdInsertIntoAppointment.Parameters.AddWithValue("@lastUpdateBy", userLastUpdated);
+
+                    cmdInsertIntoAppointment.ExecuteNonQuery();
+
+                    MessageBox.Show("Appointment added successfully!");
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -166,7 +185,7 @@ namespace C969_Scheduling_App.Forms
         private void dtpEndDateTime_ValueChanged(object sender, EventArgs e)
         {
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-            DateTime localTime = dtpStartDateTime.Value;
+            DateTime localTime = dtpEndDateTime.Value;
             DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
 
             lblEasternEndTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";

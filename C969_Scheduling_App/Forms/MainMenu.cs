@@ -258,8 +258,8 @@ namespace C969_Scheduling_App.Forms
                     Location = dgvAppointmentMGMT.CurrentRow.Cells["Location"].Value.ToString(), 
                     Contact = dgvAppointmentMGMT.CurrentRow.Cells["Contact"].Value.ToString(),
                     Type = dgvAppointmentMGMT.CurrentRow.Cells["Type"].Value.ToString(),
-                    StartDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["Start Date/Time"].Value,
-                    EndDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["End Date/Time"].Value
+                    StartDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["Start Date/Time EST"].Value,
+                    EndDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["End Date/Time EST"].Value
                     
                 };
 

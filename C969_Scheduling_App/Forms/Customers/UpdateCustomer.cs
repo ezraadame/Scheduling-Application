@@ -35,6 +35,7 @@ namespace C969_Scheduling_App.Forms
             txtUpdateCustomerNumber.Text = _customer.Phone.ToString();
             cmbUpdateCustomerCity.Text = _customer.City.ToString();
             cmbUpdateCustomerCountry.Text = _customer.Country.ToString();
+
         }
 
         private void LoadCities()

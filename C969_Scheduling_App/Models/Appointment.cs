@@ -8,9 +8,9 @@ namespace C969_Scheduling_App.Models
 {
     public class Appointment
     {
-        public int AppointmentID { get; set; }
-        public int CustomerID { get; set; }
-        public int UserID { get; set; }
+        public int AppointmentId { get; set; }
+        public int CustomerId { get; set; }
+        public int UserId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
@@ -23,14 +23,16 @@ namespace C969_Scheduling_App.Models
         public string CreatedBy { get; set; }
         public DateTime LastUpdate { get; set; }
         public string LastUpdatedBy { get; set; }
+        public string CustomerName { get; set; }
+        public string User { get; internal set; }
 
         public Appointment(
-                int appointmentID, int customerID, int userID, string title, string description, string location, string contact, string type, string uRL,
+                int appointmentId, int customerId, int userId, string title, string description, string location, string contact, string type, string uRL,
                 DateTime start, DateTime end, DateTime createdDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
         {
-            AppointmentID = appointmentID;
-            CustomerID = customerID;
-            UserID = userID;
+            AppointmentId = appointmentId;
+            CustomerId = customerId;
+            UserId = userId;
             Title = title;
             Description = description;
             Location = location;
@@ -43,6 +45,11 @@ namespace C969_Scheduling_App.Models
             CreatedBy = createdBy;
             LastUpdate = lastUpdate;
             LastUpdatedBy = lastUpdatedBy;
+        }
+
+        public Appointment()
+        {
+
         }
 
     }

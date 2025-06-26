@@ -72,8 +72,11 @@ namespace C969_Scheduling_App
                         if (reader.Read())
                         {
                             loginSuccess = true;
+                            int userId = reader.GetInt32("userId");
+                            AppSession.CurrentUserId = userId;
+                            string retrievedUserName = reader.GetString("username");
+                            AppSession.CurrentUserName = retrievedUserName;
                         }
-                        
                     }
                     if (loginSuccess)
                     {
@@ -99,7 +102,6 @@ namespace C969_Scheduling_App
                 {
                     MessageBox.Show("Login failed");
                 }
-                    
             }
         }
 

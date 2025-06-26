@@ -38,8 +38,6 @@
             this.lblLocation = new System.Windows.Forms.Label();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblDescription = new System.Windows.Forms.Label();
-            this.txtUserId = new System.Windows.Forms.TextBox();
-            this.lblUserId = new System.Windows.Forms.Label();
             this.txtCustomerId = new System.Windows.Forms.TextBox();
             this.lblCustomerId = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
@@ -49,6 +47,12 @@
             this.btnUpdateCustomerSave = new System.Windows.Forms.Button();
             this.btnUpdateCustomerCancel = new System.Windows.Forms.Button();
             this.lblTitleUpdateAppointment = new System.Windows.Forms.Label();
+            this.txtType = new System.Windows.Forms.TextBox();
+            this.lblType = new System.Windows.Forms.Label();
+            this.lblUserId = new System.Windows.Forms.Label();
+            this.txtUserId = new System.Windows.Forms.TextBox();
+            this.txtCustomerName = new System.Windows.Forms.TextBox();
+            this.lblCustomerName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblEndDateTime
@@ -87,7 +91,7 @@
             // 
             // txtContact
             // 
-            this.txtContact.Location = new System.Drawing.Point(124, 322);
+            this.txtContact.Location = new System.Drawing.Point(124, 314);
             this.txtContact.Name = "txtContact";
             this.txtContact.Size = new System.Drawing.Size(185, 20);
             this.txtContact.TabIndex = 62;
@@ -96,7 +100,7 @@
             // 
             this.lblContact.AutoSize = true;
             this.lblContact.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblContact.Location = new System.Drawing.Point(17, 322);
+            this.lblContact.Location = new System.Drawing.Point(17, 314);
             this.lblContact.Name = "lblContact";
             this.lblContact.Size = new System.Drawing.Size(56, 17);
             this.lblContact.TabIndex = 61;
@@ -104,7 +108,7 @@
             // 
             // txtLocation
             // 
-            this.txtLocation.Location = new System.Drawing.Point(124, 268);
+            this.txtLocation.Location = new System.Drawing.Point(124, 273);
             this.txtLocation.Name = "txtLocation";
             this.txtLocation.Size = new System.Drawing.Size(185, 20);
             this.txtLocation.TabIndex = 60;
@@ -113,7 +117,7 @@
             // 
             this.lblLocation.AutoSize = true;
             this.lblLocation.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblLocation.Location = new System.Drawing.Point(17, 268);
+            this.lblLocation.Location = new System.Drawing.Point(17, 273);
             this.lblLocation.Name = "lblLocation";
             this.lblLocation.Size = new System.Drawing.Size(60, 17);
             this.lblLocation.TabIndex = 59;
@@ -137,24 +141,6 @@
             this.lblDescription.TabIndex = 57;
             this.lblDescription.Text = "Description";
             // 
-            // txtUserId
-            // 
-            this.txtUserId.Location = new System.Drawing.Point(124, 156);
-            this.txtUserId.Name = "txtUserId";
-            this.txtUserId.ReadOnly = true;
-            this.txtUserId.Size = new System.Drawing.Size(185, 20);
-            this.txtUserId.TabIndex = 56;
-            // 
-            // lblUserId
-            // 
-            this.lblUserId.AutoSize = true;
-            this.lblUserId.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblUserId.Location = new System.Drawing.Point(17, 156);
-            this.lblUserId.Name = "lblUserId";
-            this.lblUserId.Size = new System.Drawing.Size(54, 17);
-            this.lblUserId.TabIndex = 55;
-            this.lblUserId.Text = "User ID";
-            // 
             // txtCustomerId
             // 
             this.txtCustomerId.Location = new System.Drawing.Point(124, 116);
@@ -175,7 +161,7 @@
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(124, 211);
+            this.txtTitle.Location = new System.Drawing.Point(124, 236);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(185, 20);
             this.txtTitle.TabIndex = 52;
@@ -192,7 +178,7 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Gadugi", 10.25F);
-            this.lblTitle.Location = new System.Drawing.Point(17, 211);
+            this.lblTitle.Location = new System.Drawing.Point(17, 236);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(33, 17);
             this.lblTitle.TabIndex = 50;
@@ -210,7 +196,7 @@
             // 
             // btnUpdateCustomerSave
             // 
-            this.btnUpdateCustomerSave.Location = new System.Drawing.Point(247, 387);
+            this.btnUpdateCustomerSave.Location = new System.Drawing.Point(495, 380);
             this.btnUpdateCustomerSave.Name = "btnUpdateCustomerSave";
             this.btnUpdateCustomerSave.Size = new System.Drawing.Size(83, 39);
             this.btnUpdateCustomerSave.TabIndex = 48;
@@ -220,7 +206,7 @@
             // 
             // btnUpdateCustomerCancel
             // 
-            this.btnUpdateCustomerCancel.Location = new System.Drawing.Point(336, 387);
+            this.btnUpdateCustomerCancel.Location = new System.Drawing.Point(584, 380);
             this.btnUpdateCustomerCancel.Name = "btnUpdateCustomerCancel";
             this.btnUpdateCustomerCancel.Size = new System.Drawing.Size(83, 39);
             this.btnUpdateCustomerCancel.TabIndex = 47;
@@ -232,17 +218,74 @@
             // 
             this.lblTitleUpdateAppointment.AutoSize = true;
             this.lblTitleUpdateAppointment.Font = new System.Drawing.Font("Gadugi", 18.25F, System.Drawing.FontStyle.Bold);
-            this.lblTitleUpdateAppointment.Location = new System.Drawing.Point(228, 12);
+            this.lblTitleUpdateAppointment.Location = new System.Drawing.Point(196, 9);
             this.lblTitleUpdateAppointment.Name = "lblTitleUpdateAppointment";
             this.lblTitleUpdateAppointment.Size = new System.Drawing.Size(265, 30);
             this.lblTitleUpdateAppointment.TabIndex = 46;
             this.lblTitleUpdateAppointment.Text = "Update Appointment";
             // 
+            // txtType
+            // 
+            this.txtType.Location = new System.Drawing.Point(124, 362);
+            this.txtType.Name = "txtType";
+            this.txtType.Size = new System.Drawing.Size(185, 20);
+            this.txtType.TabIndex = 68;
+            // 
+            // lblType
+            // 
+            this.lblType.AutoSize = true;
+            this.lblType.Font = new System.Drawing.Font("Gadugi", 10.25F);
+            this.lblType.Location = new System.Drawing.Point(17, 362);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(37, 17);
+            this.lblType.TabIndex = 67;
+            this.lblType.Text = "Type";
+            // 
+            // lblUserId
+            // 
+            this.lblUserId.AutoSize = true;
+            this.lblUserId.Font = new System.Drawing.Font("Gadugi", 10.25F);
+            this.lblUserId.Location = new System.Drawing.Point(17, 195);
+            this.lblUserId.Name = "lblUserId";
+            this.lblUserId.Size = new System.Drawing.Size(54, 17);
+            this.lblUserId.TabIndex = 55;
+            this.lblUserId.Text = "User ID";
+            // 
+            // txtUserId
+            // 
+            this.txtUserId.Location = new System.Drawing.Point(124, 195);
+            this.txtUserId.Name = "txtUserId";
+            this.txtUserId.ReadOnly = true;
+            this.txtUserId.Size = new System.Drawing.Size(185, 20);
+            this.txtUserId.TabIndex = 56;
+            // 
+            // txtCustomerName
+            // 
+            this.txtCustomerName.Location = new System.Drawing.Point(124, 156);
+            this.txtCustomerName.Name = "txtCustomerName";
+            this.txtCustomerName.ReadOnly = true;
+            this.txtCustomerName.Size = new System.Drawing.Size(185, 20);
+            this.txtCustomerName.TabIndex = 70;
+            // 
+            // lblCustomerName
+            // 
+            this.lblCustomerName.AutoSize = true;
+            this.lblCustomerName.Font = new System.Drawing.Font("Gadugi", 10.25F);
+            this.lblCustomerName.Location = new System.Drawing.Point(17, 156);
+            this.lblCustomerName.Name = "lblCustomerName";
+            this.lblCustomerName.Size = new System.Drawing.Size(108, 17);
+            this.lblCustomerName.TabIndex = 69;
+            this.lblCustomerName.Text = "Customer Name";
+            // 
             // UpdateAppointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 450);
+            this.ClientSize = new System.Drawing.Size(684, 436);
+            this.Controls.Add(this.txtCustomerName);
+            this.Controls.Add(this.lblCustomerName);
+            this.Controls.Add(this.txtType);
+            this.Controls.Add(this.lblType);
             this.Controls.Add(this.lblEndDateTime);
             this.Controls.Add(this.lblStartDateTime);
             this.Controls.Add(this.dtpEndDateTime);
@@ -284,8 +327,6 @@
         private System.Windows.Forms.Label lblLocation;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.TextBox txtUserId;
-        private System.Windows.Forms.Label lblUserId;
         private System.Windows.Forms.TextBox txtCustomerId;
         private System.Windows.Forms.Label lblCustomerId;
         private System.Windows.Forms.TextBox txtTitle;
@@ -295,5 +336,11 @@
         private System.Windows.Forms.Button btnUpdateCustomerSave;
         private System.Windows.Forms.Button btnUpdateCustomerCancel;
         private System.Windows.Forms.Label lblTitleUpdateAppointment;
+        private System.Windows.Forms.TextBox txtType;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.Label lblUserId;
+        private System.Windows.Forms.TextBox txtUserId;
+        private System.Windows.Forms.TextBox txtCustomerName;
+        private System.Windows.Forms.Label lblCustomerName;
     }
 }

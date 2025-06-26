@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static C969_Scheduling_App.Login;
 
 namespace C969_Scheduling_App.Forms
 {
@@ -80,16 +81,19 @@ namespace C969_Scheduling_App.Forms
             {
                 string appointmentQuery = "" +
                     "SELECT \r\n" +
-                    "appointmentId AS 'ID', \r\n" +
-                    "customerId AS 'Customer ID', \r\n" +
-                    "userId AS 'User ID', \r\n" +
-                    "title AS 'Title', \r\n" +
-                    "description AS 'Description', \r\n" +
-                    "location AS 'Location', \r\n" +
-                    "contact AS 'Contact', \r\n" +
-                    "start AS 'Start Date/Time', \r\n" +
-                    "end AS 'End Date/Time' \r\n" +
-                    "FROM appointment;\r\n";
+                    "a.appointmentId AS 'ID', \r\n" +
+                    "a.customerId AS 'Customer ID', \r\n" +
+                    "c.customerName AS 'Customer Name', \r\n" +
+                    "a.userId AS 'User ID', \r\n" +
+                    "a.title AS 'Title', \r\n" +
+                    "a.description AS 'Description', \r\n" +
+                    "a.location AS 'Location', \r\n" +
+                    "a.contact AS 'Contact', \r\n" +
+                    "a.type AS 'Type', \r\n" +
+                    "a.start AS 'Start Date/Time', \r\n" +
+                    "a.end AS 'End Date/Time' \r\n" +
+                    "FROM appointment a\r\n" +
+                    "INNER JOIN customer c ON a.customerId = c.customerId;";
                 MySqlDataAdapter adapter = new MySqlDataAdapter(appointmentQuery, DBConnection.conn);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -99,27 +103,6 @@ namespace C969_Scheduling_App.Forms
             {
                 MessageBox.Show("An error occurred " + ex.Message);
             }
-        }
-
-        private void btnReportsMenu_Click(object sender, EventArgs e)
-        {
-            Reports report = new Reports();
-            report.Show();
-            this.Hide();
-        }
-
-        private void btnAppointmentAdd_Click(object sender, EventArgs e)
-        {
-            AddAppointment addAppointment = new AddAppointment();
-            addAppointment.Show();
-            this.Hide();
-        }
-
-        private void btnAppointmentUpdate_Click(object sender, EventArgs e)
-        {
-            UpdateAppointment modifyAppointment = new UpdateAppointment();
-            modifyAppointment.Show();
-            this.Hide();
         }
 
         private void btnCustomerAdd_Click(object sender, EventArgs e)
@@ -227,9 +210,71 @@ namespace C969_Scheduling_App.Forms
             
         }
 
-        private void btnAppointmentDelete_Click(object sender, EventArgs e)
+        private void btnAppointmentAdd_Click(object sender, EventArgs e)
+        {
+            if (dgvCustomerMGMT.CurrentRow == null || !dgvCustomerMGMT.CurrentRow.Selected)
+            {
+                MessageBox.Show("Please select a customer to begin adding an appointment.");
+                return;
+            }
+            else
+            {
+                var selectedCustomer = new Appointment
+                {
+
+                    CustomerId = Convert.ToInt32(dgvCustomerMGMT.CurrentRow.Cells["ID"].Value),
+                    CustomerName = dgvCustomerMGMT.CurrentRow.Cells["Name"].Value.ToString(),
+                    UserId = AppSession.CurrentUserId,
+                    User = AppSession.CurrentUserName
+
+                };
+
+                AddAppointment addAppointment = new AddAppointment(selectedCustomer);
+                addAppointment.Show();
+                this.Hide();
+            }
+                
+        }
+
+        private void btnAppointmentUpdate_Click(object sender, EventArgs e)
         {
 
+            if (dgvAppointmentMGMT.CurrentRow == null || !dgvAppointmentMGMT.CurrentRow.Selected)
+            {
+                MessageBox.Show("Please select a customer to begin adding an appointment.");
+                return;
+            }
+            else
+            {
+                var selectedCustomer = new Appointment
+                {
+
+                    
+
+                };
+
+                UpdateAppointment modifyAppointment = new UpdateAppointment();
+                modifyAppointment.Show();
+                this.Hide();
+            }
+            
+        }
+
+        private void btnAppointmentDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvAppointmentMGMT.CurrentRow == null || !dgvAppointmentMGMT.CurrentRow.Selected)
+            {
+                MessageBox.Show("Nothing selected, please select an item.");
+                return;
+            }
+
+        }
+
+        private void btnReportsMenu_Click(object sender, EventArgs e)
+        {
+            Reports report = new Reports();
+            report.Show();
+            this.Hide();
         }
 
         private void btnExit_Click(object sender, EventArgs e)

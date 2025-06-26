@@ -110,6 +110,7 @@
             this.dtpStartDateTime.ShowCheckBox = true;
             this.dtpStartDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpStartDateTime.TabIndex = 42;
+            this.dtpStartDateTime.ValueChanged += new System.EventHandler(this.dtpStartDateTime_ValueChanged);
             // 
             // dtpEndDateTime
             // 

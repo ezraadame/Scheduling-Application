@@ -31,16 +31,21 @@ namespace C969_Scheduling_App.Forms
             txtCustomerName.Text= _appointment.CustomerName.ToString();
             txtUserId.Text = _appointment.UserId.ToString();
             dtpStartDateTime.Format = DateTimePickerFormat.Custom;
-            dtpStartDateTime.CustomFormat = "MM/dd/yyyy hh:mm";
+            dtpStartDateTime.CustomFormat = "MM/dd/yyyy hh:mm tt";
             dtpEndDateTime.Format = DateTimePickerFormat.Custom;
-            dtpEndDateTime.CustomFormat = "MM/dd/yyyy hh:mm";
+            dtpEndDateTime.CustomFormat = "MM/dd/yyyy hh:mm tt";
             
         }
 
 
         private void btnAddCustomerSave_Click(object sender, EventArgs e)
         {
-            
+            DateTime selectedStartTime = dtpStartDateTime.Value;
+            DateTime selectedEndTime = dtpEndDateTime.Value;
+
+            TimeSpan startTime = selectedStartTime.TimeOfDay;
+            TimeSpan endTime = selectedEndTime.TimeOfDay;
+
             string customerId = txtCustomerId.Text.Trim();
             string userId = txtUserId.Text.Trim();
             string title = txtTitle.Text.Trim();
@@ -69,7 +74,33 @@ namespace C969_Scheduling_App.Forms
                 {
                     MessageBox.Show("Please fill in all required fields.",
                         "Invalid Operation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
+                else if (selectedStartTime.DayOfWeek == DayOfWeek.Saturday || selectedStartTime.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    MessageBox.Show("Please select a weekday for your start time.");
+                    return;
+                }
+                else if (selectedEndTime.DayOfWeek == DayOfWeek.Saturday || selectedEndTime.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    MessageBox.Show("Please select a weekday for your end time.");
+                    return;
+                }
+
+                else if (startTime < TimeSpan.FromHours(9) || startTime > TimeSpan.FromHours(17))
+                {
+                    MessageBox.Show("Please select a start time between 9 AM and 5 PM");
+                }
+
+                else if (endTime < TimeSpan.FromHours(9) || endTime > TimeSpan.FromHours(17))
+                {
+                    MessageBox.Show("Please select a end time between 9 AM and 5 PM");
+                }
+                else if (StartTime.ToString("yyyy-MM-dd HH:mm") == EndTime.ToString("yyyy-MM-dd HH:mm") || StartTime > EndTime)
+                {
+                    MessageBox.Show("Start Date/Time cannot be greater than or equal too End Date/Time.");
+                }
+                
                 else
                 {
                     string queryInsertIntoAppointment = @"
@@ -115,5 +146,9 @@ namespace C969_Scheduling_App.Forms
             this.Hide();
         }
 
+        private void dtpStartDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

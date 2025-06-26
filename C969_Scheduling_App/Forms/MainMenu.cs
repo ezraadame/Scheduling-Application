@@ -272,10 +272,35 @@ namespace C969_Scheduling_App.Forms
 
         private void btnAppointmentDelete_Click(object sender, EventArgs e)
         {
+            int appointmentId = Convert.ToInt32(dgvAppointmentMGMT.CurrentRow.Cells["ID"].Value);
+
             if (dgvAppointmentMGMT.CurrentRow == null || !dgvAppointmentMGMT.CurrentRow.Selected)
             {
                 MessageBox.Show("Nothing selected, please select an item.");
                 return;
+            }
+
+            try
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this customer forever?", "Confirmation", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    string queryDeleteFromAppointment = "" +
+                        "DELETE FROM appointment " +
+                        "WHERE appointmentId = @appointmentId;";
+
+                    using (MySqlCommand cmd = new MySqlCommand(queryDeleteFromAppointment, DBConnection.conn))
+                    {
+                        cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
+                        cmd.ExecuteNonQuery();
+                    }
+                    LoadCustomerData();
+                    LoadAppointmentData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
 
         }

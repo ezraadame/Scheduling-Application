@@ -53,6 +53,7 @@ namespace C969_Scheduling_App.Forms
             DateTime easternStartTime = TimeZoneInfo.ConvertTime(dtpStartDateTime.Value, TimeZoneInfo.Local, easternZone);
             DateTime easternEndTime = TimeZoneInfo.ConvertTime(dtpEndDateTime.Value, TimeZoneInfo.Local, easternZone);
 
+
             DateTime selectedStartTime = dtpStartDateTime.Value;
             DateTime selectedEndTime = dtpEndDateTime.Value;
 

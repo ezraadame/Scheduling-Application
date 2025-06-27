@@ -142,7 +142,7 @@
             this.lblEndDateTime.Name = "lblEndDateTime";
             this.lblEndDateTime.Size = new System.Drawing.Size(98, 34);
             this.lblEndDateTime.TabIndex = 45;
-            this.lblEndDateTime.Text = "End Date/Time\r\n(Loca)\r\n";
+            this.lblEndDateTime.Text = "End Date/Time\r\n(Local)\r\n";
             // 
             // txtType
             // 

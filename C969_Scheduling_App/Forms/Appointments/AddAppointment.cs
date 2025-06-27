@@ -94,15 +94,18 @@ namespace C969_Scheduling_App.Forms
                 else if (easternStartTime.TimeOfDay < businessStart || easternStartTime.TimeOfDay > businessEnd)
                 {
                     MessageBox.Show("Please select a start time between 9 AM and 5 PM in Eastern Time");
+                    return;
                 }
                 else if (easternEndTime.TimeOfDay < businessStart || easternEndTime.TimeOfDay > businessEnd)
                 {
                     MessageBox.Show("Please select a start time between 9 AM and 5 PM in Eastern Time");
+                    return;
                 }
 
                 else if (easternStartTime.ToString("yyyy-MM-dd HH:mm") == easternEndTime.ToString("yyyy-MM-dd HH:mm") || easternStartTime > easternEndTime)
                 {
                     MessageBox.Show("Start Date/Time cannot be greater than or equal too End Date/Time.");
+                    return;
                 }
 
                 else
@@ -127,38 +130,36 @@ namespace C969_Scheduling_App.Forms
                         MessageBox.Show("This appointment overlaps with an existing appointment. Select a different time frame!");
                         return;
                     }
-                }
 
 
-                string queryInsertIntoAppointment = @"
+                    string queryInsertIntoAppointment = @"
                         INSERT INTO appointment 
                         (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)
                         VALUES 
                         (@customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
 
-                using (MySqlCommand cmdInsertIntoAppointment = new MySqlCommand(queryInsertIntoAppointment, DBConnection.conn))
-                {
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@customerId", customerId);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@userId", userId);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@title", title);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@description", description);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@location", location);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@contact", contact);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@type", type);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@url", url);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@start", easternStartTime);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@end", easternEndTime);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@createDate", now);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@createdBy", user);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@lastUpdate", now);
-                    cmdInsertIntoAppointment.Parameters.AddWithValue("@lastUpdateBy", userLastUpdated);
+                    using (MySqlCommand cmdInsertIntoAppointment = new MySqlCommand(queryInsertIntoAppointment, DBConnection.conn))
+                    {
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@customerId", customerId);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@userId", userId);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@title", title);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@description", description);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@location", location);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@contact", contact);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@type", type);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@url", url);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@start", easternStartTime);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@end", easternEndTime);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@createDate", now);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@createdBy", user);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@lastUpdate", now);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@lastUpdateBy", userLastUpdated);
 
-                    cmdInsertIntoAppointment.ExecuteNonQuery();
+                        cmdInsertIntoAppointment.ExecuteNonQuery();
 
-                    MessageBox.Show("Appointment added successfully!");
+                        MessageBox.Show("Appointment added successfully!");
+                    }
                 }
-
-
             }
             catch (Exception ex)
             {

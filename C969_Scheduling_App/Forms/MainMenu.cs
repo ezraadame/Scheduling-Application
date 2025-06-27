@@ -90,8 +90,8 @@ namespace C969_Scheduling_App.Forms
                     "a.location AS 'Location', \r\n" +
                     "a.contact AS 'Contact', \r\n" +
                     "a.type AS 'Type', \r\n" +
-                    "a.start AS 'Start Date/Time EST', \r\n" +
-                    "a.end AS 'End Date/Time EST' \r\n" +
+                    "a.start AS 'Start Date/Time', \r\n" +
+                    "a.end AS 'End Date/Time' \r\n" +
                     "FROM appointment a\r\n" +
                     "INNER JOIN customer c ON a.customerId = c.customerId;";
                 MySqlDataAdapter adapter = new MySqlDataAdapter(appointmentQuery, DBConnection.conn);
@@ -160,54 +160,64 @@ namespace C969_Scheduling_App.Forms
 
         private void btnCustomerDelete_Click(object sender, EventArgs e)
         {
+
             if (dgvCustomerMGMT.CurrentRow == null || !dgvCustomerMGMT.CurrentRow.Selected)
             {
                 MessageBox.Show("Nothing selected, please select an item.");
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Are you sure you want to delete this customer forever?", "Confirmation", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+            try
             {
-                int customerId = Convert.ToInt32(dgvCustomerMGMT.CurrentRow.Cells["ID"].Value);
-                int addressId = -1;
-                string queryDeleteAddressRow = "DELETE FROM address WHERE addressId = @addressId;";
-                string queryDeleteCustomerRow = "DELETE FROM customer WHERE customerId = @customerId;";
-                string queryGetAddressId = "SELECT addressId FROM customer WHERE customerId = @customerId;";
-                
-                using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.conn))
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this customer forever?", "Confirmation", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
                 {
-                    cmdGetAddressId.Parameters.AddWithValue("@customerId", customerId);
-                    using (var reader = cmdGetAddressId.ExecuteReader())
+                    int customerId = Convert.ToInt32(dgvCustomerMGMT.CurrentRow.Cells["ID"].Value);
+                    int addressId = -1;
+                    string queryDeleteAddressRow = "DELETE FROM address WHERE addressId = @addressId;";
+                    string queryDeleteCustomerRow = "DELETE FROM customer WHERE customerId = @customerId;";
+                    string queryGetAddressId = "SELECT addressId FROM customer WHERE customerId = @customerId;";
+
+                    using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.conn))
                     {
-                        if (reader.Read())
+                        cmdGetAddressId.Parameters.AddWithValue("@customerId", customerId);
+                        using (var reader = cmdGetAddressId.ExecuteReader())
                         {
-                            addressId = reader.GetInt32("addressId");
+                            if (reader.Read())
+                            {
+                                addressId = reader.GetInt32("addressId");
+                            }
                         }
                     }
-                }
 
-                if (addressId != -1)
-                {
-                    using (MySqlCommand cmdAddress = new MySqlCommand(queryDeleteCustomerRow, DBConnection.conn))
+                    if (addressId != -1)
                     {
-                        cmdAddress.Parameters.AddWithValue("@customerId", customerId);
-                        cmdAddress.ExecuteNonQuery();
+                        using (MySqlCommand cmdAddress = new MySqlCommand(queryDeleteCustomerRow, DBConnection.conn))
+                        {
+                            cmdAddress.Parameters.AddWithValue("@customerId", customerId);
+                            cmdAddress.ExecuteNonQuery();
+                        }
+                        using (MySqlCommand cmdCustomer = new MySqlCommand(queryDeleteAddressRow, DBConnection.conn))
+                        {
+                            cmdCustomer.Parameters.AddWithValue("@addressId", addressId);
+                            cmdCustomer.ExecuteNonQuery();
+                        }
                     }
-                    using (MySqlCommand cmdCustomer = new MySqlCommand(queryDeleteAddressRow, DBConnection.conn))
-                    {
-                        cmdCustomer.Parameters.AddWithValue("@addressId", addressId);
-                        cmdCustomer.ExecuteNonQuery();
-                    }
+                    LoadCustomerData();
+                    LoadAppointmentData();
+                    dgvCustomerMGMT.ClearSelection();
+                    dgvAppointmentMGMT.ClearSelection();
                 }
-                LoadCustomerData();
-                LoadAppointmentData();
+                else
+                {
+                    MessageBox.Show("Unable to delete item.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Unable to delete item.");
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
-            
+
         }
 
         private void btnAppointmentAdd_Click(object sender, EventArgs e)
@@ -258,8 +268,8 @@ namespace C969_Scheduling_App.Forms
                     Location = dgvAppointmentMGMT.CurrentRow.Cells["Location"].Value.ToString(), 
                     Contact = dgvAppointmentMGMT.CurrentRow.Cells["Contact"].Value.ToString(),
                     Type = dgvAppointmentMGMT.CurrentRow.Cells["Type"].Value.ToString(),
-                    StartDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["Start Date/Time EST"].Value,
-                    EndDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["End Date/Time EST"].Value
+                    StartDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["Start Date/Time"].Value,
+                    EndDateTime = (DateTime)dgvAppointmentMGMT.CurrentRow.Cells["End Date/Time"].Value
                     
                 };
 
@@ -296,6 +306,8 @@ namespace C969_Scheduling_App.Forms
                     }
                     LoadCustomerData();
                     LoadAppointmentData();
+                    dgvAppointmentMGMT.ClearSelection();
+                    dgvCustomerMGMT.ClearSelection();
                 }
             }
             catch (Exception ex)
@@ -317,6 +329,179 @@ namespace C969_Scheduling_App.Forms
             Application.Exit();
         }
 
-        
+        private void rdbtnCurrentWeek_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                DateTime Today = DateTime.Today;
+                int daysToSubtract = (int)Today.DayOfWeek;
+                DateTime Sunday = Today.AddDays(-daysToSubtract);
+                DateTime Saturday = Sunday.AddDays(7).AddTicks(-1);
+
+                string appointmentQuery = ""
+                    + "SELECT \r\n"
+                    + "a.appointmentId AS 'ID', \r\n"
+                    + "a.customerId AS 'Customer ID', \r\n"
+                    + "c.customerName AS 'Customer Name', \r\n"
+                    + "a.userId AS 'User ID', \r\n"
+                    + "a.title AS 'Title', \r\n"
+                    + "a.description AS 'Description', \r\n"
+                    + "a.location AS 'Location', \r\n"
+                    + "a.contact AS 'Contact', \r\n"
+                    + "a.type AS 'Type', \r\n"
+                    + "a.start AS 'Start Date/Time', \r\n"
+                    + "a.end AS 'End Date/Time' \r\n"
+                    + "FROM appointment a\r\n"
+                    + "INNER JOIN customer c ON a.customerId = c.customerId \r\n"
+                    + "WHERE a.start BETWEEN @startOfWeek AND @endOfWeek;";
+
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                {
+                    cmd.Parameters.AddWithValue("@startOfWeek", Sunday);
+                    cmd.Parameters.AddWithValue("@endOfWeek", Saturday);
+
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable table = new DataTable();
+
+                        adapter.Fill(table);
+                        dgvAppointmentMGMT.DataSource = table;
+                    }
+                    
+                }
+                dgvAppointmentMGMT.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred " + ex.Message);
+            }
+        }
+
+        private void rdbtnCurrentMonth_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                DateTime Today = DateTime.Today;
+                DateTime firstDayOfMonth = new DateTime(Today.Year, Today.Month, 1);
+                DateTime firstDayOfNextMonth = firstDayOfMonth.AddMonths(1);
+                DateTime lastDayOfMonth = firstDayOfNextMonth.AddTicks(-1);
+                
+
+                string appointmentQuery = ""
+                    + "SELECT \r\n"
+                    + "a.appointmentId AS 'ID', \r\n"
+                    + "a.customerId AS 'Customer ID', \r\n"
+                    + "c.customerName AS 'Customer Name', \r\n"
+                    + "a.userId AS 'User ID', \r\n"
+                    + "a.title AS 'Title', \r\n"
+                    + "a.description AS 'Description', \r\n"
+                    + "a.location AS 'Location', \r\n"
+                    + "a.contact AS 'Contact', \r\n"
+                    + "a.type AS 'Type', \r\n"
+                    + "a.start AS 'Start Date/Time', \r\n"
+                    + "a.end AS 'End Date/Time' \r\n"
+                    + "FROM appointment a\r\n"
+                    + "INNER JOIN customer c ON a.customerId = c.customerId \r\n"
+                    + "WHERE a.start BETWEEN @firstDayOfMonth AND @lastDayOfMonth;";
+
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                {
+                    cmd.Parameters.AddWithValue("@firstDayOfMonth", firstDayOfMonth);
+                    cmd.Parameters.AddWithValue("@lastDayOfMonth", lastDayOfMonth);
+
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable table = new DataTable();
+
+                        adapter.Fill(table);
+                        dgvAppointmentMGMT.DataSource = table;
+                    }
+
+                }
+                dgvAppointmentMGMT.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred " + ex.Message);
+            }
+        }
+
+        private void rdbtnAllAppointments_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadAppointmentData();
+            dgvAppointmentMGMT.ClearSelection();
+        }
+
+        private void chkbxSelectDay_CheckedChanged(object sender, EventArgs e)
+        {
+            mnthCalendarAppointments.Visible = chkbxSelectDay.Checked;
+
+            if (chkbxSelectDay.Checked)
+            {
+                LoadAppointmentBySelectedDate();
+            }
+            else
+            {
+                LoadAppointmentData();
+                dgvAppointmentMGMT.ClearSelection();
+            }
+
+            
+        }
+
+        private void mnthCalendarAppointments_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            if (chkbxSelectDay.Checked)
+            {
+                LoadAppointmentBySelectedDate();
+            }
+        }
+
+        private void LoadAppointmentBySelectedDate()
+        {
+            try
+            {
+                DateTime selectedDate = mnthCalendarAppointments.SelectionStart;
+                DateTime startOfDay = selectedDate;
+                DateTime endOfDay = selectedDate.AddDays(1).AddTicks(-1);
+
+                string appointmentQuery = ""
+                    + "SELECT \r\n"
+                    + "a.appointmentId AS 'ID', \r\n"
+                    + "a.customerId AS 'Customer ID', \r\n"
+                    + "c.customerName AS 'Customer Name', \r\n"
+                    + "a.userId AS 'User ID', \r\n"
+                    + "a.title AS 'Title', \r\n"
+                    + "a.description AS 'Description', \r\n"
+                    + "a.location AS 'Location', \r\n"
+                    + "a.contact AS 'Contact', \r\n"
+                    + "a.type AS 'Type', \r\n"
+                    + "a.start AS 'Start Date/Time', \r\n"
+                    + "a.end AS 'End Date/Time' \r\n"
+                    + "FROM appointment a\r\n"
+                    + "INNER JOIN customer c ON a.customerId = c.customerId \r\n"
+                    + "WHERE a.start BETWEEN @startOfDay AND @endOfDay;";
+
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                {
+                    cmd.Parameters.AddWithValue("@startOfDay", startOfDay);
+                    cmd.Parameters.AddWithValue("@endOfDay", endOfDay);
+
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable table = new DataTable();
+
+                        adapter.Fill(table);
+                        dgvAppointmentMGMT.DataSource = table;
+                    }
+
+                }
+                dgvAppointmentMGMT.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred " + ex.Message);
+            }
+        }
     }
 }

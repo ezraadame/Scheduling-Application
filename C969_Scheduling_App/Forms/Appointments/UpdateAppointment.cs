@@ -100,15 +100,18 @@ namespace C969_Scheduling_App.Forms
                 else if (easternStartTime.TimeOfDay < businessStart || easternStartTime.TimeOfDay > businessEnd)
                 {
                     MessageBox.Show("Please select a start time between 9 AM and 5 PM in Eastern Time");
+                    return;
                 }
                 else if (easternEndTime.TimeOfDay < businessStart || easternEndTime.TimeOfDay > businessEnd)
                 {
                     MessageBox.Show("Please select a start time between 9 AM and 5 PM in Eastern Time");
+                    return;
                 }
 
                 else if (easternStartTime.ToString("yyyy-MM-dd HH:mm") == easternEndTime.ToString("yyyy-MM-dd HH:mm") || easternStartTime > easternEndTime)
                 {
                     MessageBox.Show("Start Date/Time cannot be greater than or equal too End Date/Time.");
+                    return;
                 }
 
                 else
@@ -133,9 +136,8 @@ namespace C969_Scheduling_App.Forms
                         MessageBox.Show("This appointment overlaps with an existing appointment. Select a different time frame!");
                         return;
                     }
-                }
 
-                string queryUpdateAppointments = "" +
+                    string queryUpdateAppointments = "" +
                         "UPDATE appointment " +
                         "SET title = @title, " +
                         "description = @description, " +
@@ -148,23 +150,24 @@ namespace C969_Scheduling_App.Forms
                         "lastUpdateBy = @lastUpdateBy " +
                         "WHERE appointmentId = @appointmentId;";
 
-                using (MySqlCommand cmd = new MySqlCommand(queryUpdateAppointments, DBConnection.conn))
-                {
-                    cmd.Parameters.AddWithValue("@title", title);
-                    cmd.Parameters.AddWithValue("@description", description);
-                    cmd.Parameters.AddWithValue("@location", location);
-                    cmd.Parameters.AddWithValue("@contact", contact);
-                    cmd.Parameters.AddWithValue("@type", type);
-                    cmd.Parameters.AddWithValue("@start", easternStartTime);
-                    cmd.Parameters.AddWithValue("@end", easternEndTime);
-                    cmd.Parameters.AddWithValue("@lastUpdate", now);
-                    cmd.Parameters.AddWithValue("@lastUpdateBy", user);
-                    cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
+                    using (MySqlCommand cmd = new MySqlCommand(queryUpdateAppointments, DBConnection.conn))
+                    {
+                        cmd.Parameters.AddWithValue("@title", title);
+                        cmd.Parameters.AddWithValue("@description", description);
+                        cmd.Parameters.AddWithValue("@location", location);
+                        cmd.Parameters.AddWithValue("@contact", contact);
+                        cmd.Parameters.AddWithValue("@type", type);
+                        cmd.Parameters.AddWithValue("@start", easternStartTime);
+                        cmd.Parameters.AddWithValue("@end", easternEndTime);
+                        cmd.Parameters.AddWithValue("@lastUpdate", now);
+                        cmd.Parameters.AddWithValue("@lastUpdateBy", user);
+                        cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Appointment updated succesfully.");
                 }
-
-                MessageBox.Show("Appointment updated succesfully.");
 
             }
             catch (Exception ex)

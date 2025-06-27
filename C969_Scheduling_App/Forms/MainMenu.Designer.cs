@@ -41,6 +41,11 @@
             this.btnReportsMenu = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblTitleReports = new System.Windows.Forms.Label();
+            this.rdbtnCurrentWeek = new System.Windows.Forms.RadioButton();
+            this.rdbtnCurrentMonth = new System.Windows.Forms.RadioButton();
+            this.rdbtnAllAppointments = new System.Windows.Forms.RadioButton();
+            this.mnthCalendarAppointments = new System.Windows.Forms.MonthCalendar();
+            this.chkbxSelectDay = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomerMGMT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointmentMGMT)).BeginInit();
             this.SuspendLayout();
@@ -48,16 +53,16 @@
             // dgvCustomerMGMT
             // 
             this.dgvCustomerMGMT.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCustomerMGMT.Location = new System.Drawing.Point(32, 384);
+            this.dgvCustomerMGMT.Location = new System.Drawing.Point(32, 386);
             this.dgvCustomerMGMT.Name = "dgvCustomerMGMT";
-            this.dgvCustomerMGMT.Size = new System.Drawing.Size(663, 233);
+            this.dgvCustomerMGMT.Size = new System.Drawing.Size(663, 231);
             this.dgvCustomerMGMT.TabIndex = 0;
             // 
             // lblTitleCustomerManagement
             // 
             this.lblTitleCustomerManagement.AutoSize = true;
             this.lblTitleCustomerManagement.Font = new System.Drawing.Font("Gadugi", 18.25F, System.Drawing.FontStyle.Bold);
-            this.lblTitleCustomerManagement.Location = new System.Drawing.Point(27, 351);
+            this.lblTitleCustomerManagement.Location = new System.Drawing.Point(27, 343);
             this.lblTitleCustomerManagement.Name = "lblTitleCustomerManagement";
             this.lblTitleCustomerManagement.Size = new System.Drawing.Size(290, 30);
             this.lblTitleCustomerManagement.TabIndex = 1;
@@ -78,12 +83,12 @@
             this.dgvAppointmentMGMT.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAppointmentMGMT.Location = new System.Drawing.Point(32, 51);
             this.dgvAppointmentMGMT.Name = "dgvAppointmentMGMT";
-            this.dgvAppointmentMGMT.Size = new System.Drawing.Size(914, 230);
+            this.dgvAppointmentMGMT.Size = new System.Drawing.Size(914, 219);
             this.dgvAppointmentMGMT.TabIndex = 4;
             // 
             // btnAppointmentAdd
             // 
-            this.btnAppointmentAdd.Location = new System.Drawing.Point(32, 302);
+            this.btnAppointmentAdd.Location = new System.Drawing.Point(32, 287);
             this.btnAppointmentAdd.Name = "btnAppointmentAdd";
             this.btnAppointmentAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAppointmentAdd.TabIndex = 5;
@@ -103,7 +108,7 @@
             // 
             // btnAppointmentUpdate
             // 
-            this.btnAppointmentUpdate.Location = new System.Drawing.Point(139, 302);
+            this.btnAppointmentUpdate.Location = new System.Drawing.Point(139, 287);
             this.btnAppointmentUpdate.Name = "btnAppointmentUpdate";
             this.btnAppointmentUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnAppointmentUpdate.TabIndex = 7;
@@ -113,7 +118,7 @@
             // 
             // btnAppointmentDelete
             // 
-            this.btnAppointmentDelete.Location = new System.Drawing.Point(254, 302);
+            this.btnAppointmentDelete.Location = new System.Drawing.Point(254, 287);
             this.btnAppointmentDelete.Name = "btnAppointmentDelete";
             this.btnAppointmentDelete.Size = new System.Drawing.Size(75, 23);
             this.btnAppointmentDelete.TabIndex = 8;
@@ -143,7 +148,7 @@
             // 
             // btnReportsMenu
             // 
-            this.btnReportsMenu.Location = new System.Drawing.Point(744, 384);
+            this.btnReportsMenu.Location = new System.Drawing.Point(732, 486);
             this.btnReportsMenu.Name = "btnReportsMenu";
             this.btnReportsMenu.Size = new System.Drawing.Size(202, 58);
             this.btnReportsMenu.TabIndex = 11;
@@ -153,9 +158,9 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(798, 625);
+            this.btnExit.Location = new System.Drawing.Point(858, 636);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(94, 44);
+            this.btnExit.Size = new System.Drawing.Size(76, 33);
             this.btnExit.TabIndex = 12;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -165,17 +170,78 @@
             // 
             this.lblTitleReports.AutoSize = true;
             this.lblTitleReports.Font = new System.Drawing.Font("Gadugi", 18.25F, System.Drawing.FontStyle.Bold);
-            this.lblTitleReports.Location = new System.Drawing.Point(793, 351);
+            this.lblTitleReports.Location = new System.Drawing.Point(780, 440);
             this.lblTitleReports.Name = "lblTitleReports";
             this.lblTitleReports.Size = new System.Drawing.Size(105, 30);
             this.lblTitleReports.TabIndex = 13;
             this.lblTitleReports.Text = "Reports";
             // 
+            // rdbtnCurrentWeek
+            // 
+            this.rdbtnCurrentWeek.AutoSize = true;
+            this.rdbtnCurrentWeek.Location = new System.Drawing.Point(572, 24);
+            this.rdbtnCurrentWeek.Name = "rdbtnCurrentWeek";
+            this.rdbtnCurrentWeek.Size = new System.Drawing.Size(91, 17);
+            this.rdbtnCurrentWeek.TabIndex = 14;
+            this.rdbtnCurrentWeek.TabStop = true;
+            this.rdbtnCurrentWeek.Text = "Current Week";
+            this.rdbtnCurrentWeek.UseVisualStyleBackColor = true;
+            this.rdbtnCurrentWeek.CheckedChanged += new System.EventHandler(this.rdbtnCurrentWeek_CheckedChanged);
+            // 
+            // rdbtnCurrentMonth
+            // 
+            this.rdbtnCurrentMonth.AutoSize = true;
+            this.rdbtnCurrentMonth.Location = new System.Drawing.Point(708, 24);
+            this.rdbtnCurrentMonth.Name = "rdbtnCurrentMonth";
+            this.rdbtnCurrentMonth.Size = new System.Drawing.Size(92, 17);
+            this.rdbtnCurrentMonth.TabIndex = 15;
+            this.rdbtnCurrentMonth.TabStop = true;
+            this.rdbtnCurrentMonth.Text = "Current Month";
+            this.rdbtnCurrentMonth.UseVisualStyleBackColor = true;
+            this.rdbtnCurrentMonth.CheckedChanged += new System.EventHandler(this.rdbtnCurrentMonth_CheckedChanged);
+            // 
+            // rdbtnAllAppointments
+            // 
+            this.rdbtnAllAppointments.AutoSize = true;
+            this.rdbtnAllAppointments.Location = new System.Drawing.Point(843, 24);
+            this.rdbtnAllAppointments.Name = "rdbtnAllAppointments";
+            this.rdbtnAllAppointments.Size = new System.Drawing.Size(103, 17);
+            this.rdbtnAllAppointments.TabIndex = 16;
+            this.rdbtnAllAppointments.TabStop = true;
+            this.rdbtnAllAppointments.Text = "All Appointments";
+            this.rdbtnAllAppointments.UseVisualStyleBackColor = true;
+            this.rdbtnAllAppointments.CheckedChanged += new System.EventHandler(this.rdbtnAllAppointments_CheckedChanged);
+            // 
+            // mnthCalendarAppointments
+            // 
+            this.mnthCalendarAppointments.Location = new System.Drawing.Point(719, 269);
+            this.mnthCalendarAppointments.MaxSelectionCount = 1;
+            this.mnthCalendarAppointments.Name = "mnthCalendarAppointments";
+            this.mnthCalendarAppointments.TabIndex = 18;
+            this.mnthCalendarAppointments.Visible = false;
+            this.mnthCalendarAppointments.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.mnthCalendarAppointments_DateSelected);
+            // 
+            // chkbxSelectDay
+            // 
+            this.chkbxSelectDay.AutoSize = true;
+            this.chkbxSelectDay.Location = new System.Drawing.Point(442, 24);
+            this.chkbxSelectDay.Name = "chkbxSelectDay";
+            this.chkbxSelectDay.Size = new System.Drawing.Size(78, 17);
+            this.chkbxSelectDay.TabIndex = 19;
+            this.chkbxSelectDay.Text = "Select Day";
+            this.chkbxSelectDay.UseVisualStyleBackColor = true;
+            this.chkbxSelectDay.CheckedChanged += new System.EventHandler(this.chkbxSelectDay_CheckedChanged);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 695);
+            this.ClientSize = new System.Drawing.Size(973, 695);
+            this.Controls.Add(this.chkbxSelectDay);
+            this.Controls.Add(this.mnthCalendarAppointments);
+            this.Controls.Add(this.rdbtnAllAppointments);
+            this.Controls.Add(this.rdbtnCurrentMonth);
+            this.Controls.Add(this.rdbtnCurrentWeek);
             this.Controls.Add(this.lblTitleReports);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnReportsMenu);
@@ -214,5 +280,10 @@
         private System.Windows.Forms.Button btnReportsMenu;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblTitleReports;
+        private System.Windows.Forms.RadioButton rdbtnCurrentWeek;
+        private System.Windows.Forms.RadioButton rdbtnCurrentMonth;
+        private System.Windows.Forms.RadioButton rdbtnAllAppointments;
+        private System.Windows.Forms.MonthCalendar mnthCalendarAppointments;
+        private System.Windows.Forms.CheckBox chkbxSelectDay;
     }
 }

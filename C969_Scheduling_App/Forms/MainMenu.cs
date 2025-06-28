@@ -94,10 +94,36 @@ namespace C969_Scheduling_App.Forms
                     "a.end AS 'End Date/Time' \r\n" +
                     "FROM appointment a\r\n" +
                     "INNER JOIN customer c ON a.customerId = c.customerId;";
-                MySqlDataAdapter adapter = new MySqlDataAdapter(appointmentQuery, DBConnection.conn);
-                DataTable table = new DataTable();
-                adapter.Fill(table);
-                dgvAppointmentMGMT.DataSource = table;
+                    
+                
+
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                {
+                    
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        
+                        DataTable table = new DataTable();
+                        adapter.Fill(table);
+
+                        foreach (DataRow row in table.Rows)
+                        {
+                            if (row["Start Date/Time"] is DateTime utcStart)
+                            {
+                                row["Start Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcStart, TimeZoneInfo.Local);
+                            }
+
+                            if (row["End Date/Time"] is DateTime utcEnd)
+                            {
+                                row["End Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcEnd, TimeZoneInfo.Local);
+                            }
+                        }
+                        dgvAppointmentMGMT.DataSource = table;
+                        dgvAppointmentMGMT.ClearSelection();
+                    }
+
+                }
+               
             }
             catch (Exception ex)
             {

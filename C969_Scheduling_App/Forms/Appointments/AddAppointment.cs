@@ -46,8 +46,11 @@ namespace C969_Scheduling_App.Forms
             DateTime easternStartTime = TimeZoneInfo.ConvertTime(dtpStartDateTime.Value, TimeZoneInfo.Local, easternZone);
             DateTime easternEndTime = TimeZoneInfo.ConvertTime(dtpEndDateTime.Value, TimeZoneInfo.Local, easternZone);
 
-            DateTime selectedStartTime = dtpStartDateTime.Value;
-            DateTime selectedEndTime = dtpEndDateTime.Value;
+            DateTime utcStartTime = TimeZoneInfo.ConvertTimeToUtc(easternStartTime, easternZone);
+            DateTime utcEndTime = TimeZoneInfo.ConvertTimeToUtc(easternEndTime, easternZone);
+
+            DateTime localStartTime = dtpStartDateTime.Value;
+            DateTime localEndTime = dtpEndDateTime.Value;
 
             TimeSpan businessStart = TimeSpan.FromHours(9);
             TimeSpan businessEnd = TimeSpan.FromHours(17);
@@ -117,8 +120,8 @@ namespace C969_Scheduling_App.Forms
 
                     using (MySqlCommand cmd = new MySqlCommand(queryOverlapCheck, DBConnection.conn))
                     {
-                        cmd.Parameters.AddWithValue("@start", easternStartTime);
-                        cmd.Parameters.AddWithValue("@end", easternEndTime);
+                        cmd.Parameters.AddWithValue("@start", utcStartTime);
+                        cmd.Parameters.AddWithValue("@end", utcEndTime);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -148,8 +151,8 @@ namespace C969_Scheduling_App.Forms
                         cmdInsertIntoAppointment.Parameters.AddWithValue("@contact", contact);
                         cmdInsertIntoAppointment.Parameters.AddWithValue("@type", type);
                         cmdInsertIntoAppointment.Parameters.AddWithValue("@url", url);
-                        cmdInsertIntoAppointment.Parameters.AddWithValue("@start", easternStartTime);
-                        cmdInsertIntoAppointment.Parameters.AddWithValue("@end", easternEndTime);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@start", utcStartTime);
+                        cmdInsertIntoAppointment.Parameters.AddWithValue("@end", utcEndTime);
                         cmdInsertIntoAppointment.Parameters.AddWithValue("@createDate", now);
                         cmdInsertIntoAppointment.Parameters.AddWithValue("@createdBy", user);
                         cmdInsertIntoAppointment.Parameters.AddWithValue("@lastUpdate", now);

@@ -49,10 +49,13 @@ namespace C969_Scheduling_App.Forms
 
         private void btnUpdateCustomerSave_Click(object sender, EventArgs e)
         {
+            DateTime localTime = DateTime.Now;
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime easternStartTime = TimeZoneInfo.ConvertTime(dtpStartDateTime.Value, TimeZoneInfo.Local, easternZone);
             DateTime easternEndTime = TimeZoneInfo.ConvertTime(dtpEndDateTime.Value, TimeZoneInfo.Local, easternZone);
 
+            DateTime utcStartTime = TimeZoneInfo.ConvertTimeToUtc(easternStartTime, easternZone);
+            DateTime utcEndTime = TimeZoneInfo.ConvertTimeToUtc(easternEndTime, easternZone);
 
             DateTime selectedStartTime = dtpStartDateTime.Value;
             DateTime selectedEndTime = dtpEndDateTime.Value;
@@ -124,8 +127,8 @@ namespace C969_Scheduling_App.Forms
 
                     using (MySqlCommand cmd = new MySqlCommand(queryOverlapCheck, DBConnection.conn))
                     {
-                        cmd.Parameters.AddWithValue("@start", easternStartTime);
-                        cmd.Parameters.AddWithValue("@end", easternEndTime);
+                        cmd.Parameters.AddWithValue("@start", utcStartTime);
+                        cmd.Parameters.AddWithValue("@end", utcEndTime);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -158,8 +161,8 @@ namespace C969_Scheduling_App.Forms
                         cmd.Parameters.AddWithValue("@location", location);
                         cmd.Parameters.AddWithValue("@contact", contact);
                         cmd.Parameters.AddWithValue("@type", type);
-                        cmd.Parameters.AddWithValue("@start", easternStartTime);
-                        cmd.Parameters.AddWithValue("@end", easternEndTime);
+                        cmd.Parameters.AddWithValue("@start", utcStartTime);
+                        cmd.Parameters.AddWithValue("@end", utcEndTime);
                         cmd.Parameters.AddWithValue("@lastUpdate", now);
                         cmd.Parameters.AddWithValue("@lastUpdateBy", user);
                         cmd.Parameters.AddWithValue("@appointmentId", appointmentId);

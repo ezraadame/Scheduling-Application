@@ -83,6 +83,7 @@ namespace C969_Scheduling_App.Forms
             TimeSpan businessStart = TimeSpan.FromHours(9);
             TimeSpan businessEnd = TimeSpan.FromHours(17);
 
+
             string appointmentId = txtAppointmentId.Text.Trim();
             string title = txtTitle.Text.Trim();
             string location = txtLocation.Text.Trim();
@@ -137,23 +138,11 @@ namespace C969_Scheduling_App.Forms
                 else
                 {
                     bool overlaps = false;
+                    int retrievedId = -1;
                     string queryOverlapCheck = @"
                             SELECT * FROM appointment
                             WHERE @start < end AND @end > start;";
-                    using (MySqlCommand cmd = new MySqlCommand(queryOverlapCheck, DBConnection.Conn))
-                    {
-                        cmd.Parameters.AddWithValue("@start", utcStartTime);
-                        cmd.Parameters.AddWithValue("@end", utcEndTime);
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            overlaps = reader.HasRows;
-                        }
-                    }
-                    if (overlaps)
-                    {
-                        MessageBox.Show("This appointment overlaps with an existing appointment. Select a different time frame!");
-                        return;
-                    }
+
                     string queryUpdateAppointments = "" +
                         "UPDATE appointment " +
                         "SET title = @title, " +
@@ -167,6 +156,44 @@ namespace C969_Scheduling_App.Forms
                         "lastUpdateBy = @lastUpdateBy " +
                         "WHERE appointmentId = @appointmentId;";
 
+                    using (MySqlCommand cmd = new MySqlCommand(queryOverlapCheck, DBConnection.Conn))
+                    {
+                        cmd.Parameters.AddWithValue("@start", utcStartTime);
+                        cmd.Parameters.AddWithValue("@end", utcEndTime);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            overlaps = reader.HasRows;
+                            if (reader.HasRows && reader.Read())
+                            {
+                                retrievedId = reader.GetInt32("appointmentId");
+                            }
+                        }
+                        if (retrievedId.ToString() == appointmentId)
+                        {
+                            using (MySqlCommand cmdUpdate = new MySqlCommand(queryUpdateAppointments, DBConnection.Conn))
+                            {
+                                cmdUpdate.Parameters.AddWithValue("@title", title);
+                                cmdUpdate.Parameters.AddWithValue("@description", description);
+                                cmdUpdate.Parameters.AddWithValue("@location", location);
+                                cmdUpdate.Parameters.AddWithValue("@contact", contact);
+                                cmdUpdate.Parameters.AddWithValue("@type", type);
+                                cmdUpdate.Parameters.AddWithValue("@start", utcStartTime);
+                                cmdUpdate.Parameters.AddWithValue("@end", utcEndTime);
+                                cmdUpdate.Parameters.AddWithValue("@lastUpdate", now);
+                                cmdUpdate.Parameters.AddWithValue("@lastUpdateBy", user);
+                                cmdUpdate.Parameters.AddWithValue("@appointmentId", appointmentId);
+
+                                cmdUpdate.ExecuteNonQuery();
+                            }
+                            MessageBox.Show("Appointment updated succesfully.");
+                            return;
+                        }
+                        else if (overlaps)
+                        {
+                            MessageBox.Show("This appointment overlaps with an existing appointment. Select a different time frame!");
+                            return;
+                        }
+                    }
                     using (MySqlCommand cmd = new MySqlCommand(queryUpdateAppointments, DBConnection.Conn))
                     {
                         cmd.Parameters.AddWithValue("@title", title);

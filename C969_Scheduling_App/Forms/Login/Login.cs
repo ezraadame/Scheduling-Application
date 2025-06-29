@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -58,16 +59,28 @@ namespace C969_Scheduling_App
             string userName = txtUserName.Text;
             string password = txtPassword.Text;
             string queryLogin = @"SELECT * FROM user WHERE userName = @userName AND password = @password";
+
             DateTime today = DateTime.Now;
+            string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string logEntry = $"User: {userName} has logged in at {timeStamp}";
+            string failedLogEntry = $"Failed Login Attempt with User: {userName} at {timeStamp}";
+
+            string logFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "C969_Scheduling_App",
+                "Logs",
+                "Login_History.txt");
+
+            Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
 
             try
             {
+
                 using (MySqlCommand cmd = new MySqlCommand(queryLogin, DBConnection.conn))
                 {
                     cmd.Parameters.AddWithValue("@userName", userName);
                     cmd.Parameters.AddWithValue("@password", password);
                     bool loginSuccess = false;
-
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -81,23 +94,32 @@ namespace C969_Scheduling_App
                             AppSession.CurrentUserName = retrievedUserName;
                         }
                     }
+
+                    // Logs will be saved to user's documents folder, C:\Users\<user>\Documents\C969_Scheduling_App\Logs
                     if (loginSuccess)
                     {
-                        
+                        using (StreamWriter writer = new StreamWriter(logFilePath, true))
+                        {
+                            writer.WriteLine(logEntry);
+
+                        }
+
                         Forms.MainMenu mainMenu = new Forms.MainMenu();
                         mainMenu.Show();
                         this.Hide();
-                         
                     }
                     else
                     {
+                        using (StreamWriter writer = new StreamWriter(logFilePath, true))
+                        {
+                            writer.WriteLine(failedLogEntry);
+
+                        }
+                        
                         string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
                         MessageBox.Show(language == "es" ? "¡Credenciales incorrectas!" : "Wrong credentials!");
                     }
                 }
-
-
-
             }
             catch (MySqlException)
             {
@@ -163,9 +185,6 @@ namespace C969_Scheduling_App
             {
                 lblCurrentLocation.Text = $"Location unavailabkle, ({ex.Message})";
             }
-
         }
-
-        
     }
 }

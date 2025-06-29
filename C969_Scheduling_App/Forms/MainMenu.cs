@@ -116,7 +116,7 @@ namespace C969_Scheduling_App.Forms
                     + "INNER JOIN customer c ON a.customerId = c.customerId \r\n"
                     + "WHERE a.start BETWEEN @firstDayOfMonth AND @lastDayOfMonth;";
 
-                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.Conn))
                 {
                     cmd.Parameters.AddWithValue("@firstDayOfMonth", firstDayOfMonth);
                     cmd.Parameters.AddWithValue("@lastDayOfMonth", lastDayOfMonth);
@@ -171,7 +171,7 @@ namespace C969_Scheduling_App.Forms
                     + "INNER JOIN customer c ON a.customerId = c.customerId \r\n"
                     + "WHERE a.start BETWEEN @startOfWeek AND @endOfWeek;";
 
-                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.Conn))
                 {
                     cmd.Parameters.AddWithValue("@startOfWeek", Sunday);
                     cmd.Parameters.AddWithValue("@endOfWeek", Saturday);
@@ -221,7 +221,7 @@ namespace C969_Scheduling_App.Forms
                         "DELETE FROM appointment " +
                         "WHERE appointmentId = @appointmentId;";
 
-                    using (MySqlCommand cmd = new MySqlCommand(queryDeleteFromAppointment, DBConnection.conn))
+                    using (MySqlCommand cmd = new MySqlCommand(queryDeleteFromAppointment, DBConnection.Conn))
                     {
                         cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
                         cmd.ExecuteNonQuery();
@@ -322,7 +322,7 @@ namespace C969_Scheduling_App.Forms
 
                     }
 
-                    using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.conn))
+                    using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.Conn))
                     {
                         cmdGetAddressId.Parameters.AddWithValue("@customerId", dgvCustomerMGMTcustomerId);
                         using (var reader = cmdGetAddressId.ExecuteReader())
@@ -335,12 +335,12 @@ namespace C969_Scheduling_App.Forms
                     }
                     if (addressId != -1)
                     {
-                        using (MySqlCommand cmdAddress = new MySqlCommand(queryDeleteCustomerRow, DBConnection.conn))
+                        using (MySqlCommand cmdAddress = new MySqlCommand(queryDeleteCustomerRow, DBConnection.Conn))
                         {
                             cmdAddress.Parameters.AddWithValue("@customerId", dgvCustomerMGMTcustomerId);
                             cmdAddress.ExecuteNonQuery();
                         }
-                        using (MySqlCommand cmdCustomer = new MySqlCommand(queryDeleteAddressRow, DBConnection.conn))
+                        using (MySqlCommand cmdCustomer = new MySqlCommand(queryDeleteAddressRow, DBConnection.Conn))
                         {
                             cmdCustomer.Parameters.AddWithValue("@addressId", addressId);
                             cmdCustomer.ExecuteNonQuery();
@@ -379,7 +379,7 @@ namespace C969_Scheduling_App.Forms
 
                 int addressId = -1;
                 string queryGetAddressId = "SELECT addressId FROM customer WHERE customerId = @customerId;";
-                using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.conn))
+                using (MySqlCommand cmdGetAddressId = new MySqlCommand(queryGetAddressId, DBConnection.Conn))
                 {
                     cmdGetAddressId.Parameters.AddWithValue("@customerId", selectedCustomer.CustomerId);
                     using (var reader = cmdGetAddressId.ExecuteReader())
@@ -421,7 +421,7 @@ namespace C969_Scheduling_App.Forms
                     "JOIN city ci ON a.cityId = ci.cityId\r\n" +
                     "JOIN country co ON ci.countryId = co.countryId;";
 
-                MySqlDataAdapter adapter = new MySqlDataAdapter(customerQuery, DBConnection.conn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(customerQuery, DBConnection.Conn);
 
                 DataTable table = new DataTable();
                 adapter.Fill(table);
@@ -454,7 +454,7 @@ namespace C969_Scheduling_App.Forms
                     "FROM appointment a\r\n" +
                     "INNER JOIN customer c ON a.customerId = c.customerId;";
 
-                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.Conn))
                 {
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                     {
@@ -493,7 +493,7 @@ namespace C969_Scheduling_App.Forms
                         AND TIMESTAMPDIFF(MINUTE, @now, start) BETWEEN 0 AND 15
                         ;";
 
-                using (MySqlCommand cmd = new MySqlCommand(queryCheckAppointments, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(queryCheckAppointments, DBConnection.Conn))
                 {
                     cmd.Parameters.AddWithValue("@userId", userId);
                     cmd.Parameters.AddWithValue("@now", nowUtc);
@@ -544,7 +544,7 @@ namespace C969_Scheduling_App.Forms
                     + "INNER JOIN customer c ON a.customerId = c.customerId \r\n"
                     + "WHERE a.start BETWEEN @startOfDay AND @endOfDay;";
 
-                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(appointmentQuery, DBConnection.Conn))
                 {
                     cmd.Parameters.AddWithValue("@startOfDay", startOfDay);
                     cmd.Parameters.AddWithValue("@endOfDay", endOfDay);

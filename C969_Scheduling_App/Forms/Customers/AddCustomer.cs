@@ -23,18 +23,30 @@ namespace C969_Scheduling_App.Forms
             LoadCountries();
         }
 
-        private void txtAddCustomerNumber_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtAddCustomerNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != '-' && !char.IsControl(e.KeyChar))
             {
                 e.Handled = true;
             }
         }
+        private void BtnAddCustomerSave_Click(object sender, EventArgs e)
+        {
+            AddCustomerToDB();
+        }
+
+        private void BtnAddCustomerCancel_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
+            this.Hide();
+        }
+
         private void LoadCities()
         {
 
             string cityQuery = "SELECT DISTINCT cityId, city FROM city ORDER BY city;";
-            MySqlDataAdapter adapter = new MySqlDataAdapter(cityQuery, DBConnection.conn);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(cityQuery, DBConnection.Conn);
             DataTable cityTable = new DataTable();
             adapter.Fill(cityTable);
 
@@ -42,13 +54,13 @@ namespace C969_Scheduling_App.Forms
             cmbAddCustomerCity.DisplayMember = "city";
             cmbAddCustomerCity.ValueMember = "cityId";
             cmbAddCustomerCity.SelectedIndex = -1;
-            
+
         }
 
         private void LoadCountries()
         {
             string countryQuery = "SELECT DISTINCT countryId, country FROM country ORDER BY country;";
-            MySqlDataAdapter adapter = new MySqlDataAdapter(countryQuery, DBConnection.conn);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(countryQuery, DBConnection.Conn);
             DataTable countryTable = new DataTable();
             adapter.Fill(countryTable);
 
@@ -56,10 +68,9 @@ namespace C969_Scheduling_App.Forms
             cmbAddCustomerCountry.DisplayMember = "country";
             cmbAddCustomerCountry.ValueMember = "countryId";
             cmbAddCustomerCountry.SelectedIndex = -1;
-            
-        }
 
-        private void btnAddCustomerSave_Click(object sender, EventArgs e)
+        }
+        private void AddCustomerToDB()
         {
             string name = txtAddCustomerName.Text.Trim();
             string address = txtAddCustomerAddress.Text.Trim();
@@ -89,11 +100,11 @@ namespace C969_Scheduling_App.Forms
                     string queryIsCityInCountry = "SELECT countryId FROM city WHERE cityId = @cityId;";
                     int actualCountryId = -1;
 
-                    using (MySqlCommand cmd = new MySqlCommand(queryIsCityInCountry, DBConnection.conn))
+                    using (MySqlCommand cmd = new MySqlCommand(queryIsCityInCountry, DBConnection.Conn))
                     {
                         cmd.Parameters.AddWithValue("@cityId", selectedCityId);
                         object result = cmd.ExecuteScalar();
-                        
+
                         if (result != null)
                         {
                             actualCountryId = Convert.ToInt32(result);
@@ -112,7 +123,7 @@ namespace C969_Scheduling_App.Forms
                             @"INSERT INTO address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)
                               VALUES (@address, @address2, @cityId, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
 
-                        using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoAddress, DBConnection.conn))
+                        using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoAddress, DBConnection.Conn))
                         {
                             cmd.Parameters.AddWithValue("@address", address);
                             cmd.Parameters.AddWithValue("@address2", "");
@@ -136,7 +147,7 @@ namespace C969_Scheduling_App.Forms
                             @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy)
                               VALUES (@customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy);";
 
-                        using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoCustomer, DBConnection.conn))
+                        using (MySqlCommand cmd = new MySqlCommand(queryInsertIntoCustomer, DBConnection.Conn))
                         {
                             cmd.Parameters.AddWithValue("@customerName", name);
                             cmd.Parameters.AddWithValue("@addressId", newAddressID);
@@ -156,13 +167,6 @@ namespace C969_Scheduling_App.Forms
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
-        }
-
-        private void btnAddCustomerCancel_Click(object sender, EventArgs e)
-        {
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.Show();
-            this.Hide();
         }
     }
 }

@@ -33,57 +33,7 @@ namespace C969_Scheduling_App
             GetLocation();
         }
 
-        private void BtnSignIn_Click(object sender, EventArgs e)
-        {
-            string userName = txtUserName.Text;
-            string password = txtPassword.Text;
-            string queryLogin = @"SELECT * FROM user WHERE userName = @userName AND password = @password";
-            try
-            {
-                using (MySqlCommand cmd = new MySqlCommand(queryLogin, DBConnection.conn))
-                {
-                    cmd.Parameters.AddWithValue("@userName", userName);
-                    cmd.Parameters.AddWithValue("@password", password);
-                    bool loginSuccess = false;
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            loginSuccess = true;
-
-                            int userId = reader.GetInt32("userId");
-                            AppSession.CurrentUserId = userId;
-                            string retrievedUserName = reader.GetString("username");
-                            AppSession.CurrentUserName = retrievedUserName;
-                        }
-                    }
-                    // Logs will be saved to user's documents folder, C:\Users\<user>\Documents\C969_Scheduling_App\Logs
-                    if (loginSuccess)
-                    {
-                        LoginLog(loginSuccess);
-                        Forms.MainMenu mainMenu = new Forms.MainMenu();
-                        mainMenu.Show();
-                        this.Hide();
-                    }
-                    else
-                    {
-                        LoginLog(loginSuccess);
-                        string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-                        MessageBox.Show(language == "es" ? "¡Credenciales incorrectas!" : "Wrong credentials!");
-                    }
-                }
-            }
-            catch (MySqlException)
-            {
-                string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-                if (language == "es")
-                {
-                    MessageBox.Show("Error de iniciio de sesion");
-                }
-            }
-        }
-
+        private void BtnSignIn_Click(object sender, EventArgs e) => SignIn();
         private void LocalizeForm()
         {
             string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
@@ -105,6 +55,8 @@ namespace C969_Scheduling_App
                 titleSchedulingApp.Text = "Scheduling Application";
             }
         }
+        //Method: LoginLog will append to a log called Login_History.txt, whether the sign is was a success or a failure.
+        //File Path: C:\Users\<user>\Documents\C969_Scheduling_App\Logs
         private void LoginLog(bool loginSuccess)
         {
             string userName = txtUserName.Text;
@@ -157,7 +109,55 @@ namespace C969_Scheduling_App
                 lblCurrentLocation.Text = $"Location unavailabkle, ({ex.Message})";
             }
         }
+        private void SignIn()
+        {
+            string userName = txtUserName.Text;
+            string password = txtPassword.Text;
+            string queryLogin = @"SELECT * FROM user WHERE userName = @userName AND password = @password";
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(queryLogin, DBConnection.Conn))
+                {
+                    cmd.Parameters.AddWithValue("@userName", userName);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    bool loginSuccess = false;
 
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            loginSuccess = true;
+
+                            int userId = reader.GetInt32("userId");
+                            AppSession.CurrentUserId = userId;
+                            string retrievedUserName = reader.GetString("username");
+                            AppSession.CurrentUserName = retrievedUserName;
+                        }
+                    }
+                    if (loginSuccess)
+                    {
+                        LoginLog(loginSuccess);
+                        Forms.MainMenu mainMenu = new Forms.MainMenu();
+                        mainMenu.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        LoginLog(loginSuccess);
+                        string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+                        MessageBox.Show(language == "es" ? "¡Credenciales incorrectas!" : "Wrong credentials!");
+                    }
+                }
+            }
+            catch (MySqlException)
+            {
+                string language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+                if (language == "es")
+                {
+                    MessageBox.Show("Error de iniciio de sesion");
+                }
+            }
+        }
         private void TxtUserName_TextChanged(object sender, EventArgs e)
         {
             if (txtUserName.Text.Length > 0)
@@ -169,7 +169,6 @@ namespace C969_Scheduling_App
                 txtUserName.BackColor = Color.Yellow;
             }
         }
-
         private void TxtPassword_TextChanged(object sender, EventArgs e)
         {
             if (txtUserName.Text.Length > 0)
@@ -181,7 +180,6 @@ namespace C969_Scheduling_App
                 txtPassword.BackColor = Color.Yellow;
             }
         }
-
         private void BtnExit_Click(object sender, EventArgs e) => Application.Exit();
     }
 }

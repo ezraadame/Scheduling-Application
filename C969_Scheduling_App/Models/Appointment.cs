@@ -48,7 +48,6 @@ namespace C969_Scheduling_App.Models
             LastUpdate = lastUpdate;
             LastUpdatedBy = lastUpdatedBy;
         }
-
         public Appointment()
         {
 

@@ -15,9 +15,8 @@ namespace C969_Scheduling_App.Forms
 {
     public partial class UpdateCustomer : Form
     {
-
-        private Customer _customer;
-        private int _addressId;
+        private readonly Customer _customer;
+        private readonly int _addressId;
         public UpdateCustomer(Customer customer, int addressId)
         {
             InitializeComponent();
@@ -35,14 +34,19 @@ namespace C969_Scheduling_App.Forms
             txtUpdateCustomerNumber.Text = _customer.Phone.ToString();
             cmbUpdateCustomerCity.Text = _customer.City.ToString();
             cmbUpdateCustomerCountry.Text = _customer.Country.ToString();
-
         }
+        private void BtnUpdateCustomerSave_Click(object sender, EventArgs e) => UpdateCustomerToDB();
 
+        private void BtnUpdateCustomerCancel_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
+            this.Hide();
+        }
         private void LoadCities()
         {
-
             string cityQuery = "SELECT DISTINCT cityId, city FROM city ORDER BY city;";
-            MySqlDataAdapter adapter = new MySqlDataAdapter(cityQuery, DBConnection.conn);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(cityQuery, DBConnection.Conn);
             DataTable cityTable = new DataTable();
             adapter.Fill(cityTable);
 
@@ -50,13 +54,12 @@ namespace C969_Scheduling_App.Forms
             cmbUpdateCustomerCity.DisplayMember = "city";
             cmbUpdateCustomerCity.ValueMember = "cityId";
             cmbUpdateCustomerCity.SelectedIndex = -1;
-
         }
 
         private void LoadCountries()
         {
             string countryQuery = "SELECT DISTINCT countryId, country FROM country ORDER BY country;";
-            MySqlDataAdapter adapter = new MySqlDataAdapter(countryQuery, DBConnection.conn);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(countryQuery, DBConnection.Conn);
             DataTable countryTable = new DataTable();
             adapter.Fill(countryTable);
 
@@ -64,13 +67,11 @@ namespace C969_Scheduling_App.Forms
             cmbUpdateCustomerCountry.DisplayMember = "country";
             cmbUpdateCustomerCountry.ValueMember = "countryId";
             cmbUpdateCustomerCountry.SelectedIndex = -1;
-
         }
-        private void btnUpdateCustomerSave_Click(object sender, EventArgs e)
+
+        private void UpdateCustomerToDB()
         {
-
             DateTime date = DateTime.Now;
-
             try
             {
                 if (
@@ -90,7 +91,7 @@ namespace C969_Scheduling_App.Forms
                     string queryIsCityInCountry = "SELECT countryId FROM city WHERE cityId = @cityId;";
                     int actualCountryId = -1;
 
-                    using (MySqlCommand cmd = new MySqlCommand(queryIsCityInCountry, DBConnection.conn))
+                    using (MySqlCommand cmd = new MySqlCommand(queryIsCityInCountry, DBConnection.Conn))
                     {
                         cmd.Parameters.AddWithValue("@cityId", selectedCityId);
                         object result = cmd.ExecuteScalar();
@@ -113,7 +114,7 @@ namespace C969_Scheduling_App.Forms
                                                     SET address = @address, cityId = @cityId, phone = @phone, lastUpdate = @lastUpdate
                                                     WHERE addressId = @addressId;";
 
-                        using (MySqlCommand cmd = new MySqlCommand(queryUpdateAddress, DBConnection.conn))
+                        using (MySqlCommand cmd = new MySqlCommand(queryUpdateAddress, DBConnection.Conn))
                         {
                             cmd.Parameters.AddWithValue("@address", txtUpdateCustomerAddress.Text.Trim());
                             cmd.Parameters.AddWithValue("@phone", txtUpdateCustomerNumber.Text.Trim());
@@ -130,7 +131,7 @@ namespace C969_Scheduling_App.Forms
                                                      SET customerName = @customerName, lastUpdate = @lastUpdate
                                                      WHERE customerId = @customerId;";
 
-                        using (MySqlCommand cmd = new MySqlCommand(queryUpdateCustomer, DBConnection.conn))
+                        using (MySqlCommand cmd = new MySqlCommand(queryUpdateCustomer, DBConnection.Conn))
                         {
                             cmd.Parameters.AddWithValue("@customerName", txtUpdateCustomerName.Text.Trim());
                             cmd.Parameters.AddWithValue("@lastUpdate", date);
@@ -140,20 +141,12 @@ namespace C969_Scheduling_App.Forms
                         }
                     }
                     MessageBox.Show("Customer updated successfully!");
-
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
-        }
-
-        private void btnUpdateCustomerCancel_Click(object sender, EventArgs e)
-        {
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.Show();
-            this.Hide();
         }
     }
 }

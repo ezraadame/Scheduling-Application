@@ -63,7 +63,7 @@
             this.btnAddCustomerCancel.TabIndex = 6;
             this.btnAddCustomerCancel.Text = "Cancel";
             this.btnAddCustomerCancel.UseVisualStyleBackColor = true;
-            this.btnAddCustomerCancel.Click += new System.EventHandler(this.btnAddCustomerCancel_Click);
+            this.btnAddCustomerCancel.Click += new System.EventHandler(this.BtnAddCustomerCancel_Click);
             // 
             // btnAddCustomerSave
             // 
@@ -73,7 +73,7 @@
             this.btnAddCustomerSave.TabIndex = 7;
             this.btnAddCustomerSave.Text = "Save";
             this.btnAddCustomerSave.UseVisualStyleBackColor = true;
-            this.btnAddCustomerSave.Click += new System.EventHandler(this.btnAddCustomerSave_Click);
+            this.btnAddCustomerSave.Click += new System.EventHandler(this.BtnAddCustomerSave_Click);
             // 
             // lblAddCustomerID
             // 
@@ -163,7 +163,7 @@
             this.txtAddCustomerNumber.Name = "txtAddCustomerNumber";
             this.txtAddCustomerNumber.Size = new System.Drawing.Size(185, 20);
             this.txtAddCustomerNumber.TabIndex = 17;
-            this.txtAddCustomerNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAddCustomerNumber_KeyPress);
+            this.txtAddCustomerNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtAddCustomerNumber_KeyPress);
             // 
             // cmbAddCustomerCity
             // 

@@ -76,7 +76,7 @@
             this.btnAddCustomerSave.TabIndex = 9;
             this.btnAddCustomerSave.Text = "Save";
             this.btnAddCustomerSave.UseVisualStyleBackColor = true;
-            this.btnAddCustomerSave.Click += new System.EventHandler(this.btnAddCustomerSave_Click);
+            this.btnAddCustomerSave.Click += new System.EventHandler(this.BtnAddCustomerSave_Click);
             // 
             // btnAddCustomerCancel
             // 
@@ -86,7 +86,7 @@
             this.btnAddCustomerCancel.TabIndex = 8;
             this.btnAddCustomerCancel.Text = "Cancel";
             this.btnAddCustomerCancel.UseVisualStyleBackColor = true;
-            this.btnAddCustomerCancel.Click += new System.EventHandler(this.btnAddCustomerCancel_Click);
+            this.btnAddCustomerCancel.Click += new System.EventHandler(this.BtnAddCustomerCancel_Click);
             // 
             // lblDescription
             // 
@@ -113,7 +113,7 @@
             this.dtpStartDateTime.ShowCheckBox = true;
             this.dtpStartDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpStartDateTime.TabIndex = 42;
-            this.dtpStartDateTime.ValueChanged += new System.EventHandler(this.dtpStartDateTime_ValueChanged);
+            this.dtpStartDateTime.ValueChanged += new System.EventHandler(this.DtpStartDateTime_ValueChanged);
             // 
             // dtpEndDateTime
             // 
@@ -122,7 +122,7 @@
             this.dtpEndDateTime.ShowCheckBox = true;
             this.dtpEndDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpEndDateTime.TabIndex = 43;
-            this.dtpEndDateTime.ValueChanged += new System.EventHandler(this.dtpEndDateTime_ValueChanged);
+            this.dtpEndDateTime.ValueChanged += new System.EventHandler(this.DtpEndDateTime_ValueChanged);
             // 
             // lblStartDateTime
             // 

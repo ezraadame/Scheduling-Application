@@ -19,7 +19,6 @@ namespace C969_Scheduling_App.Forms
         {
             InitializeComponent();
         }
-
         private void Reports_Load(object sender, EventArgs e)
         {
 
@@ -31,7 +30,6 @@ namespace C969_Scheduling_App.Forms
             dgvNumberApptsTypeByMonth.ClearSelection();
 
             ConfigureGrid(dgvSchedulePerUser);
-            
             LoadUserChoices();
             dgvSchedulePerUser.ClearSelection();
 
@@ -51,16 +49,30 @@ namespace C969_Scheduling_App.Forms
             };
 
             dtpNumApptTypeByMonth.ValueChanged += (s, args) => LoadNumberOfTypesByMonth();
-
             dtpAppointmentLocationsByMonth.ValueChanged += (s, args) => LoadNumberOfApptLocationsByMonth();
-
+        }
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
+            this.Hide();
+        }
+        private void ConfigureGrid(DataGridView grid)
+        {
+            grid.RowHeadersVisible = false;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid.AllowUserToResizeRows = false;
+            grid.ReadOnly = true;
+            grid.MultiSelect = false;
+            grid.AllowUserToAddRows = false;
         }
         private void LoadUserChoices()
         {
             try
             {
                 string queryAllUsers = "SELECT userId, userName FROM user;";
-                using (MySqlCommand cmd = new MySqlCommand(queryAllUsers, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(queryAllUsers, DBConnection.Conn))
                 {
                     DataTable dt = new DataTable();
                     MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
@@ -91,7 +103,7 @@ namespace C969_Scheduling_App.Forms
                     WHERE userId = @userId
                     ORDER BY start;";
 
-                using (MySqlCommand cmd = new MySqlCommand(queryUserSchedules, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(queryUserSchedules, DBConnection.Conn))
                 {
                     cmd.Parameters.AddWithValue("@userId", selectedUserId);
 
@@ -122,7 +134,6 @@ namespace C969_Scheduling_App.Forms
                 MessageBox.Show("An error occurred " + ex.Message);
             }
         }
-
         private void LoadNumberOfTypesByMonth()
         {
 
@@ -134,14 +145,14 @@ namespace C969_Scheduling_App.Forms
 
             try
             {
-                string queryTypeAndCount= @"
+                string queryTypeAndCount = @"
                     SELECT type AS Type, COUNT(*) AS Count
                     FROM appointment
                     WHERE start BETWEEN @firstDayOfMonth AND @lastDayOfMonth
                     Group By type;
                     ";
 
-                using (MySqlCommand cmd = new MySqlCommand(queryTypeAndCount, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(queryTypeAndCount, DBConnection.Conn))
                 {
                     cmd.Parameters.AddWithValue("@firstDayOfMonth", firstDayOfMonth.ToUniversalTime());
                     cmd.Parameters.AddWithValue("@lastDayOfMonth", lastDayOfMonth.ToUniversalTime());
@@ -159,7 +170,6 @@ namespace C969_Scheduling_App.Forms
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
-
         private void LoadNumberOfApptLocationsByMonth()
         {
             DateTime selectedMonth = dtpAppointmentLocationsByMonth.Value;
@@ -175,7 +185,7 @@ namespace C969_Scheduling_App.Forms
                     Group By location;
                     ";
 
-                using (MySqlCommand cmd = new MySqlCommand(queryTypeAndCount, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(queryTypeAndCount, DBConnection.Conn))
                 {
 
                     cmd.Parameters.AddWithValue("@firstDayOfMonth", firstDayOfMonth.ToUniversalTime());
@@ -194,25 +204,5 @@ namespace C969_Scheduling_App.Forms
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
-
-        private void BtnCancel_Click(object sender, EventArgs e)
-        {
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.Show();
-            this.Hide();
-        }
-
-        private void ConfigureGrid(DataGridView grid)
-        {
-            grid.RowHeadersVisible = false;
-            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            grid.AllowUserToResizeRows = false;
-            grid.ReadOnly = true;
-            grid.MultiSelect = false;
-            grid.AllowUserToAddRows = false;
-        }
-
-        
     }
 }

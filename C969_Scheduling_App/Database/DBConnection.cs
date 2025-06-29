@@ -11,17 +11,16 @@ namespace C969_Scheduling_App.Database
 {
     public static class DBConnection
     {
-        public static MySqlConnection conn { get; set; }
-
+        public static MySqlConnection Conn { get; set; }
         public static void StartConnection()
         {
             try
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
 
-                conn = new MySqlConnection(connectionString);
+                Conn = new MySqlConnection(connectionString);
 
-                conn.Open();
+                Conn.Open();
 
             }
             catch (MySqlException ex)
@@ -34,8 +33,8 @@ namespace C969_Scheduling_App.Database
         {
             try
             {
-                conn?.Close();
-                conn = null;
+                Conn?.Close();
+                Conn = null;
             }
             catch (MySqlException ex)
             {

@@ -142,7 +142,7 @@
             this.btnUpdateCustomerSave.TabIndex = 22;
             this.btnUpdateCustomerSave.Text = "Save";
             this.btnUpdateCustomerSave.UseVisualStyleBackColor = true;
-            this.btnUpdateCustomerSave.Click += new System.EventHandler(this.btnUpdateCustomerSave_Click);
+            this.btnUpdateCustomerSave.Click += new System.EventHandler(this.BtnUpdateCustomerSave_Click);
             // 
             // btnUpdateCustomerCancel
             // 
@@ -152,7 +152,7 @@
             this.btnUpdateCustomerCancel.TabIndex = 21;
             this.btnUpdateCustomerCancel.Text = "Cancel";
             this.btnUpdateCustomerCancel.UseVisualStyleBackColor = true;
-            this.btnUpdateCustomerCancel.Click += new System.EventHandler(this.btnUpdateCustomerCancel_Click);
+            this.btnUpdateCustomerCancel.Click += new System.EventHandler(this.BtnUpdateCustomerCancel_Click);
             // 
             // lblTitleUpdateCustomer
             // 

@@ -24,7 +24,6 @@ namespace C969_Scheduling_App.Forms
             InitializeComponent();
             _appointment = appointment;
         }
-
         private void UpdateAppointment_Load(object sender, EventArgs e)
         {
             txtAppointmentId.Text = _appointment.AppointmentId.ToString();
@@ -45,11 +44,35 @@ namespace C969_Scheduling_App.Forms
             DtpStartDateTime_ValueChanged(null, null);
             DtpEndDateTime_ValueChanged(null, null);
         }
-
-
         private void BtnUpdateCustomerSave_Click(object sender, EventArgs e)
         {
-            
+            UpdateCustomer();
+        }
+        private void BtnUpdateCustomerCancel_Click(object sender, EventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
+            this.Hide();
+        }
+        private void DtpStartDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime localTime = dtpStartDateTime.Value;
+            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
+
+            lblEasternStartTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
+        }
+
+        private void DtpEndDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime localTime = dtpEndDateTime.Value;
+            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
+
+            lblEasternEndTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
+        }
+        private void UpdateCustomer()
+        {
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime easternStartTime = TimeZoneInfo.ConvertTime(dtpStartDateTime.Value, TimeZoneInfo.Local, easternZone);
             DateTime easternEndTime = TimeZoneInfo.ConvertTime(dtpEndDateTime.Value, TimeZoneInfo.Local, easternZone);
@@ -61,8 +84,6 @@ namespace C969_Scheduling_App.Forms
             TimeSpan businessEnd = TimeSpan.FromHours(17);
 
             string appointmentId = txtAppointmentId.Text.Trim();
-            
-            
             string title = txtTitle.Text.Trim();
             string location = txtLocation.Text.Trim();
             string contact = txtContact.Text.Trim();
@@ -113,19 +134,16 @@ namespace C969_Scheduling_App.Forms
                     MessageBox.Show("Start Date/Time cannot be greater than or equal too End Date/Time.");
                     return;
                 }
-
                 else
                 {
                     bool overlaps = false;
                     string queryOverlapCheck = @"
                             SELECT * FROM appointment
                             WHERE @start < end AND @end > start;";
-
-                    using (MySqlCommand cmd = new MySqlCommand(queryOverlapCheck, DBConnection.conn))
+                    using (MySqlCommand cmd = new MySqlCommand(queryOverlapCheck, DBConnection.Conn))
                     {
                         cmd.Parameters.AddWithValue("@start", utcStartTime);
                         cmd.Parameters.AddWithValue("@end", utcEndTime);
-
                         using (var reader = cmd.ExecuteReader())
                         {
                             overlaps = reader.HasRows;
@@ -136,7 +154,6 @@ namespace C969_Scheduling_App.Forms
                         MessageBox.Show("This appointment overlaps with an existing appointment. Select a different time frame!");
                         return;
                     }
-
                     string queryUpdateAppointments = "" +
                         "UPDATE appointment " +
                         "SET title = @title, " +
@@ -150,7 +167,7 @@ namespace C969_Scheduling_App.Forms
                         "lastUpdateBy = @lastUpdateBy " +
                         "WHERE appointmentId = @appointmentId;";
 
-                    using (MySqlCommand cmd = new MySqlCommand(queryUpdateAppointments, DBConnection.conn))
+                    using (MySqlCommand cmd = new MySqlCommand(queryUpdateAppointments, DBConnection.Conn))
                     {
                         cmd.Parameters.AddWithValue("@title", title);
                         cmd.Parameters.AddWithValue("@description", description);
@@ -165,40 +182,13 @@ namespace C969_Scheduling_App.Forms
 
                         cmd.ExecuteNonQuery();
                     }
-
                     MessageBox.Show("Appointment updated succesfully.");
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
-        }
-
-        private void BtnUpdateCustomerCancel_Click(object sender, EventArgs e)
-        {
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.Show();
-            this.Hide();
-        }
-
-        private void DtpStartDateTime_ValueChanged(object sender, EventArgs e)
-        {
-            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-            DateTime localTime = dtpStartDateTime.Value;
-            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
-
-            lblEasternStartTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
-        }
-
-        private void DtpEndDateTime_ValueChanged(object sender, EventArgs e)
-        {
-            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-            DateTime localTime = dtpEndDateTime.Value;
-            DateTime easternTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, easternZone);
-
-            lblEasternEndTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
         }
     }
 }

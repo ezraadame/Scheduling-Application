@@ -62,7 +62,7 @@
             // 
             this.lblTitleCustomerManagement.AutoSize = true;
             this.lblTitleCustomerManagement.Font = new System.Drawing.Font("Gadugi", 18.25F, System.Drawing.FontStyle.Bold);
-            this.lblTitleCustomerManagement.Location = new System.Drawing.Point(27, 343);
+            this.lblTitleCustomerManagement.Location = new System.Drawing.Point(27, 353);
             this.lblTitleCustomerManagement.Name = "lblTitleCustomerManagement";
             this.lblTitleCustomerManagement.Size = new System.Drawing.Size(290, 30);
             this.lblTitleCustomerManagement.TabIndex = 1;
@@ -94,17 +94,17 @@
             this.btnAppointmentAdd.TabIndex = 5;
             this.btnAppointmentAdd.Text = "Add";
             this.btnAppointmentAdd.UseVisualStyleBackColor = true;
-            this.btnAppointmentAdd.Click += new System.EventHandler(this.btnAppointmentAdd_Click);
+            this.btnAppointmentAdd.Click += new System.EventHandler(this.BtnAppointmentAdd_Click);
             // 
             // btnCustomerAdd
             // 
-            this.btnCustomerAdd.Location = new System.Drawing.Point(32, 646);
+            this.btnCustomerAdd.Location = new System.Drawing.Point(32, 633);
             this.btnCustomerAdd.Name = "btnCustomerAdd";
             this.btnCustomerAdd.Size = new System.Drawing.Size(75, 23);
             this.btnCustomerAdd.TabIndex = 6;
             this.btnCustomerAdd.Text = "Add";
             this.btnCustomerAdd.UseVisualStyleBackColor = true;
-            this.btnCustomerAdd.Click += new System.EventHandler(this.btnCustomerAdd_Click);
+            this.btnCustomerAdd.Click += new System.EventHandler(this.BtnCustomerAdd_Click);
             // 
             // btnAppointmentUpdate
             // 
@@ -114,7 +114,7 @@
             this.btnAppointmentUpdate.TabIndex = 7;
             this.btnAppointmentUpdate.Text = "Update";
             this.btnAppointmentUpdate.UseVisualStyleBackColor = true;
-            this.btnAppointmentUpdate.Click += new System.EventHandler(this.btnAppointmentUpdate_Click);
+            this.btnAppointmentUpdate.Click += new System.EventHandler(this.BtnAppointmentUpdate_Click);
             // 
             // btnAppointmentDelete
             // 
@@ -124,37 +124,37 @@
             this.btnAppointmentDelete.TabIndex = 8;
             this.btnAppointmentDelete.Text = "Delete";
             this.btnAppointmentDelete.UseVisualStyleBackColor = true;
-            this.btnAppointmentDelete.Click += new System.EventHandler(this.btnAppointmentDelete_Click);
+            this.btnAppointmentDelete.Click += new System.EventHandler(this.BtnAppointmentDelete_Click);
             // 
             // btnCustomerUpdate
             // 
-            this.btnCustomerUpdate.Location = new System.Drawing.Point(139, 646);
+            this.btnCustomerUpdate.Location = new System.Drawing.Point(139, 633);
             this.btnCustomerUpdate.Name = "btnCustomerUpdate";
             this.btnCustomerUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnCustomerUpdate.TabIndex = 9;
             this.btnCustomerUpdate.Text = "Update";
             this.btnCustomerUpdate.UseVisualStyleBackColor = true;
-            this.btnCustomerUpdate.Click += new System.EventHandler(this.btnCustomerUpdate_Click);
+            this.btnCustomerUpdate.Click += new System.EventHandler(this.BtnCustomerUpdate_Click);
             // 
             // btnCustomerDelete
             // 
-            this.btnCustomerDelete.Location = new System.Drawing.Point(254, 646);
+            this.btnCustomerDelete.Location = new System.Drawing.Point(254, 633);
             this.btnCustomerDelete.Name = "btnCustomerDelete";
             this.btnCustomerDelete.Size = new System.Drawing.Size(75, 23);
             this.btnCustomerDelete.TabIndex = 10;
             this.btnCustomerDelete.Text = "Delete";
             this.btnCustomerDelete.UseVisualStyleBackColor = true;
-            this.btnCustomerDelete.Click += new System.EventHandler(this.btnCustomerDelete_Click);
+            this.btnCustomerDelete.Click += new System.EventHandler(this.BtnCustomerDelete_Click);
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(858, 636);
+            this.btnExit.Location = new System.Drawing.Point(858, 623);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(76, 33);
             this.btnExit.TabIndex = 12;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // lblTitleReports
             // 
@@ -176,7 +176,7 @@
             this.rdbtnCurrentWeek.TabStop = true;
             this.rdbtnCurrentWeek.Text = "Current Week";
             this.rdbtnCurrentWeek.UseVisualStyleBackColor = true;
-            this.rdbtnCurrentWeek.CheckedChanged += new System.EventHandler(this.rdbtnCurrentWeek_CheckedChanged);
+            this.rdbtnCurrentWeek.CheckedChanged += new System.EventHandler(this.RdbtnCurrentWeek_CheckedChanged);
             // 
             // rdbtnCurrentMonth
             // 
@@ -188,7 +188,7 @@
             this.rdbtnCurrentMonth.TabStop = true;
             this.rdbtnCurrentMonth.Text = "Current Month";
             this.rdbtnCurrentMonth.UseVisualStyleBackColor = true;
-            this.rdbtnCurrentMonth.CheckedChanged += new System.EventHandler(this.rdbtnCurrentMonth_CheckedChanged);
+            this.rdbtnCurrentMonth.CheckedChanged += new System.EventHandler(this.RdbtnCurrentMonth_CheckedChanged);
             // 
             // rdbtnAllAppointments
             // 
@@ -200,7 +200,7 @@
             this.rdbtnAllAppointments.TabStop = true;
             this.rdbtnAllAppointments.Text = "All Appointments";
             this.rdbtnAllAppointments.UseVisualStyleBackColor = true;
-            this.rdbtnAllAppointments.CheckedChanged += new System.EventHandler(this.rdbtnAllAppointments_CheckedChanged);
+            this.rdbtnAllAppointments.CheckedChanged += new System.EventHandler(this.RdbtnAllAppointments_CheckedChanged);
             // 
             // mnthCalendarAppointments
             // 
@@ -209,7 +209,7 @@
             this.mnthCalendarAppointments.Name = "mnthCalendarAppointments";
             this.mnthCalendarAppointments.TabIndex = 18;
             this.mnthCalendarAppointments.Visible = false;
-            this.mnthCalendarAppointments.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.mnthCalendarAppointments_DateSelected);
+            this.mnthCalendarAppointments.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.MnthCalendarAppointments_DateSelected);
             // 
             // chkbxSelectDay
             // 
@@ -220,7 +220,7 @@
             this.chkbxSelectDay.TabIndex = 19;
             this.chkbxSelectDay.Text = "Select Day";
             this.chkbxSelectDay.UseVisualStyleBackColor = true;
-            this.chkbxSelectDay.CheckedChanged += new System.EventHandler(this.chkbxSelectDay_CheckedChanged);
+            this.chkbxSelectDay.CheckedChanged += new System.EventHandler(this.ChkbxSelectDay_CheckedChanged);
             // 
             // btnReports
             // 
@@ -230,13 +230,13 @@
             this.btnReports.TabIndex = 20;
             this.btnReports.Text = "Reports";
             this.btnReports.UseVisualStyleBackColor = true;
-            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            this.btnReports.Click += new System.EventHandler(this.BtnReports_Click);
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(961, 682);
+            this.ClientSize = new System.Drawing.Size(961, 664);
             this.Controls.Add(this.btnReports);
             this.Controls.Add(this.chkbxSelectDay);
             this.Controls.Add(this.mnthCalendarAppointments);

@@ -18,7 +18,7 @@ namespace C969_Scheduling_App.Forms
 
     public partial class UpdateAppointment : Form
     {
-        private Appointment _appointment;
+        private readonly Appointment _appointment;
         public UpdateAppointment(Appointment appointment)
         {
             InitializeComponent();
@@ -42,14 +42,14 @@ namespace C969_Scheduling_App.Forms
             dtpEndDateTime.Format = DateTimePickerFormat.Custom;
             dtpEndDateTime.CustomFormat = "MM/dd/yyyy hh:mm tt";
             dtpEndDateTime.Value = _appointment.EndDateTime;
-            dtpStartDateTime_ValueChanged(null, null);
-            dtpEndDateTime_ValueChanged(null, null);
+            DtpStartDateTime_ValueChanged(null, null);
+            DtpEndDateTime_ValueChanged(null, null);
         }
 
 
-        private void btnUpdateCustomerSave_Click(object sender, EventArgs e)
+        private void BtnUpdateCustomerSave_Click(object sender, EventArgs e)
         {
-            DateTime localTime = DateTime.Now;
+            
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime easternStartTime = TimeZoneInfo.ConvertTime(dtpStartDateTime.Value, TimeZoneInfo.Local, easternZone);
             DateTime easternEndTime = TimeZoneInfo.ConvertTime(dtpEndDateTime.Value, TimeZoneInfo.Local, easternZone);
@@ -57,20 +57,16 @@ namespace C969_Scheduling_App.Forms
             DateTime utcStartTime = TimeZoneInfo.ConvertTimeToUtc(easternStartTime, easternZone);
             DateTime utcEndTime = TimeZoneInfo.ConvertTimeToUtc(easternEndTime, easternZone);
 
-            DateTime selectedStartTime = dtpStartDateTime.Value;
-            DateTime selectedEndTime = dtpEndDateTime.Value;
-
             TimeSpan businessStart = TimeSpan.FromHours(9);
             TimeSpan businessEnd = TimeSpan.FromHours(17);
 
             string appointmentId = txtAppointmentId.Text.Trim();
-            string customerId = txtCustomerId.Text.Trim();
-            string userId = txtUserId.Text.Trim();
+            
+            
             string title = txtTitle.Text.Trim();
             string location = txtLocation.Text.Trim();
             string contact = txtContact.Text.Trim();
             string type = txtType.Text.Trim();
-            string url = "";
             string description = txtDescription.Text.Trim();
             DateTime now = DateTime.Now;
             string user = _appointment.User.ToString();
@@ -180,14 +176,14 @@ namespace C969_Scheduling_App.Forms
             }
         }
 
-        private void btnUpdateCustomerCancel_Click(object sender, EventArgs e)
+        private void BtnUpdateCustomerCancel_Click(object sender, EventArgs e)
         {
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
             this.Hide();
         }
 
-        private void dtpStartDateTime_ValueChanged(object sender, EventArgs e)
+        private void DtpStartDateTime_ValueChanged(object sender, EventArgs e)
         {
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime localTime = dtpStartDateTime.Value;
@@ -196,7 +192,7 @@ namespace C969_Scheduling_App.Forms
             lblEasternStartTime.Text = $"EST: {easternTime:MM/dd/yyyy hh:mm tt}";
         }
 
-        private void dtpEndDateTime_ValueChanged(object sender, EventArgs e)
+        private void DtpEndDateTime_ValueChanged(object sender, EventArgs e)
         {
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime localTime = dtpEndDateTime.Value;

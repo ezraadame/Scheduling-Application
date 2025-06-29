@@ -30,16 +30,17 @@
         {
             this.dgvNumberApptsTypeByMonth = new System.Windows.Forms.DataGridView();
             this.dgvSchedulePerUser = new System.Windows.Forms.DataGridView();
-            this.dgvNumberApptByLocation = new System.Windows.Forms.DataGridView();
+            this.dgvNumberApptLocationsByMonth = new System.Windows.Forms.DataGridView();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblNumOfApptTypeByMonth = new System.Windows.Forms.Label();
             this.lblScheduleOfEachUser = new System.Windows.Forms.Label();
             this.lblNumOfApptLocationsByMonth = new System.Windows.Forms.Label();
             this.dtpNumApptTypeByMonth = new System.Windows.Forms.DateTimePicker();
             this.cmbBoxUserChoice = new System.Windows.Forms.ComboBox();
+            this.dtpAppointmentLocationsByMonth = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptsTypeByMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedulePerUser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptByLocation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptLocationsByMonth)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvNumberApptsTypeByMonth
@@ -58,13 +59,13 @@
             this.dgvSchedulePerUser.Size = new System.Drawing.Size(501, 260);
             this.dgvSchedulePerUser.TabIndex = 1;
             // 
-            // dgvNumberApptByLocation
+            // dgvNumberApptLocationsByMonth
             // 
-            this.dgvNumberApptByLocation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvNumberApptByLocation.Location = new System.Drawing.Point(400, 40);
-            this.dgvNumberApptByLocation.Name = "dgvNumberApptByLocation";
-            this.dgvNumberApptByLocation.Size = new System.Drawing.Size(362, 219);
-            this.dgvNumberApptByLocation.TabIndex = 2;
+            this.dgvNumberApptLocationsByMonth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvNumberApptLocationsByMonth.Location = new System.Drawing.Point(400, 40);
+            this.dgvNumberApptLocationsByMonth.Name = "dgvNumberApptLocationsByMonth";
+            this.dgvNumberApptLocationsByMonth.Size = new System.Drawing.Size(362, 219);
+            this.dgvNumberApptLocationsByMonth.TabIndex = 2;
             // 
             // btnCancel
             // 
@@ -74,7 +75,7 @@
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // lblNumOfApptTypeByMonth
             // 
@@ -101,11 +102,11 @@
             this.lblNumOfApptLocationsByMonth.AutoSize = true;
             this.lblNumOfApptLocationsByMonth.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblNumOfApptLocationsByMonth.Font = new System.Drawing.Font("Gadugi", 10.25F, System.Drawing.FontStyle.Bold);
-            this.lblNumOfApptLocationsByMonth.Location = new System.Drawing.Point(450, 18);
+            this.lblNumOfApptLocationsByMonth.Location = new System.Drawing.Point(429, 18);
             this.lblNumOfApptLocationsByMonth.Name = "lblNumOfApptLocationsByMonth";
-            this.lblNumOfApptLocationsByMonth.Size = new System.Drawing.Size(263, 18);
+            this.lblNumOfApptLocationsByMonth.Size = new System.Drawing.Size(310, 18);
             this.lblNumOfApptLocationsByMonth.TabIndex = 6;
-            this.lblNumOfApptLocationsByMonth.Text = "Number Of Appointments By Location";
+            this.lblNumOfApptLocationsByMonth.Text = "Number Of Appointment Locations By Month";
             // 
             // dtpNumApptTypeByMonth
             // 
@@ -115,7 +116,6 @@
             this.dtpNumApptTypeByMonth.Size = new System.Drawing.Size(216, 25);
             this.dtpNumApptTypeByMonth.TabIndex = 7;
             this.dtpNumApptTypeByMonth.Value = new System.DateTime(2025, 6, 28, 0, 0, 0, 0);
-            this.dtpNumApptTypeByMonth.ValueChanged += new System.EventHandler(this.dtpNumApptTypeByMonth_ValueChanged);
             // 
             // cmbBoxUserChoice
             // 
@@ -124,20 +124,29 @@
             this.cmbBoxUserChoice.Name = "cmbBoxUserChoice";
             this.cmbBoxUserChoice.Size = new System.Drawing.Size(160, 21);
             this.cmbBoxUserChoice.TabIndex = 8;
-            this.cmbBoxUserChoice.SelectedIndexChanged += new System.EventHandler(this.cmbBoxUserChoice_SelectedIndexChanged);
+            // 
+            // dtpAppointmentLocationsByMonth
+            // 
+            this.dtpAppointmentLocationsByMonth.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpAppointmentLocationsByMonth.Location = new System.Drawing.Point(481, 265);
+            this.dtpAppointmentLocationsByMonth.Name = "dtpAppointmentLocationsByMonth";
+            this.dtpAppointmentLocationsByMonth.Size = new System.Drawing.Size(216, 25);
+            this.dtpAppointmentLocationsByMonth.TabIndex = 9;
+            this.dtpAppointmentLocationsByMonth.Value = new System.DateTime(2025, 6, 28, 0, 0, 0, 0);
             // 
             // Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 646);
+            this.Controls.Add(this.dtpAppointmentLocationsByMonth);
             this.Controls.Add(this.cmbBoxUserChoice);
             this.Controls.Add(this.dtpNumApptTypeByMonth);
             this.Controls.Add(this.lblNumOfApptLocationsByMonth);
             this.Controls.Add(this.lblScheduleOfEachUser);
             this.Controls.Add(this.lblNumOfApptTypeByMonth);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.dgvNumberApptByLocation);
+            this.Controls.Add(this.dgvNumberApptLocationsByMonth);
             this.Controls.Add(this.dgvSchedulePerUser);
             this.Controls.Add(this.dgvNumberApptsTypeByMonth);
             this.Name = "Reports";
@@ -145,7 +154,7 @@
             this.Load += new System.EventHandler(this.Reports_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptsTypeByMonth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedulePerUser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptByLocation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptLocationsByMonth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,12 +164,13 @@
 
         private System.Windows.Forms.DataGridView dgvNumberApptsTypeByMonth;
         private System.Windows.Forms.DataGridView dgvSchedulePerUser;
-        private System.Windows.Forms.DataGridView dgvNumberApptByLocation;
+        private System.Windows.Forms.DataGridView dgvNumberApptLocationsByMonth;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblNumOfApptTypeByMonth;
         private System.Windows.Forms.Label lblScheduleOfEachUser;
         private System.Windows.Forms.Label lblNumOfApptLocationsByMonth;
         private System.Windows.Forms.DateTimePicker dtpNumApptTypeByMonth;
         private System.Windows.Forms.ComboBox cmbBoxUserChoice;
+        private System.Windows.Forms.DateTimePicker dtpAppointmentLocationsByMonth;
     }
 }

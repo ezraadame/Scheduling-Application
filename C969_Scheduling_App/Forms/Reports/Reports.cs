@@ -22,59 +22,39 @@ namespace C969_Scheduling_App.Forms
 
         private void Reports_Load(object sender, EventArgs e)
         {
-            
 
-            dgvNumberApptsTypeByMonth.RowHeadersVisible = false;
-            dgvNumberApptsTypeByMonth.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvNumberApptsTypeByMonth.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvNumberApptsTypeByMonth.AllowUserToResizeRows = false;
-            dgvNumberApptsTypeByMonth.ReadOnly = true;
-            dgvNumberApptsTypeByMonth.MultiSelect = false;
-            dgvNumberApptsTypeByMonth.AllowUserToAddRows = false;
+            ConfigureGrid(dgvNumberApptsTypeByMonth);
             dtpNumApptTypeByMonth.Format = DateTimePickerFormat.Custom;
             dtpNumApptTypeByMonth.CustomFormat = "MMMM yyyy";
             dtpNumApptTypeByMonth.ShowUpDown = true;
-
             LoadNumberOfTypesByMonth();
             dgvNumberApptsTypeByMonth.ClearSelection();
 
-            dgvSchedulePerUser.RowHeadersVisible = false;
-            dgvSchedulePerUser.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSchedulePerUser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvSchedulePerUser.AllowUserToResizeRows = false;
-            dgvSchedulePerUser.ReadOnly = true;
-            dgvSchedulePerUser.MultiSelect = false;
-            dgvSchedulePerUser.AllowUserToAddRows = false;
+            ConfigureGrid(dgvSchedulePerUser);
+            
             LoadUserChoices();
             dgvSchedulePerUser.ClearSelection();
 
-            dgvNumberApptByLocation.RowHeadersVisible = false;
-            dgvNumberApptByLocation.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvNumberApptByLocation.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvNumberApptByLocation.AllowUserToResizeRows = false;
-            dgvNumberApptByLocation.ReadOnly = true;
-            dgvNumberApptByLocation.MultiSelect = false;
-            dgvNumberApptByLocation.AllowUserToAddRows = false;
-            LoadNumberOfApptByLocation();
-            dgvNumberApptByLocation.ClearSelection();
+            ConfigureGrid(dgvNumberApptLocationsByMonth);
+            dtpAppointmentLocationsByMonth.Format = DateTimePickerFormat.Custom;
+            dtpAppointmentLocationsByMonth.CustomFormat = "MMMM yyyy";
+            dtpAppointmentLocationsByMonth.ShowUpDown = true;
+            LoadNumberOfApptLocationsByMonth();
+            dgvNumberApptLocationsByMonth.ClearSelection();
 
-        }
-        private void dtpNumApptTypeByMonth_ValueChanged(object sender, EventArgs e)
-        {
-            
-            LoadNumberOfTypesByMonth();
-            
-        }
-
-
-        private void cmbBoxUserChoice_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbBoxUserChoice.SelectedValue is int selectedUserId)
+            cmbBoxUserChoice.SelectedIndexChanged += (s, args) =>
             {
-                LoadUserSchedule(selectedUserId);
-            }
-        }
+                if (cmbBoxUserChoice.SelectedValue is int selectedUserId)
+                {
+                    LoadUserSchedule(selectedUserId);
+                }
+            };
 
+            dtpNumApptTypeByMonth.ValueChanged += (s, args) => LoadNumberOfTypesByMonth();
+
+            dtpAppointmentLocationsByMonth.ValueChanged += (s, args) => LoadNumberOfApptLocationsByMonth();
+
+        }
         private void LoadUserChoices()
         {
             try
@@ -88,6 +68,11 @@ namespace C969_Scheduling_App.Forms
                     cmbBoxUserChoice.DisplayMember = "userName";
                     cmbBoxUserChoice.ValueMember = "userId";
                     cmbBoxUserChoice.DataSource = dt;
+
+                    if (dt.Rows.Count > 0 && dt.Rows[0]["userId"] is int userId)
+                    {
+                        LoadUserSchedule(userId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -175,24 +160,32 @@ namespace C969_Scheduling_App.Forms
             }
         }
 
-        private void LoadNumberOfApptByLocation()
+        private void LoadNumberOfApptLocationsByMonth()
         {
-
+            DateTime selectedMonth = dtpAppointmentLocationsByMonth.Value;
+            DateTime firstDayOfMonth = new DateTime(selectedMonth.Year, selectedMonth.Month, 1);
+            DateTime firstDayOfNextMonth = firstDayOfMonth.AddMonths(1);
+            DateTime lastDayOfMonth = firstDayOfNextMonth.AddTicks(-1);
             try
             {
                 string queryTypeAndCount = @"
                     SELECT location AS Location, COUNT(*) AS Count
                     FROM appointment
+                    WHERE start BETWEEN @firstDayOfMonth AND @lastDayOfMonth
                     Group By location;
                     ";
 
                 using (MySqlCommand cmd = new MySqlCommand(queryTypeAndCount, DBConnection.conn))
                 {
+
+                    cmd.Parameters.AddWithValue("@firstDayOfMonth", firstDayOfMonth.ToUniversalTime());
+                    cmd.Parameters.AddWithValue("@lastDayOfMonth", lastDayOfMonth.ToUniversalTime());
+
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                     {
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);
-                        dgvNumberApptByLocation.DataSource = dt;
+                        dgvNumberApptLocationsByMonth.DataSource = dt;
                     }
                 }
             }
@@ -202,12 +195,24 @@ namespace C969_Scheduling_App.Forms
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
             this.Hide();
         }
 
+        private void ConfigureGrid(DataGridView grid)
+        {
+            grid.RowHeadersVisible = false;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid.AllowUserToResizeRows = false;
+            grid.ReadOnly = true;
+            grid.MultiSelect = false;
+            grid.AllowUserToAddRows = false;
+        }
+
+        
     }
 }

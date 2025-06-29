@@ -86,7 +86,7 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(228, 22);
             this.txtUserName.TabIndex = 4;
-            this.txtUserName.TextChanged += new System.EventHandler(this.txtUserName_TextChanged);
+            this.txtUserName.TextChanged += new System.EventHandler(this.TxtUserName_TextChanged);
             // 
             // txtPassword
             // 
@@ -95,7 +95,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(228, 22);
             this.txtPassword.TabIndex = 5;
-            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
+            this.txtPassword.TextChanged += new System.EventHandler(this.TxtPassword_TextChanged);
             // 
             // btnSignIn
             // 
@@ -106,7 +106,7 @@
             this.btnSignIn.TabIndex = 6;
             this.btnSignIn.Text = "Sign in";
             this.btnSignIn.UseVisualStyleBackColor = true;
-            this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
+            this.btnSignIn.Click += new System.EventHandler(this.BtnSignIn_Click);
             // 
             // btnExit
             // 
@@ -117,7 +117,7 @@
             this.btnExit.TabIndex = 13;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // lblCurrentLocation
             // 
@@ -133,7 +133,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 485);
+            this.ClientSize = new System.Drawing.Size(774, 485);
             this.Controls.Add(this.lblCurrentLocation);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSignIn);

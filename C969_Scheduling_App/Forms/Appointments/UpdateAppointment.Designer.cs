@@ -84,7 +84,7 @@
             this.dtpEndDateTime.ShowCheckBox = true;
             this.dtpEndDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpEndDateTime.TabIndex = 64;
-            this.dtpEndDateTime.ValueChanged += new System.EventHandler(this.dtpEndDateTime_ValueChanged);
+            this.dtpEndDateTime.ValueChanged += new System.EventHandler(this.DtpEndDateTime_ValueChanged);
             // 
             // dtpStartDateTime
             // 
@@ -93,7 +93,7 @@
             this.dtpStartDateTime.ShowCheckBox = true;
             this.dtpStartDateTime.Size = new System.Drawing.Size(200, 20);
             this.dtpStartDateTime.TabIndex = 63;
-            this.dtpStartDateTime.ValueChanged += new System.EventHandler(this.dtpStartDateTime_ValueChanged);
+            this.dtpStartDateTime.ValueChanged += new System.EventHandler(this.DtpStartDateTime_ValueChanged);
             // 
             // txtContact
             // 
@@ -208,7 +208,7 @@
             this.btnUpdateCustomerSave.TabIndex = 48;
             this.btnUpdateCustomerSave.Text = "Save";
             this.btnUpdateCustomerSave.UseVisualStyleBackColor = true;
-            this.btnUpdateCustomerSave.Click += new System.EventHandler(this.btnUpdateCustomerSave_Click);
+            this.btnUpdateCustomerSave.Click += new System.EventHandler(this.BtnUpdateCustomerSave_Click);
             // 
             // btnUpdateCustomerCancel
             // 
@@ -218,7 +218,7 @@
             this.btnUpdateCustomerCancel.TabIndex = 47;
             this.btnUpdateCustomerCancel.Text = "Cancel";
             this.btnUpdateCustomerCancel.UseVisualStyleBackColor = true;
-            this.btnUpdateCustomerCancel.Click += new System.EventHandler(this.btnUpdateCustomerCancel_Click);
+            this.btnUpdateCustomerCancel.Click += new System.EventHandler(this.BtnUpdateCustomerCancel_Click);
             // 
             // lblTitleUpdateAppointment
             // 

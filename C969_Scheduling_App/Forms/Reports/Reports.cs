@@ -101,7 +101,7 @@ namespace C969_Scheduling_App.Forms
             try
             {
                 string queryUserSchedules = @"
-                    SELECT appointmentId, title, start, end
+                    SELECT appointmentId, title AS 'Title', start AS 'Start Date/Time', end AS 'End Date/Time'
                     FROM appointment
                     WHERE userId = @userId
                     ORDER BY start;";
@@ -115,6 +115,18 @@ namespace C969_Scheduling_App.Forms
 
                         DataTable table = new DataTable();
                         adapter.Fill(table);
+                        foreach (DataRow row in table.Rows)
+                        {
+                            if (row["Start Date/Time"] is DateTime utcStart)
+                            {
+                                row["Start Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcStart, TimeZoneInfo.Local);
+                            }
+
+                            if (row["End Date/Time"] is DateTime utcEnd)
+                            {
+                                row["End Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcEnd, TimeZoneInfo.Local);
+                            }
+                        }
 
                         dgvSchedulePerUser.DataSource = table;
                     }

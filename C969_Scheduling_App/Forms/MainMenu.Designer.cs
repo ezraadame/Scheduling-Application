@@ -38,7 +38,6 @@
             this.btnAppointmentDelete = new System.Windows.Forms.Button();
             this.btnCustomerUpdate = new System.Windows.Forms.Button();
             this.btnCustomerDelete = new System.Windows.Forms.Button();
-            this.btnReportsMenu = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblTitleReports = new System.Windows.Forms.Label();
             this.rdbtnCurrentWeek = new System.Windows.Forms.RadioButton();
@@ -46,6 +45,7 @@
             this.rdbtnAllAppointments = new System.Windows.Forms.RadioButton();
             this.mnthCalendarAppointments = new System.Windows.Forms.MonthCalendar();
             this.chkbxSelectDay = new System.Windows.Forms.CheckBox();
+            this.btnReports = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomerMGMT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointmentMGMT)).BeginInit();
             this.SuspendLayout();
@@ -146,16 +146,6 @@
             this.btnCustomerDelete.UseVisualStyleBackColor = true;
             this.btnCustomerDelete.Click += new System.EventHandler(this.btnCustomerDelete_Click);
             // 
-            // btnReportsMenu
-            // 
-            this.btnReportsMenu.Location = new System.Drawing.Point(732, 486);
-            this.btnReportsMenu.Name = "btnReportsMenu";
-            this.btnReportsMenu.Size = new System.Drawing.Size(202, 58);
-            this.btnReportsMenu.TabIndex = 11;
-            this.btnReportsMenu.Text = "Reports Menu";
-            this.btnReportsMenu.UseVisualStyleBackColor = true;
-            this.btnReportsMenu.Click += new System.EventHandler(this.btnReportsMenu_Click);
-            // 
             // btnExit
             // 
             this.btnExit.Location = new System.Drawing.Point(858, 636);
@@ -232,11 +222,22 @@
             this.chkbxSelectDay.UseVisualStyleBackColor = true;
             this.chkbxSelectDay.CheckedChanged += new System.EventHandler(this.chkbxSelectDay_CheckedChanged);
             // 
+            // btnReports
+            // 
+            this.btnReports.Location = new System.Drawing.Point(769, 484);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(134, 58);
+            this.btnReports.TabIndex = 20;
+            this.btnReports.Text = "Reports";
+            this.btnReports.UseVisualStyleBackColor = true;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(973, 695);
+            this.ClientSize = new System.Drawing.Size(961, 682);
+            this.Controls.Add(this.btnReports);
             this.Controls.Add(this.chkbxSelectDay);
             this.Controls.Add(this.mnthCalendarAppointments);
             this.Controls.Add(this.rdbtnAllAppointments);
@@ -244,7 +245,6 @@
             this.Controls.Add(this.rdbtnCurrentWeek);
             this.Controls.Add(this.lblTitleReports);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.btnReportsMenu);
             this.Controls.Add(this.btnCustomerDelete);
             this.Controls.Add(this.btnCustomerUpdate);
             this.Controls.Add(this.btnAppointmentDelete);
@@ -277,7 +277,6 @@
         private System.Windows.Forms.Button btnAppointmentDelete;
         private System.Windows.Forms.Button btnCustomerUpdate;
         private System.Windows.Forms.Button btnCustomerDelete;
-        private System.Windows.Forms.Button btnReportsMenu;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblTitleReports;
         private System.Windows.Forms.RadioButton rdbtnCurrentWeek;
@@ -285,5 +284,6 @@
         private System.Windows.Forms.RadioButton rdbtnAllAppointments;
         private System.Windows.Forms.MonthCalendar mnthCalendarAppointments;
         private System.Windows.Forms.CheckBox chkbxSelectDay;
+        private System.Windows.Forms.Button btnReports;
     }
 }

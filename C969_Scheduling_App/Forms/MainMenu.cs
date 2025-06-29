@@ -348,13 +348,6 @@ namespace C969_Scheduling_App.Forms
 
         }
 
-        private void btnReportsMenu_Click(object sender, EventArgs e)
-        {
-            Reports report = new Reports();
-            report.Show();
-            this.Hide();
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -617,6 +610,13 @@ namespace C969_Scheduling_App.Forms
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+        }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            Reports report = new Reports ();
+            report.Show();
+            this.Hide();
         }
     }
 }

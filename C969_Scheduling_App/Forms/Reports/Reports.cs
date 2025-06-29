@@ -34,12 +34,14 @@ namespace C969_Scheduling_App.Forms
             dgvSchedulePerUser.ClearSelection();
 
             ConfigureGrid(dgvNumberApptLocationsByMonth);
-            dtpAppointmentLocationsByMonth.Format = DateTimePickerFormat.Custom;
-            dtpAppointmentLocationsByMonth.CustomFormat = "MMMM yyyy";
-            dtpAppointmentLocationsByMonth.ShowUpDown = true;
+            dtpNumberOfAppointmentLocationsByMonth.Format = DateTimePickerFormat.Custom;
+            dtpNumberOfAppointmentLocationsByMonth.CustomFormat = "MMMM yyyy";
+            dtpNumberOfAppointmentLocationsByMonth.ShowUpDown = true;
             LoadNumberOfApptLocationsByMonth();
             dgvNumberApptLocationsByMonth.ClearSelection();
 
+            //Lambda Expression for my combobox regarding the report for the schedule of users.
+            //This handles the dgv when the user selects a user from the combobox.
             cmbBoxUserChoice.SelectedIndexChanged += (s, args) =>
             {
                 if (cmbBoxUserChoice.SelectedValue is int selectedUserId)
@@ -47,9 +49,18 @@ namespace C969_Scheduling_App.Forms
                     LoadUserSchedule(selectedUserId);
                 }
             };
+            //
 
+            //Lambda Expression for my report of number of appointment types by month.
+            //This handles my DateTimePicker and loads the current month selected in the DTP using my LoadNumberOfTypesByMonth method. 
             dtpNumApptTypeByMonth.ValueChanged += (s, args) => LoadNumberOfTypesByMonth();
-            dtpAppointmentLocationsByMonth.ValueChanged += (s, args) => LoadNumberOfApptLocationsByMonth();
+            //
+
+            //Lambda Expression for my report of number of appointment locations by month.
+            //This handles my DTP when the user selects their chosen month.
+            //My method LoadNumberOfApptLocationsByMonth, will load the DGV.
+            dtpNumberOfAppointmentLocationsByMonth.ValueChanged += (s, args) => LoadNumberOfApptLocationsByMonth();
+            //
         }
         private void BtnCancel_Click(object sender, EventArgs e)
         {
@@ -172,7 +183,7 @@ namespace C969_Scheduling_App.Forms
         }
         private void LoadNumberOfApptLocationsByMonth()
         {
-            DateTime selectedMonth = dtpAppointmentLocationsByMonth.Value;
+            DateTime selectedMonth = dtpNumberOfAppointmentLocationsByMonth.Value;
             DateTime firstDayOfMonth = new DateTime(selectedMonth.Year, selectedMonth.Month, 1);
             DateTime firstDayOfNextMonth = firstDayOfMonth.AddMonths(1);
             DateTime lastDayOfMonth = firstDayOfNextMonth.AddTicks(-1);

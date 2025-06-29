@@ -37,7 +37,7 @@
             this.lblNumOfApptLocationsByMonth = new System.Windows.Forms.Label();
             this.dtpNumApptTypeByMonth = new System.Windows.Forms.DateTimePicker();
             this.cmbBoxUserChoice = new System.Windows.Forms.ComboBox();
-            this.dtpAppointmentLocationsByMonth = new System.Windows.Forms.DateTimePicker();
+            this.dtpNumberOfAppointmentLocationsByMonth = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptsTypeByMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedulePerUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNumberApptLocationsByMonth)).BeginInit();
@@ -127,19 +127,19 @@
             // 
             // dtpAppointmentLocationsByMonth
             // 
-            this.dtpAppointmentLocationsByMonth.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpAppointmentLocationsByMonth.Location = new System.Drawing.Point(481, 265);
-            this.dtpAppointmentLocationsByMonth.Name = "dtpAppointmentLocationsByMonth";
-            this.dtpAppointmentLocationsByMonth.Size = new System.Drawing.Size(216, 25);
-            this.dtpAppointmentLocationsByMonth.TabIndex = 9;
-            this.dtpAppointmentLocationsByMonth.Value = new System.DateTime(2025, 6, 28, 0, 0, 0, 0);
+            this.dtpNumberOfAppointmentLocationsByMonth.Font = new System.Drawing.Font("Gadugi", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpNumberOfAppointmentLocationsByMonth.Location = new System.Drawing.Point(481, 265);
+            this.dtpNumberOfAppointmentLocationsByMonth.Name = "dtpAppointmentLocationsByMonth";
+            this.dtpNumberOfAppointmentLocationsByMonth.Size = new System.Drawing.Size(216, 25);
+            this.dtpNumberOfAppointmentLocationsByMonth.TabIndex = 9;
+            this.dtpNumberOfAppointmentLocationsByMonth.Value = new System.DateTime(2025, 6, 28, 0, 0, 0, 0);
             // 
             // Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 646);
-            this.Controls.Add(this.dtpAppointmentLocationsByMonth);
+            this.Controls.Add(this.dtpNumberOfAppointmentLocationsByMonth);
             this.Controls.Add(this.cmbBoxUserChoice);
             this.Controls.Add(this.dtpNumApptTypeByMonth);
             this.Controls.Add(this.lblNumOfApptLocationsByMonth);
@@ -171,6 +171,6 @@
         private System.Windows.Forms.Label lblNumOfApptLocationsByMonth;
         private System.Windows.Forms.DateTimePicker dtpNumApptTypeByMonth;
         private System.Windows.Forms.ComboBox cmbBoxUserChoice;
-        private System.Windows.Forms.DateTimePicker dtpAppointmentLocationsByMonth;
+        private System.Windows.Forms.DateTimePicker dtpNumberOfAppointmentLocationsByMonth;
     }
 }

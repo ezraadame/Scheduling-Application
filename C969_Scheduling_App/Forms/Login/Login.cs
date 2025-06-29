@@ -55,6 +55,7 @@ namespace C969_Scheduling_App
                 titleSchedulingApp.Text = "Scheduling Application";
             }
         }
+
         //Method: LoginLog will append to a log called Login_History.txt, whether the sign is was a success or a failure.
         //File Path: C:\Users\<user>\Documents\C969_Scheduling_App\Logs
         private void LoginLog(bool loginSuccess)
@@ -87,6 +88,7 @@ namespace C969_Scheduling_App
                 }
             }
         }
+        //
         public void GetLocation()
         {
             try

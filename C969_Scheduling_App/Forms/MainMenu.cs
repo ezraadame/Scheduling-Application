@@ -23,6 +23,8 @@ namespace C969_Scheduling_App.Forms
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
+
+            CheckUpcomingAppointments(AppSession.CurrentUserId);
             dgvCustomerMGMT.RowHeadersVisible = false;
             dgvCustomerMGMT.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCustomerMGMT.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -42,8 +44,11 @@ namespace C969_Scheduling_App.Forms
             dgvAppointmentMGMT.AllowUserToAddRows = false;
             LoadAppointmentData();
             dgvAppointmentMGMT.ClearSelection();
+
+            
         }
 
+        
         private void LoadCustomerData()
         {
             try
@@ -391,11 +396,25 @@ namespace C969_Scheduling_App.Forms
                         DataTable table = new DataTable();
 
                         adapter.Fill(table);
+                        foreach (DataRow row in table.Rows)
+                        {
+                            if (row["Start Date/Time"] is DateTime utcStart)
+                            {
+                                row["Start Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcStart, TimeZoneInfo.Local);
+                            }
+
+                            if (row["End Date/Time"] is DateTime utcEnd)
+                            {
+                                row["End Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcEnd, TimeZoneInfo.Local);
+                            }
+                        }
                         dgvAppointmentMGMT.DataSource = table;
+                        dgvAppointmentMGMT.ClearSelection();
+                        dgvAppointmentMGMT.ClearSelection();
                     }
                     
                 }
-                dgvAppointmentMGMT.ClearSelection();
+                
             }
             catch (Exception ex)
             {
@@ -440,11 +459,25 @@ namespace C969_Scheduling_App.Forms
                         DataTable table = new DataTable();
 
                         adapter.Fill(table);
+                        foreach (DataRow row in table.Rows)
+                        {
+                            if (row["Start Date/Time"] is DateTime utcStart)
+                            {
+                                row["Start Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcStart, TimeZoneInfo.Local);
+                            }
+
+                            if (row["End Date/Time"] is DateTime utcEnd)
+                            {
+                                row["End Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcEnd, TimeZoneInfo.Local);
+                            }
+                        }
                         dgvAppointmentMGMT.DataSource = table;
+                        dgvAppointmentMGMT.ClearSelection();
+                        
                     }
 
                 }
-                dgvAppointmentMGMT.ClearSelection();
+                
             }
             catch (Exception ex)
             {
@@ -518,15 +551,71 @@ namespace C969_Scheduling_App.Forms
                         DataTable table = new DataTable();
 
                         adapter.Fill(table);
+                        foreach (DataRow row in table.Rows)
+                        {
+                            if (row["Start Date/Time"] is DateTime utcStart)
+                            {
+                                row["Start Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcStart, TimeZoneInfo.Local);
+                            }
+
+                            if (row["End Date/Time"] is DateTime utcEnd)
+                            {
+                                row["End Date/Time"] = TimeZoneInfo.ConvertTimeFromUtc(utcEnd, TimeZoneInfo.Local);
+                            }
+                        }
                         dgvAppointmentMGMT.DataSource = table;
+                        dgvAppointmentMGMT.ClearSelection();
+                        
                     }
 
                 }
-                dgvAppointmentMGMT.ClearSelection();
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred " + ex.Message);
+            }
+        }
+
+        private void CheckUpcomingAppointments(int userId)
+        {
+            try
+            {
+
+                DateTime nowUtc = DateTime.UtcNow;
+
+
+                string queryCheckAppointments = @"
+                        SELECT * FROM appointment
+                        WHERE userId = @userId
+                        AND TIMESTAMPDIFF(MINUTE, @now, start) BETWEEN 0 AND 15
+                        ;";
+
+                using (MySqlCommand cmd = new MySqlCommand(queryCheckAppointments, DBConnection.conn))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@now", nowUtc);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int apptId = reader.GetInt32("appointmentId");
+                            DateTime apptTimeUtc = reader.GetDateTime("start");
+                            DateTime apptLocal = apptTimeUtc.ToLocalTime();
+                            string apptTitle = reader.GetString("title");
+                            int minutesUntil = (int)(apptTimeUtc - nowUtc).TotalMinutes;
+
+                            MessageBox.Show(
+                                            $"You have an upcoming appointment (ID: {apptId}, Title: {apptTitle}) starting at {apptLocal:t} — in {minutesUntil} minutes.",
+                                            "Upcoming Appointment");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
     }

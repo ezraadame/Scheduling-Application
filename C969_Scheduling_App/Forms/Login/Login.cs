@@ -57,21 +57,24 @@ namespace C969_Scheduling_App
         {
             string userName = txtUserName.Text;
             string password = txtPassword.Text;
-            string query = @"SELECT * FROM user WHERE userName = @userName AND password = @password";
+            string queryLogin = @"SELECT * FROM user WHERE userName = @userName AND password = @password";
+            DateTime today = DateTime.Now;
 
             try
             {
-                using (MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn))
+                using (MySqlCommand cmd = new MySqlCommand(queryLogin, DBConnection.conn))
                 {
                     cmd.Parameters.AddWithValue("@userName", userName);
                     cmd.Parameters.AddWithValue("@password", password);
                     bool loginSuccess = false;
+
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             loginSuccess = true;
+
                             int userId = reader.GetInt32("userId");
                             AppSession.CurrentUserId = userId;
                             string retrievedUserName = reader.GetString("username");
@@ -80,9 +83,11 @@ namespace C969_Scheduling_App
                     }
                     if (loginSuccess)
                     {
+                        
                         Forms.MainMenu mainMenu = new Forms.MainMenu();
                         mainMenu.Show();
                         this.Hide();
+                         
                     }
                     else
                     {
@@ -90,6 +95,9 @@ namespace C969_Scheduling_App
                         MessageBox.Show(language == "es" ? "¡Credenciales incorrectas!" : "Wrong credentials!");
                     }
                 }
+
+
+
             }
             catch (MySqlException)
             {
@@ -157,5 +165,7 @@ namespace C969_Scheduling_App
             }
 
         }
+
+        
     }
 }

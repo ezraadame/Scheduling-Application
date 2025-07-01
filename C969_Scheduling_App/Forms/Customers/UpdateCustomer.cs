@@ -26,6 +26,13 @@ namespace C969_Scheduling_App.Forms
             LoadCountries();
         }
 
+        private void txtUpdateCustomerNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '-' && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
         private void UpdateCustomer_Load(object sender, EventArgs e)
         {
             txtUpdateCustomerID.Text = _customer.CustomerId.ToString();
@@ -147,6 +154,6 @@ namespace C969_Scheduling_App.Forms
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
-        }
+        } 
     }
 }

@@ -51,6 +51,7 @@
             this.txtUpdateCustomerNumber.Name = "txtUpdateCustomerNumber";
             this.txtUpdateCustomerNumber.Size = new System.Drawing.Size(185, 20);
             this.txtUpdateCustomerNumber.TabIndex = 32;
+            this.txtUpdateCustomerNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUpdateCustomerNumber_KeyPress);
             // 
             // txtUpdateCustomerAddress
             // 

@@ -26,7 +26,7 @@ namespace C969_Scheduling_App.Forms
             LoadCountries();
         }
 
-        private void txtUpdateCustomerNumber_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtUpdateCustomerNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != '-' && !char.IsControl(e.KeyChar))
             {

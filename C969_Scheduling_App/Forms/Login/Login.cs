@@ -113,6 +113,13 @@ namespace C969_Scheduling_App
         }
         private void SignIn()
         {
+            // Verify connection is actually open before trying to use it
+            if (DBConnection.Conn == null || DBConnection.Conn.State != System.Data.ConnectionState.Open)
+            {
+                MessageBox.Show("Database connection failed. Check MySQL service is running and App.config connection string is valid.");
+                return;
+            }
+
             string userName = txtUserName.Text;
             string password = txtPassword.Text;
             string queryLogin = @"SELECT * FROM user WHERE userName = @userName AND password = @password";

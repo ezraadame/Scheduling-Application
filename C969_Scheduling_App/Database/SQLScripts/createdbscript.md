@@ -4,7 +4,7 @@ DROP DATABASE IF EXISTS client_schedule;
 CREATE DATABASE client_schedule;
 USE client_schedule;
 
--- User table
+#### User table
 CREATE TABLE user (
     userId INT AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(255) NOT NULL UNIQUE,
@@ -16,7 +16,7 @@ CREATE TABLE user (
     lastUpdateBy VARCHAR(255)
 );
 
--- Country table
+#### Country table
 CREATE TABLE country (
     countryId INT AUTO_INCREMENT PRIMARY KEY,
     country VARCHAR(255) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE country (
     lastUpdateBy VARCHAR(255)
 );
 
--- City table
+#### City table
 CREATE TABLE city (
     cityId INT AUTO_INCREMENT PRIMARY KEY,
     city VARCHAR(255) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE city (
     FOREIGN KEY (countryId) REFERENCES country(countryId)
 );
 
--- Address table
+#### Address table
 CREATE TABLE `address` (
     addressId INT AUTO_INCREMENT PRIMARY KEY,
     address VARCHAR(255) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `address` (
     FOREIGN KEY (cityId) REFERENCES city(cityId)
 );
 
--- Customer table
+#### Customer table
 CREATE TABLE customer (
     customerId INT AUTO_INCREMENT PRIMARY KEY,
     customerName VARCHAR(255) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE customer (
     FOREIGN KEY (addressId) REFERENCES `address`(addressId)
 );
 
--- Appointment table
+#### Appointment table
 CREATE TABLE appointment (
     appointmentId INT AUTO_INCREMENT PRIMARY KEY,
     customerId INT NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE appointment (
     FOREIGN KEY (userId) REFERENCES user(userId)
 );
 
-## Sample Data Insertion
+#### Sample Data Insertion
 INSERT INTO country (country, createdBy, lastUpdateBy) VALUES
 ('United States', 'system', 'system'),
 ('Canada', 'system', 'system'),

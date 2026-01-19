@@ -26,7 +26,7 @@ CREATE TABLE country (
     lastUpdateBy VARCHAR(255)
 );
 
--- City table
+#### City table
 CREATE TABLE city (
     cityId INT AUTO_INCREMENT PRIMARY KEY,
     city VARCHAR(255) NOT NULL,

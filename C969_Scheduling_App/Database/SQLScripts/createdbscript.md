@@ -4,8 +4,8 @@ DROP DATABASE IF EXISTS client_schedule;
 CREATE DATABASE client_schedule;
 USE client_schedule;
 
--- User table
-CREATE TABLE user (
+#### User table
+-- CREATE TABLE user (
     userId INT AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE user (
     createdBy VARCHAR(255),
     lastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     lastUpdateBy VARCHAR(255)
-);
+); --
 
 -- Country table
 CREATE TABLE country (
